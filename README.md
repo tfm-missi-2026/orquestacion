@@ -1,2 +1,130 @@
-# tfm-eureka
-Eureka Server - Service Discovery para el sistema de planificación de recursos técnicos (TFM MISSI - UNIR)
+# SPSRT — Orquestación y despliegue
+
+Repositorio de **orquestación** del sistema **SPSRT — Sistema de Planificación y
+Seguimiento de Recursos Técnicos** (UNIR, MISSI). Reúne el `docker-compose.yml` del
+stack completo, el init/migraciones de base de datos y la documentación de arranque.
+El código de cada componente vive en su **propio repositorio**.
+
+> Estado: **M0 — Esqueleto del proyecto.** Todos los componentes arrancan; sin
+> lógica de negocio aún.
+
+## Componentes del stack
+
+| Componente | Repo | Tecnología | Puerto | Responsable |
+|---|---|---|---|---|
+| `eureka-server` | `eureka-server` | Spring Cloud Netflix Eureka | 8761 | colaborativo |
+| `api-gateway` | `api-gateway` | Spring Cloud Gateway + JWT | 8080 | colaborativo |
+| `ms-administracion` | `ms-administracion` | Spring Boot · PostgreSQL · Flyway | 8081 | EFPF |
+| `ms-proyectos` | `ms-proyectos` | Spring Boot · PostgreSQL · Flyway | 8082 | MJPA |
+| `ms-seguimiento` | `ms-seguimiento` | Spring Boot · PostgreSQL · Flyway | 8083 | PESSL |
+| `postgres` | (imagen) | PostgreSQL 16 (3 BD lógicas) | 5432 | — |
+| `frontend` | `frontend` | Angular 21 + TailAdmin + pnpm 10.33.0 | 4200 | colaborativo |
+
+## Disposición esperada del workspace
+
+Este repo construye cada servicio desde `../Backend/<servicio>` y `../Frontend`, por lo
+que **los repos de servicio se clonan como hermanos** en esta estructura:
+
+```
+<workspace>/
+├── orquestacion/        # este repo (docker-compose.yml + Database/ + .env.example)
+├── Backend/
+│   ├── eureka-server/
+│   ├── api-gateway/
+│   ├── ms-administracion/
+│   ├── ms-proyectos/
+│   └── ms-seguimiento/
+└── Frontend/            # repo frontend (Angular)
+```
+
+### Clonado inicial
+
+```bash
+mkdir spsrt && cd spsrt
+git clone https://github.com/tfm-missi-2026/orquestacion.git
+mkdir Backend
+git clone https://github.com/tfm-missi-2026/eureka-server.git     Backend/eureka-server
+git clone https://github.com/tfm-missi-2026/api-gateway.git       Backend/api-gateway
+git clone https://github.com/tfm-missi-2026/ms-administracion.git Backend/ms-administracion
+git clone https://github.com/tfm-missi-2026/ms-proyectos.git      Backend/ms-proyectos
+git clone https://github.com/tfm-missi-2026/ms-seguimiento.git    Backend/ms-seguimiento
+git clone https://github.com/tfm-missi-2026/frontend.git          Frontend
+```
+
+## Requisitos previos
+
+- Docker Desktop 24+ con docker compose v2
+- Node.js 20.19.x LTS · pnpm 10.33.0 (`npm install -g pnpm@10.33.0`) — solo para el frontend
+- Java 21 + Maven 3.9+ (solo si se quiere compilar fuera del contenedor)
+
+## Primer arranque (stack completo)
+
+```bash
+cd orquestacion
+cp .env.example .env
+docker compose up -d --build
+```
+
+La primera vez tarda ~5 minutos (descarga de imágenes base + build Maven).
+
+### Verificación rápida
+
+| URL | Resultado esperado |
+|---|---|
+| http://localhost:8761 | dashboard Eureka con los 3 microservicios y el gateway registrados |
+| http://localhost:8080/actuator/health | `{"status":"UP"}` |
+| http://localhost:8081/actuator/health · :8082 · :8083 | `{"status":"UP"}` |
+| http://localhost:8081/swagger-ui.html · :8082 · :8083 | Swagger UI (vacío en M0) |
+
+> El **login** entra por el gateway: `POST http://localhost:8080/api/auth/login`.
+
+### Frontend en local
+
+```bash
+cd Frontend
+pnpm install
+pnpm start
+```
+
+`http://localhost:4200` → pantalla de bienvenida de TailAdmin.
+
+## Levantar un solo microservicio (standalone)
+
+Cada repo de microservicio trae su **propio** `docker-compose.yml` que levanta solo ese
+servicio + su PostgreSQL (sin Eureka), para desarrollo aislado:
+
+```bash
+cd Backend/ms-seguimiento
+cp .env.example .env
+docker compose up -d --build
+```
+
+## Pruebas de API (Bruno)
+
+La carpeta [`Test/`](Test/) es una colección de [Bruno](https://www.usebruno.com/) para probar
+la API por el gateway: login (guarda el JWT) + endpoints protegidos de los 3 microservicios.
+En Bruno: *Open Collection* → `orquestacion/Test/`, selecciona un environment con
+`tfm-api-gateway-local`, corre **Auth → Login** y luego el resto.
+
+## Convenciones
+
+- **Multi-repo**: 6 repos de servicio + este repo de orquestación. Cada microservicio es
+  un proyecto Maven independiente (sin parent POM común); subir la versión de Spring Boot
+  se hace en cada `pom.xml` por separado.
+- **JWT compartido HS256** vía `JWT_SECRET` para M0. En M4 se evaluará migrar a RS256 con
+  JWKS publicado por `ms-administracion`.
+- **Migraciones Flyway** dentro de cada microservicio (`src/main/resources/db/migration/V*.sql`);
+  se replican en `Database/spsrt_*/migrations/` (este repo) para revisión humana y entrega
+  académica. La creación de las 3 BD/usuarios la hace `Database/init/00_create_databases.sql`
+  al levantar postgres.
+- **Paquete Java raíz**: `pe.unir.tfm.srp.<dominio>`.
+- El **`.env` real no se versiona** (está en `.gitignore`); se parte de `.env.example`.
+
+## Hitos siguientes
+
+- **M1** — Autenticación end-to-end (login + JWT + guard Angular)
+- **M2** — Modelo de datos completo por microservicio
+- **M3** — APIs CRUD por entidad principal
+- **M4** — Integración entre microservicios
+- **M5** — Frontend conectado a las APIs
+- **M6** — Despliegue completo y evaluación

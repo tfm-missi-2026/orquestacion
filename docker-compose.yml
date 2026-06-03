@@ -1,0 +1,146 @@
+name: spsrt
+
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: spsrt-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_SUPERUSER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_SUPERUSER_PASSWORD:-postgres}
+      POSTGRES_DB: postgres
+      DB_ADMINISTRACION_NAME: ${DB_ADMINISTRACION_NAME:-spsrt_administracion}
+      DB_ADMINISTRACION_USER: ${DB_ADMINISTRACION_USER:-spsrt_administracion_user}
+      DB_ADMINISTRACION_PASSWORD: ${DB_ADMINISTRACION_PASSWORD:-spsrt_administracion_pwd}
+      DB_PROYECTOS_NAME: ${DB_PROYECTOS_NAME:-spsrt_proyectos}
+      DB_PROYECTOS_USER: ${DB_PROYECTOS_USER:-spsrt_proyectos_user}
+      DB_PROYECTOS_PASSWORD: ${DB_PROYECTOS_PASSWORD:-spsrt_proyectos_pwd}
+      DB_SEGUIMIENTO_NAME: ${DB_SEGUIMIENTO_NAME:-spsrt_seguimiento}
+      DB_SEGUIMIENTO_USER: ${DB_SEGUIMIENTO_USER:-spsrt_seguimiento_user}
+      DB_SEGUIMIENTO_PASSWORD: ${DB_SEGUIMIENTO_PASSWORD:-spsrt_seguimiento_pwd}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./Database/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_SUPERUSER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - spsrt-net
+
+  eureka-server:
+    build:
+      context: ../Backend/eureka-server
+    container_name: spsrt-eureka
+    restart: unless-stopped
+    environment:
+      SERVER_PORT: 8761
+    ports:
+      - "${EUREKA_DASHBOARD_PORT:-8761}:8761"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:8761/actuator/health | grep -q UP || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    networks:
+      - spsrt-net
+
+  api-gateway:
+    build:
+      context: ../Backend/api-gateway
+    container_name: spsrt-gateway
+    restart: unless-stopped
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8080
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "${GATEWAY_PORT:-8080}:8080"
+    networks:
+      - spsrt-net
+
+  ms-administracion:
+    build:
+      context: ../Backend/ms-administracion
+    container_name: spsrt-ms-administracion
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8081
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      DB_URL: jdbc:postgresql://postgres:5432/${DB_ADMINISTRACION_NAME:-spsrt_administracion}
+      DB_USER: ${DB_ADMINISTRACION_USER:-spsrt_administracion_user}
+      DB_PASSWORD: ${DB_ADMINISTRACION_PASSWORD:-spsrt_administracion_pwd}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "${MS_ADMINISTRACION_PORT:-8081}:8081"
+    networks:
+      - spsrt-net
+
+  ms-proyectos:
+    build:
+      context: ../Backend/ms-proyectos
+    container_name: spsrt-ms-proyectos
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8082
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      DB_URL: jdbc:postgresql://postgres:5432/${DB_PROYECTOS_NAME:-spsrt_proyectos}
+      DB_USER: ${DB_PROYECTOS_USER:-spsrt_proyectos_user}
+      DB_PASSWORD: ${DB_PROYECTOS_PASSWORD:-spsrt_proyectos_pwd}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "${MS_PROYECTOS_PORT:-8082}:8082"
+    networks:
+      - spsrt-net
+
+  ms-seguimiento:
+    build:
+      context: ../Backend/ms-seguimiento
+    container_name: spsrt-ms-seguimiento
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    environment:
+      SERVER_PORT: 8083
+      EUREKA_DEFAULT_ZONE: http://eureka-server:8761/eureka/
+      DB_URL: jdbc:postgresql://postgres:5432/${DB_SEGUIMIENTO_NAME:-spsrt_seguimiento}
+      DB_USER: ${DB_SEGUIMIENTO_USER:-spsrt_seguimiento_user}
+      DB_PASSWORD: ${DB_SEGUIMIENTO_PASSWORD:-spsrt_seguimiento_pwd}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "${MS_SEGUIMIENTO_PORT:-8083}:8083"
+    networks:
+      - spsrt-net
+
+  # Frontend Angular: en M0 se ejecuta localmente con `pnpm start`.
+  # Cuando llegue M6 se anadira aqui su servicio (build con Node 20 -> nginx con el bundle).
+
+volumes:
+  postgres-data:
+    name: spsrt-postgres-data
+
+networks:
+  spsrt-net:
+    name: spsrt-net
+    driver: bridge

@@ -1,0 +1,15 @@
+meta {
+  name: Mi bitacora
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/bitacora/mia
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}

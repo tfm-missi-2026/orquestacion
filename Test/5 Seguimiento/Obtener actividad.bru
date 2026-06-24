@@ -1,0 +1,24 @@
+meta {
+  name: Obtener actividad
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/actividades/{{actividadId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("es la actividad creada", function() {
+    expect(res.body.id).to.equal(bru.getVar("actividadId"));
+  });
+}

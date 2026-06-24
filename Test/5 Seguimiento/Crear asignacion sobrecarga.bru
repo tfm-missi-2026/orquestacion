@@ -1,0 +1,37 @@
+meta {
+  name: Crear asignacion sobrecarga
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{tfm-api-gateway-local}}/api/asignaciones
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "tareaId": "{{tareaId}}",
+    "usuarioId": "{{adminUserId}}",
+    "horasPlanificadas": 50,
+    "fechaInicioPlanificada": "2026-06-01",
+    "fechaFinPlanificada": "2026-06-07",
+    "confirmarSobrecarga": false
+  }
+}
+
+docs {
+  RF-06: 50 h en un periodo de 5 dias habiles (capacidad 40 h) sin confirmar
+  debe rechazarse con 409. No inserta, por lo que la siguiente creacion (30 h) si pasa.
+}
+
+tests {
+  test("rechaza sobrecarga con 409", function() {
+    expect(res.status).to.equal(409);
+  });
+}

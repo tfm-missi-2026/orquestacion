@@ -1,0 +1,24 @@
+meta {
+  name: Listar asignaciones
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/asignaciones
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("devuelve lista", function() {
+    expect(res.body).to.be.an("array");
+  });
+}

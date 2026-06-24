@@ -1,0 +1,24 @@
+meta {
+  name: Obtener rol
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/roles/{{rolAdmin}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("es el rol ADMIN", function() {
+    expect(res.body.codigo).to.equal("ADMIN");
+  });
+}

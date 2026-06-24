@@ -1,0 +1,54 @@
+meta {
+  name: Congelar linea base
+  type: http
+  seq: 17
+}
+
+post {
+  url: {{tfm-api-gateway-local}}/api/linea-base/congelar
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "proyectoId": "{{proyectoId}}",
+    "descripcion": "Linea base inicial QA",
+    "tareas": [
+      {
+        "tareaId": "{{tareaId}}",
+        "nombre": "Tarea de prueba QA",
+        "descripcion": "Snapshot de tarea",
+        "fechaInicioPlanificada": "2026-06-01",
+        "fechaFinPlanificada": "2026-06-07",
+        "horasEstimadas": 40
+      }
+    ],
+    "asignaciones": [
+      {
+        "asignacionId": "{{asignacionId}}",
+        "tareaId": "{{tareaId}}",
+        "usuarioId": "{{adminUserId}}"
+      }
+    ]
+  }
+}
+
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("lineaBaseId", res.body.id);
+  }
+}
+
+tests {
+  test("congelada (200/201)", function() {
+    expect(res.status).to.be.oneOf([200, 201]);
+  });
+  test("devuelve id de linea base", function() {
+    expect(res.body.id).to.be.a("string");
+  });
+}

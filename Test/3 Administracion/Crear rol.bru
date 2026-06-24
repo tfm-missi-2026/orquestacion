@@ -1,0 +1,38 @@
+meta {
+  name: Crear rol
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{tfm-api-gateway-local}}/api/roles
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "codigo": "QA_ROL",
+    "nombre": "Rol de prueba QA",
+    "descripcion": "Rol creado por la coleccion Bruno"
+  }
+}
+
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("createdRolId", res.body.id);
+  }
+}
+
+tests {
+  test("creado (200/201)", function() {
+    expect(res.status).to.be.oneOf([200, 201]);
+  });
+  test("devuelve id", function() {
+    expect(res.body.id).to.be.a("string");
+  });
+}

@@ -1,0 +1,31 @@
+meta {
+  name: Actualizar proyecto
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{tfm-api-gateway-local}}/api/proyectos/{{proyectoId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "nombreCorto": "QA-SYS",
+    "nombre": "Sistema de prueba QA (editado)",
+    "descripcion": "Actualizado por la coleccion Bruno",
+    "gestorId": "{{adminUserId}}",
+    "estado": 1
+  }
+}
+
+tests {
+  test("actualizado 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

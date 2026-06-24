@@ -1,0 +1,34 @@
+meta {
+  name: Actualizar tarea
+  type: http
+  seq: 13
+}
+
+put {
+  url: {{tfm-api-gateway-local}}/api/tareas/{{tareaId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "nombre": "Tarea de prueba QA (editada)",
+    "descripcion": "Actualizada por la coleccion Bruno",
+    "fechaInicioPlanificada": "2026-06-01",
+    "fechaFinPlanificada": "2026-06-07",
+    "horasEstimadas": 40,
+    "situacionId": "{{catSituacion}}",
+    "origenVariacionId": null,
+    "estado": 1
+  }
+}
+
+tests {
+  test("actualizada 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

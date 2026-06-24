@@ -1,0 +1,27 @@
+meta {
+  name: Eliminar bitacora
+  type: http
+  seq: 2
+}
+
+delete {
+  url: {{tfm-api-gateway-local}}/api/bitacora/{{bitacoraId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de pruebas QA"
+  }
+}
+
+tests {
+  test("eliminada (200/204)", function() {
+    expect(res.status).to.be.oneOf([200, 204]);
+  });
+}

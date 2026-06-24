@@ -1,0 +1,43 @@
+meta {
+  name: Crear tarea
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{tfm-api-gateway-local}}/api/tareas
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "subproyectoId": "{{subproyectoId}}",
+    "nombre": "Tarea de prueba QA",
+    "descripcion": "Tarea creada por la coleccion Bruno",
+    "fechaInicioPlanificada": "2026-06-01",
+    "fechaFinPlanificada": "2026-06-07",
+    "horasEstimadas": 40,
+    "situacionId": "{{catSituacion}}",
+    "origenVariacionId": null
+  }
+}
+
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("tareaId", res.body.id);
+  }
+}
+
+tests {
+  test("creada (200/201)", function() {
+    expect(res.status).to.be.oneOf([200, 201]);
+  });
+  test("devuelve id", function() {
+    expect(res.body.id).to.be.a("string");
+  });
+}

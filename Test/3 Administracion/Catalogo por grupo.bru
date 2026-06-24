@@ -1,0 +1,24 @@
+meta {
+  name: Catalogo por grupo
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/catalogo/grupo/SITUACION
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("todos los items son del grupo SITUACION", function() {
+    expect(res.body.every(i => i.grupo === "SITUACION")).to.be.true;
+  });
+}

@@ -1,0 +1,34 @@
+meta {
+  name: Actualizar actividad
+  type: http
+  seq: 11
+}
+
+put {
+  url: {{tfm-api-gateway-local}}/api/actividades/{{actividadId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "tipoActividadId": "{{catTipoActividad}}",
+    "modalidadId": "{{catModalidad}}",
+    "titulo": "Reunion de seguimiento QA (editada)",
+    "descripcion": "Actualizada por la coleccion Bruno",
+    "fecha": "2026-06-02",
+    "horaInicio": "09:00:00",
+    "horaFin": "11:00:00",
+    "organizadorId": "{{adminUserId}}"
+  }
+}
+
+tests {
+  test("actualizada 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

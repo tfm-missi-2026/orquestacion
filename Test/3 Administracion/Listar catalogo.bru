@@ -1,0 +1,46 @@
+meta {
+  name: Listar catalogo
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/catalogo
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+script:post-response {
+  if (res.status === 200) {
+    const items = res.body;
+    const find = (g, o) => {
+      const it = items.find(i => i.grupo === g && i.idOpcion === o);
+      return it ? it.id : null;
+    };
+    bru.setVar("catTipoSubproyecto", find("TIPO_SUBPROYECTO", 2));
+    bru.setVar("catPrioridad", find("PRIORIDAD", 1));
+    bru.setVar("catSituacion", find("SITUACION", 1));
+    bru.setVar("catSituacionCulminado", find("SITUACION", 3));
+    bru.setVar("catTipoVariacion", find("TIPO_VARIACION", 2));
+    bru.setVar("catSituacionVariacion", find("SITUACION_VARIACION", 1));
+    bru.setVar("catSituacionVariacionAprobada", find("SITUACION_VARIACION", 2));
+    bru.setVar("catTipoActividad", find("TIPO_ACTIVIDAD", 1));
+    bru.setVar("catModalidad", find("MODALIDAD", 1));
+  }
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("devuelve lista de items", function() {
+    expect(res.body).to.be.an("array");
+  });
+  test("capturo UUID de SITUACION", function() {
+    expect(bru.getVar("catSituacion")).to.be.a("string");
+  });
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Mi bitacora por rango
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/bitacora/mia/rango?desde=2026-06-01&hasta=2026-06-30
+  body: none
+  auth: bearer
+}
+
+params:query {
+  desde: 2026-06-01
+  hasta: 2026-06-30
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("devuelve lista", function() {
+    expect(res.body).to.be.an("array");
+  });
+}

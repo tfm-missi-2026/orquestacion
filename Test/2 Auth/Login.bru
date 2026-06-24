@@ -1,0 +1,33 @@
+meta {
+  name: Login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{tfm-api-gateway-local}}/api/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "admin@srp.local",
+    "contrasenia": "Admin123"
+  }
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setVar("token", res.body.tokenAcceso);
+  }
+}
+
+tests {
+  test("login correcto 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("devuelve token", function() {
+    expect(res.body.tokenAcceso).to.be.a("string");
+  });
+}

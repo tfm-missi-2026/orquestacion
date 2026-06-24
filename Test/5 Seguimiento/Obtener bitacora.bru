@@ -1,0 +1,24 @@
+meta {
+  name: Obtener bitacora
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/bitacora/{{bitacoraId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("es la entrada creada", function() {
+    expect(res.body.id).to.equal(bru.getVar("bitacoraId"));
+  });
+}

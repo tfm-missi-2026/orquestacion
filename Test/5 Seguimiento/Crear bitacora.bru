@@ -1,0 +1,41 @@
+meta {
+  name: Crear bitacora
+  type: http
+  seq: 12
+}
+
+post {
+  url: {{tfm-api-gateway-local}}/api/bitacora
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "fecha": "2026-06-02",
+    "horaInicio": "08:00:00",
+    "horaFin": "12:00:00",
+    "descripcion": "Trabajo en tarea QA",
+    "asignacionId": "{{asignacionId}}",
+    "actividadId": null
+  }
+}
+
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("bitacoraId", res.body.id);
+  }
+}
+
+tests {
+  test("creada (200/201)", function() {
+    expect(res.status).to.be.oneOf([200, 201]);
+  });
+  test("devuelve id", function() {
+    expect(res.body.id).to.be.a("string");
+  });
+}

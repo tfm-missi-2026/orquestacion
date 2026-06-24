@@ -1,0 +1,27 @@
+meta {
+  name: Eliminar rol
+  type: http
+  seq: 9
+}
+
+delete {
+  url: {{tfm-api-gateway-local}}/api/roles/{{createdRolId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de pruebas QA"
+  }
+}
+
+tests {
+  test("eliminado (200/204)", function() {
+    expect(res.status).to.be.oneOf([200, 204]);
+  });
+}

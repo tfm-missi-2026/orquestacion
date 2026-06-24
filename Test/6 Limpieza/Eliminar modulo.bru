@@ -1,0 +1,27 @@
+meta {
+  name: Eliminar modulo
+  type: http
+  seq: 10
+}
+
+delete {
+  url: {{tfm-api-gateway-local}}/api/modulos/{{createdModuloId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de pruebas QA"
+  }
+}
+
+tests {
+  test("eliminado (200/204)", function() {
+    expect(res.status).to.be.oneOf([200, 204]);
+  });
+}

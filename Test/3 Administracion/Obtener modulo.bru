@@ -1,0 +1,24 @@
+meta {
+  name: Obtener modulo
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/modulos/{{modInicio}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("es el modulo INICIO", function() {
+    expect(res.body.codigo).to.equal("INICIO");
+  });
+}

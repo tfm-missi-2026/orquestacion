@@ -1,0 +1,28 @@
+meta {
+  name: Resolver variacion
+  type: http
+  seq: 27
+}
+
+put {
+  url: {{tfm-api-gateway-local}}/api/variaciones/{{variacionId}}/resolver
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "situacionId": "{{catSituacionVariacionAprobada}}",
+    "observacionResolucion": "Aprobada por la coleccion Bruno"
+  }
+}
+
+tests {
+  test("resuelta 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

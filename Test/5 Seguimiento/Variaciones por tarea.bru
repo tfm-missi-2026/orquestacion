@@ -1,0 +1,24 @@
+meta {
+  name: Variaciones por tarea
+  type: http
+  seq: 25
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/variaciones/por-tarea/{{tareaId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("incluye la variacion creada", function() {
+    expect(res.body.some(v => v.id === bru.getVar("variacionId"))).to.be.true;
+  });
+}

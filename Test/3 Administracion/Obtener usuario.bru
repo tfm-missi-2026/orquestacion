@@ -1,0 +1,24 @@
+meta {
+  name: Obtener usuario
+  type: http
+  seq: 20
+}
+
+get {
+  url: {{tfm-api-gateway-local}}/api/usuarios/{{createdUsuarioId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("es el usuario creado", function() {
+    expect(res.body.email).to.equal("qa.bruno@srp.local");
+  });
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Actualizar rol
+  type: http
+  seq: 9
+}
+
+put {
+  url: {{tfm-api-gateway-local}}/api/roles/{{createdRolId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "nombre": "Rol de prueba QA (editado)",
+    "descripcion": "Actualizado por la coleccion Bruno",
+    "estado": 1
+  }
+}
+
+tests {
+  test("actualizado 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

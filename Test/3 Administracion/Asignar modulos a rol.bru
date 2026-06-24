@@ -1,0 +1,30 @@
+meta {
+  name: Asignar modulos a rol
+  type: http
+  seq: 11
+}
+
+put {
+  url: {{tfm-api-gateway-local}}/api/roles/{{createdRolId}}/modulos
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "moduloIds": [
+      "{{modInicio}}",
+      "{{modBitacora}}"
+    ]
+  }
+}
+
+tests {
+  test("asignacion 200", function() {
+    expect(res.status).to.equal(200);
+  });
+}

@@ -1,0 +1,27 @@
+meta {
+  name: Eliminar tarea
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{tfm-api-gateway-local}}/api/tareas/{{tareaId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de pruebas QA"
+  }
+}
+
+tests {
+  test("eliminada (200/204)", function() {
+    expect(res.status).to.be.oneOf([200, 204]);
+  });
+}

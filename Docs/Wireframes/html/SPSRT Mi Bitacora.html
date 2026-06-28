@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Mi bitácora</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+  .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .seg button {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px;
+    padding: 5px 12px; cursor: pointer; color: var(--line-soft); white-space: nowrap;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .seg button.active { background: var(--line); color: var(--paper); }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* ---- view toggle ---- */
+  .viewtoggle { display:inline-flex; flex:none; border:2px solid var(--line); border-radius:10px 4px 11px 4px / 4px 10px 4px 11px; overflow:hidden; box-shadow:2px 2px 0 var(--line); }
+  .viewtoggle button { font-family:'Kalam',cursive; font-weight:700; font-size:13px; padding:7px 16px; cursor:pointer; background:var(--paper); color:var(--line-soft); border:none; border-right:2px solid var(--line); white-space:nowrap; }
+  .viewtoggle button:last-child { border-right:none; }
+  .viewtoggle button.on { background:var(--line); color:var(--paper); }
+
+  /* date stepper */
+  .datestep { display:inline-flex; flex:none; align-items:center; gap:0; border:2px solid var(--line); border-radius:10px 4px 11px 4px / 4px 10px 4px 11px; overflow:hidden; box-shadow:2px 2px 0 var(--line); }
+  .datestep .arrow { font-family:'Caveat',cursive; font-weight:700; font-size:22px; padding:4px 13px; cursor:pointer; background:var(--paper); line-height:1; }
+  .datestep .arrow:first-child { border-right:2px solid var(--line); }
+  .datestep .arrow:last-child { border-left:2px solid var(--line); }
+  .datestep .dlabel { padding:0 18px; text-align:center; }
+  .datestep .dlabel .dnum { font-family:'Caveat',cursive; font-weight:700; font-size:19px; line-height:1.05; white-space:nowrap; }
+  .datestep .dlabel .ddow { font-family:'Kalam',cursive; font-size:11px; color:var(--line-soft); }
+
+  /* ---- timeline of blocks ---- */
+  .timeline { display:flex; flex-direction:column; }
+  .block {
+    display:flex; gap:16px; align-items:stretch;
+    padding:14px 0; border-bottom:1.5px dashed var(--line-faint);
+  }
+  .block:last-child { border-bottom:none; }
+  .btime { width:130px; flex:none; font-family:'Caveat',cursive; font-weight:700; font-size:19px; white-space:nowrap; padding-top:2px; }
+  .btime .tdur { display:block; font-family:'Kalam',cursive; font-size:12px; font-weight:700; color:var(--line-soft); margin-top:2px; }
+  .brail { width:0; border-left:2px solid var(--line-mid); position:relative; }
+  .brail::before { content:''; position:absolute; top:4px; left:-6px; width:10px; height:10px; border:2px solid var(--line); border-radius:50%; background:var(--paper); }
+  .bbody { flex:1; }
+  .bkind { font-family:'Kalam',cursive; font-weight:700; font-size:12px; white-space:nowrap; padding:3px 11px; border-radius:8px 3px 7px 2px; display:inline-flex; align-items:center; gap:6px; border:2px solid var(--line); }
+  .bkind.tarea { background:var(--paper); }
+  .bkind.tarea::before { content:'▣'; font-size:11px; }
+  .bkind.actividad { background:repeating-linear-gradient(45deg,var(--paper) 0 6px,var(--paper-alt) 6px 7px); }
+  .bkind.actividad::before { content:'◇'; font-size:11px; }
+  .bdesc { font-family:'Kalam',cursive; font-size:14px; margin-top:8px; max-width:60ch; }
+  .bacts { display:flex; gap:10px; align-items:flex-start; white-space:nowrap; }
+  .bacts a { font-family:'Kalam',cursive; font-size:12px; font-weight:700; color:var(--line); text-decoration:underline; cursor:pointer; }
+  .bacts .sep { color:var(--line-mid); }
+  .bacts .danger { color:var(--line-soft); }
+
+  .codechip { font-family: monospace; font-weight: 700; font-size: 13px; letter-spacing: .02em; border: 2px solid var(--line); border-radius: 8px 3px 7px 2px; padding: 4px 11px; display: inline-block; background: var(--paper); }
+  .btn { white-space: nowrap; }
+  .h-title { white-space: nowrap; }
+
+  /* ---- empty state ---- */
+  .empty {
+    text-align: center; padding: 60px 20px;
+    border: 2px dashed var(--line-mid);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    background: var(--paper);
+  }
+  .empty .ph { margin: 0 auto 16px; }
+
+  /* ---- modal ---- */
+  .scrim {
+    position: fixed; inset: 0; z-index: 80;
+    background: repeating-linear-gradient(45deg, rgba(26,26,26,0.12) 0 7px, rgba(26,26,26,0.18) 7px 8px);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 56px 20px 40px; overflow: auto;
+  }
+  .scrim.show { display: flex; }
+  .modal {
+    width: 100%; max-width: 540px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    box-shadow: 5px 6px 0 var(--line);
+    padding: 22px 26px 24px; position: relative;
+  }
+  .modal-x {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 24px;
+    cursor: pointer; line-height: 1;
+  }
+  .grid3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; }
+  .formrow { margin-bottom: 14px; }
+  .dropdown { white-space: nowrap; }
+
+  /* exclusive choice */
+  .choice { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .choice-opt {
+    display:flex; align-items:center; gap:11px; cursor:pointer;
+    border:2px solid var(--line-mid); border-radius:10px 4px 11px 4px / 4px 10px 4px 11px;
+    padding:12px 14px; background:var(--paper);
+  }
+  .choice-opt.on { border:2px solid var(--line); box-shadow:2px 2px 0 var(--line); background:var(--paper-alt); }
+  .choice-opt .cname { font-family:'Kalam',cursive; font-weight:700; font-size:14px; }
+  .choice-panel { display:none; margin-top:12px; }
+  .choice-panel.show { display:block; }
+  .infonote {
+    display:flex; gap:10px; align-items:flex-start;
+    border:2px dashed var(--line); border-radius:10px 4px 12px 4px / 4px 10px 4px 12px;
+    background:var(--paper-alt); padding:11px 14px; margin:6px 0 16px;
+  }
+  .infonote .bang { font-family:'Caveat',cursive; font-weight:700; font-size:20px; line-height:1; border:2px solid var(--line); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; flex:none; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE SWITCHER ============ -->
+<div class="statebar">
+  <span class="label">Estado del boceto:</span>
+  <div class="seg">
+    <button class="active" data-state="dia" onclick="setState('dia')">Mi bitácora (día)</button>
+    <button data-state="registrar" onclick="setState('registrar')">Modal · Registrar bloque</button>
+    <button data-state="vacio" onclick="setState('vacio')">Estado vacío</button>
+  </div>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">RF-08 · CU-06 · HU-05 — Registrar dedicación real · Actor: A3 Recurso Técnico (RECURSO_TECNICO)</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Mi bitácora">
+
+  <!-- SIDEBAR (short — Recurso Técnico) -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Dashboard</span><span class="pendiente">pendiente</span></a>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Seguimiento</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Avance</span><span class="pendiente">pendiente</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      El menú es más corto: el rol Recurso Técnico solo accede a estos módulos.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">A. Quispe</div>
+        <div class="tiny">Recurso Técnico</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Ana Quispe</div>
+          <div class="tiny">Recurso Técnico</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- module header -->
+      <div class="row between mb-2" style="align-items:flex-end;">
+        <div>
+          <div class="crumb" style="white-space:nowrap;">Seguimiento › <b style="color:var(--line);">Mi bitácora</b></div>
+          <div class="h-title" style="margin-top:2px;">Mi bitácora</div>
+        </div>
+        <button class="btn btn-primary" onclick="setState('registrar')">+ Registrar bloque</button>
+      </div>
+      <div class="small mb-5" style="color:var(--line-soft); max-width:80ch;">Registra tu dedicación real en <b>bloques</b> de tiempo. Cada bloque es trabajo en una <b>tarea</b> o participación en una <b>actividad</b> — nunca ambos.</div>
+
+      <!-- view toggle + date stepper -->
+      <div class="row gap-4 mb-5" style="flex-wrap:wrap; align-items:center;">
+        <div class="viewtoggle">
+          <button class="on">Por día</button>
+          <button>Por rango</button>
+        </div>
+        <div class="datestep">
+          <span class="arrow">‹</span>
+          <div class="dlabel">
+            <div class="dnum">02/06/2026</div>
+            <div class="ddow">martes</div>
+          </div>
+          <span class="arrow">›</span>
+        </div>
+        <div class="flex-1"></div>
+        <span class="tiny">Hoy: 12/06/2026</span>
+      </div>
+
+      <!-- ===== TIMELINE ===== -->
+      <div id="data-wrap" class="box p-5">
+        <div class="row between mb-3" style="align-items:center;">
+          <div class="label" style="margin:0;">BLOQUES DEL DÍA · martes 02/06/2026</div>
+          <span class="tiny">4 bloques</span>
+        </div>
+        <div class="timeline" id="timeline"></div>
+
+        <div class="row between mt-4" style="border-top:2px solid var(--line); padding-top:14px;">
+          <span class="tiny">Dedicación real del día = suma de los bloques</span>
+          <div class="row gap-2" style="align-items:center;">
+            <span class="tiny">Total del día:</span>
+            <span class="codechip">8.5 h</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY STATE ===== -->
+      <div id="empty-wrap" class="empty" style="display:none;">
+        <div class="ph square" style="width:54px; height:54px;"></div>
+        <div class="h-section">No registraste bloques este día.</div>
+        <div class="small mt-2">Pulsa + Registrar bloque para empezar.</div>
+        <div class="row center gap-2 mt-4">
+          <button class="btn btn-sm btn-primary" onclick="setState('registrar')">+ Registrar bloque</button>
+        </div>
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:540px;">
+        Un bloque vincula a una <b>tarea</b> (vía tu asignación) o a una <b>actividad</b> (reunión, capacitación, soporte), nunca a las dos. La suma de bloques alimenta tus horas registradas en Carga del equipo.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL · REGISTRAR BLOQUE ============ -->
+<div class="scrim" id="scrim-registrar">
+  <div class="modal">
+    <span class="modal-x" onclick="setState('dia')">✕</span>
+    <div class="h-title" style="font-size:26px; margin-bottom:4px; white-space:normal;">Registrar bloque</div>
+    <div class="small mb-4">Un tramo de tu jornada vinculado a una tarea o a una actividad.</div>
+
+    <div class="grid3">
+      <div class="formrow">
+        <div class="label mb-2">FECHA</div>
+        <input class="input" value="02/06/2026" />
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">HORA INICIO</div>
+        <input class="input" placeholder="hh:mm" value="14:00" />
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">HORA FIN</div>
+        <input class="input" placeholder="hh:mm" value="16:30" />
+      </div>
+    </div>
+
+    <div class="label mb-2">¿QUÉ REGISTRAS?</div>
+    <div class="choice">
+      <label class="choice-opt on" id="opt-tarea" onclick="pickKind('tarea')">
+        <span class="radio checked"></span>
+        <span class="cname">Trabajo en tarea</span>
+      </label>
+      <label class="choice-opt" id="opt-actividad" onclick="pickKind('actividad')">
+        <span class="radio"></span>
+        <span class="cname">Actividad</span>
+      </label>
+    </div>
+
+    <div class="infonote">
+      <span class="bang">i</span>
+      <span style="font-size:13px;">Un bloque es de tarea <b>O</b> de actividad, no ambos.</span>
+    </div>
+
+    <!-- panel: tarea -->
+    <div class="choice-panel show" id="panel-tarea">
+      <div class="formrow">
+        <div class="label mb-2">MIS TAREAS ASIGNADAS</div>
+        <div class="dropdown stretch"><span>Implementar validación de RUC <span style="color:var(--line-soft);">· #REQ-014</span></span></div>
+        <div class="tiny mt-2">Solo tareas con asignación vigente para ti.</div>
+      </div>
+    </div>
+
+    <!-- panel: actividad -->
+    <div class="choice-panel" id="panel-actividad">
+      <div class="formrow">
+        <div class="label mb-2">ACTIVIDAD</div>
+        <div class="dropdown stretch"><span>Reunión</span></div>
+        <div class="tiny mt-2">Catálogo: Reunión · Capacitación · Soporte · Otro.</div>
+      </div>
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">DESCRIPCIÓN</div>
+      <textarea class="input" rows="2" placeholder="¿Qué hiciste en este bloque?"></textarea>
+    </div>
+
+    <div class="row end gap-2 mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('dia')">Cancelar</button>
+      <button class="btn btn-primary" onclick="setState('dia')">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const BLOCKS = [
+    { ini:'08:30', fin:'09:00', dur:'0.5 h', kind:'actividad', vinc:'Reunión de planificación diaria', desc:'Daily del equipo de SIGTRAMITES; revisión de pendientes.' },
+    { ini:'09:00', fin:'12:00', dur:'3 h',   kind:'tarea',     vinc:'Implementar validación de RUC',     ref:'#REQ-014', desc:'Codificación de la regla de validación y pruebas unitarias.' },
+    { ini:'13:00', fin:'15:00', dur:'2 h',   kind:'tarea',     vinc:'Pruebas con casos reales',          ref:'#REQ-014', desc:'Ejecución de casos con expedientes de muestra.' },
+    { ini:'15:00', fin:'18:00', dur:'3 h',   kind:'actividad', vinc:'Soporte a Mesa de Ayuda',           desc:'Atención de consultas sobre el módulo de trámites.' },
+  ];
+
+  function blockHTML(b) {
+    const kindLabel = b.kind === 'tarea'
+      ? `Tarea: ${b.vinc}` + (b.ref ? ` <span style="font-family:monospace; font-size:11px; color:var(--line-soft);">· ${b.ref}</span>` : '')
+      : `Actividad: ${b.vinc}`;
+    return `
+      <div class="block">
+        <div class="btime">${b.ini} – ${b.fin}<span class="tdur">${b.dur}</span></div>
+        <div class="brail"></div>
+        <div class="bbody">
+          <span class="bkind ${b.kind}">${kindLabel}</span>
+          <div class="bdesc">${b.desc}</div>
+        </div>
+        <div class="bacts">
+          <a onclick="setState('registrar')">Editar</a><span class="sep">·</span>
+          <a class="danger">Eliminar</a>
+        </div>
+      </div>`;
+  }
+  document.getElementById('timeline').innerHTML = BLOCKS.map(blockHTML).join('');
+
+  function pickKind(k) {
+    document.getElementById('opt-tarea').classList.toggle('on', k === 'tarea');
+    document.getElementById('opt-actividad').classList.toggle('on', k === 'actividad');
+    document.querySelector('#opt-tarea .radio').classList.toggle('checked', k === 'tarea');
+    document.querySelector('#opt-actividad .radio').classList.toggle('checked', k === 'actividad');
+    document.getElementById('panel-tarea').classList.toggle('show', k === 'tarea');
+    document.getElementById('panel-actividad').classList.toggle('show', k === 'actividad');
+  }
+
+  function setState(s) {
+    document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+    document.getElementById('scrim-registrar').classList.toggle('show', s === 'registrar');
+    document.getElementById('data-wrap').style.display = (s === 'vacio') ? 'none' : '';
+    document.getElementById('empty-wrap').style.display = (s === 'vacio') ? 'block' : 'none';
+  }
+</script>
+
+</body>
+</html>

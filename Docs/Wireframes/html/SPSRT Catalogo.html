@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Catálogo</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+  .seg { display: flex; gap: 6px; }
+  .seg button {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px;
+    padding: 5px 12px; cursor: pointer; color: var(--line-soft); white-space: nowrap;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .seg button.active { background: var(--line); color: var(--paper); }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* ---- catalog two-pane ---- */
+  .cat-grid { display: grid; grid-template-columns: 300px 1fr; gap: 22px; align-items: start; }
+
+  .group-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 14px; cursor: pointer;
+    border: 2px solid var(--line);
+    border-radius: 11px 4px 12px 4px / 4px 11px 4px 12px;
+    background: var(--paper); margin-bottom: 10px;
+  }
+  .group-item:hover { background: var(--paper-alt); }
+  .group-item.sel { box-shadow: 3px 3px 0 var(--line); background: var(--paper-alt); }
+  .group-item.sel::before {
+    content: ''; width: 5px; align-self: stretch; margin: -2px 4px -2px -4px;
+    background: var(--line); border-radius: 3px;
+  }
+  .group-item .gname { font-weight: 700; font-size: 15px; font-family:'Kalam',cursive; }
+  .group-item .gmeta { font-size: 11px; color: var(--line-soft); }
+
+  /* ---- items table ---- */
+  .tbl td { font-family: 'Kalam', cursive; }
+  .est-activo::before   { content:'●'; font-size:9px; margin-right:5px; }
+  .est-inactivo::before { content:'○'; font-size:9px; margin-right:5px; }
+  .acts { display: flex; gap: 10px; align-items: center; white-space: nowrap; justify-content: flex-end; }
+  .acts a { font-family:'Kalam',cursive; font-size:12px; font-weight:700; color:var(--line); text-decoration: underline; cursor: pointer; }
+  .acts .sep { color: var(--line-mid); }
+  .acts .danger { color: var(--line-soft); }
+  .ord {
+    display:inline-flex; align-items:center; justify-content:center;
+    width: 26px; height: 26px; font-family:'Caveat',cursive; font-weight:700; font-size:17px;
+    border: 2px solid var(--line-mid); border-radius: 7px 3px 6px 2px;
+  }
+
+  .btn { white-space: nowrap; }
+  .cat-grid .h-title { white-space: nowrap; }
+  .dropdown { white-space: nowrap; }
+
+  /* ---- modal ---- */
+  .scrim {
+    position: fixed; inset: 0; z-index: 80;
+    background: repeating-linear-gradient(45deg, rgba(26,26,26,0.12) 0 7px, rgba(26,26,26,0.18) 7px 8px);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 70px 20px 40px; overflow: auto;
+  }
+  .scrim.show { display: flex; }
+  .modal {
+    width: 100%; max-width: 520px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    box-shadow: 5px 6px 0 var(--line);
+    padding: 22px 26px 24px; position: relative;
+  }
+  .modal-x {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 24px;
+    cursor: pointer; line-height: 1;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .formrow { margin-bottom: 14px; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE SWITCHER ============ -->
+<div class="statebar">
+  <span class="label">Estado del boceto:</span>
+  <div class="seg">
+    <button class="active" data-state="lista" onclick="setState('lista')">Catálogo</button>
+    <button data-state="nuevo" onclick="setState('nuevo')">Modal · Nuevo / Editar ítem</button>
+  </div>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">Soporte de administración · RF-02 · Actor: A4 Administrador</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Catálogo">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Administración · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">ADMINISTRACIÓN</div>
+      <a><span class="ico sm"></span><span class="flex-1">Usuarios</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Roles</span></a>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Catálogo</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Módulos</span><span class="pendiente">pendiente</span></a>
+      <div class="nav-h">CUENTA</div>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Configuración</span><span class="pendiente">pendiente</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      Los ítems atenuados aún no tienen pantalla diseñada.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">R. Salazar</div>
+        <div class="tiny">Administrador</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Ricardo Salazar</div>
+          <div class="tiny">Administrador</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- module header -->
+      <div class="row between mb-2" style="align-items:flex-end;">
+        <div>
+          <div class="crumb">Administración › <b style="color:var(--line);">Catálogo</b></div>
+          <div class="h-title" style="margin-top:2px; white-space:nowrap;">Catálogo</div>
+        </div>
+        <button class="btn btn-primary" onclick="setState('nuevo')">+ Nuevo ítem</button>
+      </div>
+      <div class="small mb-5" style="color:var(--line-soft); max-width:70ch;">Tabla paramétrica unificada. Cada grupo alimenta los desplegables del sistema (formularios de proyectos, variaciones, etc.).</div>
+
+      <!-- two-pane -->
+      <div class="cat-grid">
+
+        <!-- LEFT: groups -->
+        <div>
+          <div class="label mb-2">GRUPOS DEL CATÁLOGO</div>
+          <div id="group-list"></div>
+          <button class="btn btn-sm stretch center mt-2" style="justify-content:center; border-style:dashed;">+ Nuevo grupo</button>
+        </div>
+
+        <!-- RIGHT: items of selected group -->
+        <div class="box p-4">
+          <div class="row between mb-4" style="align-items:flex-end;">
+            <div>
+              <div class="h-section" id="grp-name" style="font-size:22px;">Tipo de actividad</div>
+              <div class="tiny mt-1" id="grp-meta">Grupo TACT · alimenta el desplegable “Actividad” en Seguimiento</div>
+            </div>
+            <span class="pill pill-soft" id="grp-code">TACT</span>
+          </div>
+
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th style="width:78px;">Código</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th style="width:66px; text-align:center;">Orden</th>
+                <th style="width:96px;">Estado</th>
+                <th style="text-align:right;">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+
+          <div class="row between mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:12px;">
+            <span class="tiny" id="grp-count">4 ítems · 4 activos</span>
+            <span class="tiny">Arrastra las filas para reordenar · el Orden define la posición en el desplegable.</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL · NUEVO / EDITAR ÍTEM ============ -->
+<div class="scrim" id="scrim-nuevo">
+  <div class="modal">
+    <span class="modal-x" onclick="setState('lista')">✕</span>
+    <div class="h-title" style="font-size:26px; margin-bottom:4px;">Nuevo ítem</div>
+    <div class="small mb-4">Un ítem pertenece a un grupo y aparece en su desplegable según el orden.</div>
+
+    <div class="formrow">
+      <div class="label mb-2">GRUPO</div>
+      <div class="dropdown stretch"><span>Tipo de actividad</span></div>
+    </div>
+
+    <div class="grid2">
+      <div class="formrow">
+        <div class="label mb-2">CÓDIGO</div>
+        <input class="input" placeholder="p. ej. REU — corto, único" />
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">ORDEN</div>
+        <input class="input" placeholder="p. ej. 1" />
+      </div>
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">NOMBRE</div>
+      <input class="input" placeholder="p. ej. Reunión" />
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">DESCRIPCIÓN</div>
+      <textarea class="input" rows="2" placeholder="Texto de ayuda opcional para el administrador."></textarea>
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">ESTADO</div>
+      <div class="row gap-4" style="padding-top:2px;">
+        <label class="row gap-2" style="cursor:pointer;"><span class="radio checked"></span><span style="font-size:14px;">Activo</span></label>
+        <label class="row gap-2" style="cursor:pointer;"><span class="radio"></span><span style="font-size:14px;">Inactivo</span></label>
+      </div>
+      <div class="tiny mt-2">Los ítems inactivos no aparecen en los desplegables, pero se conservan en registros antiguos.</div>
+    </div>
+
+    <div class="row end gap-2 mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('lista')">Cancelar</button>
+      <button class="btn btn-primary" onclick="setState('lista')">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const GROUPS = [
+    { code:'TACT', name:'Tipo de actividad', feeds:'alimenta “Actividad” en Seguimiento',
+      items:[
+        { c:'REU', n:'Reunión',      d:'Coordinación o seguimiento con el equipo.',  o:1, e:'Activo' },
+        { c:'CAP', n:'Capacitación', d:'Formación interna o externa.',               o:2, e:'Activo' },
+        { c:'SOP', n:'Soporte',      d:'Atención de incidencias y soporte técnico.', o:3, e:'Activo' },
+        { c:'OTR', n:'Otro',         d:'Actividad no clasificada.',                  o:4, e:'Activo' },
+      ]},
+    { code:'MOD', name:'Modalidad', feeds:'alimenta la modalidad de actividad en Seguimiento',
+      items:[
+        { c:'PRE', n:'Presencial', d:'Actividad realizada en sede.',           o:1, e:'Activo' },
+        { c:'VIR', n:'Virtual',    d:'Actividad realizada de forma remota.',   o:2, e:'Activo' },
+        { c:'HIB', n:'Híbrida',    d:'Combinación presencial y virtual.',      o:3, e:'Activo' },
+      ]},
+    { code:'TVAR', name:'Tipo de variación', feeds:'alimenta “Tipo” en Variaciones',
+      items:[
+        { c:'ALC', n:'Alcance',  d:'Cambio en el alcance del subproyecto.', o:1, e:'Activo' },
+        { c:'PLZ', n:'Plazo',    d:'Cambio en fechas o cronograma.',        o:2, e:'Activo' },
+        { c:'REC', n:'Recursos', d:'Cambio en recursos asignados.',         o:3, e:'Activo' },
+      ]},
+    { code:'SVAR', name:'Situación de variación', feeds:'alimenta “Situación” en Variaciones',
+      items:[
+        { c:'PEN', n:'Pendiente', d:'Variación registrada, a la espera de decisión.', o:1, e:'Activo' },
+        { c:'APR', n:'Aprobada',  d:'Aceptada y aplicada al plan.',                   o:2, e:'Activo' },
+        { c:'REC', n:'Rechazada', d:'No procede.',                                    o:3, e:'Activo' },
+      ]},
+    { code:'TSUB', name:'Tipo de subproyecto', feeds:'alimenta “Tipo” en Subproyectos',
+      items:[
+        { c:'INC', n:'Incidencia',        d:'Falla o error a corregir sobre el sistema.', o:1, e:'Activo' },
+        { c:'REQ', n:'Requerimiento',     d:'Nueva necesidad funcional solicitada.',      o:2, e:'Activo' },
+        { c:'DMO', n:'Desarrollo modular', d:'Construcción de un módulo nuevo.',          o:3, e:'Activo' },
+      ]},
+    { code:'PRIO', name:'Prioridad', feeds:'alimenta “Prioridad” en Subproyectos',
+      items:[
+        { c:'ALT', n:'Alta',  d:'Atención urgente.',          o:1, e:'Activo' },
+        { c:'MED', n:'Media', d:'Atención en plazo normal.',  o:2, e:'Activo' },
+        { c:'BAJ', n:'Baja',  d:'Puede esperar.',             o:3, e:'Activo' },
+      ]},
+    { code:'SIT', name:'Situación', feeds:'situación derivada de subproyectos y tareas',
+      items:[
+        { c:'PEN', n:'Pendiente',   d:'Sin iniciar.',                       o:1, e:'Activo' },
+        { c:'ATE', n:'En atención', d:'En ejecución por el recurso técnico.', o:2, e:'Activo' },
+        { c:'CUL', n:'Culminado',   d:'Trabajo terminado.',                 o:3, e:'Activo' },
+        { c:'RCH', n:'Rechazado',   d:'Descartado; no se ejecutará.',       o:4, e:'Activo' },
+      ]},
+  ];
+
+  let selected = 0;
+
+  function renderGroups() {
+    document.getElementById('group-list').innerHTML = GROUPS.map((g,i) => `
+      <div class="group-item ${i===selected?'sel':''}" onclick="selectGroup(${i})">
+        <span class="pill ${i===selected?'pill-dark':'pill-soft'}">${g.code}</span>
+        <div class="flex-1">
+          <div class="gname">${g.name}</div>
+          <div class="gmeta">${g.items.length} ítems</div>
+        </div>
+        ${i===selected?'<span style="font-size:13px;">▸</span>':''}
+      </div>`).join('');
+  }
+
+  function renderItems() {
+    const g = GROUPS[selected];
+    document.getElementById('grp-name').textContent = g.name;
+    document.getElementById('grp-code').textContent = g.code;
+    document.getElementById('grp-meta').textContent = 'Grupo ' + g.code + ' · ' + g.feeds;
+    const activos = g.items.filter(i => i.e === 'Activo').length;
+    document.getElementById('grp-count').textContent = g.items.length + ' ítems · ' + activos + ' activos';
+    document.getElementById('tbody').innerHTML = g.items.map(it => {
+      const estClass = it.e === 'Activo' ? 'est-activo' : 'est-inactivo';
+      const estPill  = it.e === 'Activo' ? 'pill-dark' : 'pill-soft';
+      return `
+        <tr>
+          <td style="font-family:monospace; font-size:12px;">${it.c}</td>
+          <td><b style="font-size:14px;">${it.n}</b></td>
+          <td style="color:var(--line-soft); font-size:13px;">${it.d}</td>
+          <td style="text-align:center;"><span class="ord">${it.o}</span></td>
+          <td><span class="pill ${estPill} ${estClass}">${it.e}</span></td>
+          <td>
+            <div class="acts">
+              <a onclick="setState('nuevo')">Editar</a><span class="sep">·</span>
+              <a class="danger">Dar de baja</a>
+            </div>
+          </td>
+        </tr>`;
+    }).join('');
+  }
+
+  function selectGroup(i){ selected = i; renderGroups(); renderItems(); }
+
+  function setState(s) {
+    document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+    document.getElementById('scrim-nuevo').classList.toggle('show', s === 'nuevo');
+  }
+
+  renderGroups(); renderItems();
+</script>
+
+</body>
+</html>

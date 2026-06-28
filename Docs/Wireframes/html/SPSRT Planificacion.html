@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Planificación</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+  .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .seg button {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px;
+    padding: 5px 12px; cursor: pointer; color: var(--line-soft); white-space: nowrap;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .seg button.active { background: var(--line); color: var(--paper); }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* ---- table ---- */
+  .tbl td { font-family: 'Kalam', cursive; vertical-align: top; }
+  .res { display:flex; align-items:center; gap:9px; }
+  .tk { font-family: monospace; font-weight:700; font-size:12px; white-space:nowrap; }
+  .subline { font-family:'Kalam',cursive; font-size:11px; color:var(--line-soft); margin-top:2px; }
+  .hrs { font-family:'Caveat',cursive; font-weight:700; font-size:19px; white-space:nowrap; }
+  .acts { display: flex; gap: 10px; align-items: center; white-space: nowrap; justify-content: flex-end; }
+  .acts a { font-family:'Kalam',cursive; font-size:12px; font-weight:700; color:var(--line); text-decoration: underline; cursor: pointer; }
+  .acts .sep { color: var(--line-mid); }
+  .acts .danger { color: var(--line-soft); }
+
+  .codechip {
+    font-family: monospace; font-weight: 700; font-size: 14px; letter-spacing: .02em;
+    border: 2px solid var(--line); border-radius: 8px 3px 7px 2px;
+    padding: 4px 11px; display: inline-block; background: var(--paper);
+  }
+  .btn { white-space: nowrap; }
+  .h-title { white-space: nowrap; }
+
+  /* ---- empty state ---- */
+  .empty {
+    text-align: center; padding: 64px 20px;
+    border: 2px dashed var(--line-mid);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    background: var(--paper);
+  }
+  .empty .ph { margin: 0 auto 16px; }
+
+  /* ---- modal ---- */
+  .scrim {
+    position: fixed; inset: 0; z-index: 80;
+    background: repeating-linear-gradient(45deg, rgba(26,26,26,0.12) 0 7px, rgba(26,26,26,0.18) 7px 8px);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 64px 20px 40px; overflow: auto;
+  }
+  .scrim.show { display: flex; }
+  .modal {
+    width: 100%; max-width: 540px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    box-shadow: 5px 6px 0 var(--line);
+    padding: 22px 26px 24px; position: relative;
+  }
+  .modal.narrow { max-width: 460px; }
+  .modal-x {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 24px;
+    cursor: pointer; line-height: 1;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .formrow { margin-bottom: 14px; }
+  .dropdown { white-space: nowrap; }
+  .infonote {
+    display:flex; gap:10px; align-items:flex-start;
+    border:2px dashed var(--line); border-radius:10px 4px 12px 4px / 4px 10px 4px 12px;
+    background:var(--paper-alt); padding:11px 14px; margin-bottom:16px;
+  }
+  .infonote .bang { font-family:'Caveat',cursive; font-weight:700; font-size:20px; line-height:1; border:2px solid var(--line); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; flex:none; }
+
+  /* ---- overload dialog ---- */
+  .warnhead {
+    display:flex; gap:12px; align-items:center; margin-bottom:6px;
+  }
+  .warn-ico {
+    width:42px; height:42px; flex:none;
+    border:2px solid var(--line); border-radius:9px 3px 8px 3px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Caveat',cursive; font-weight:700; font-size:30px;
+    background:repeating-linear-gradient(45deg,var(--paper) 0 5px,var(--paper-alt) 5px 6px);
+    transform: rotate(-2deg);
+  }
+  /* capacity bar */
+  .capbar-wrap { margin: 18px 0 8px; }
+  .capbar {
+    position: relative; height: 38px;
+    border: 2px solid var(--line); border-radius: 9px 3px 8px 3px;
+    background: var(--paper); overflow: hidden;
+  }
+  .capseg { position:absolute; top:0; bottom:0; display:flex; align-items:center; justify-content:center; font-family:'Kalam',cursive; font-weight:700; font-size:12px; }
+  .cap-committed { left:0; width:60%; background:var(--paper-alt); border-right:2px solid var(--line-mid); }
+  .cap-new { left:60%; width:40%; background:repeating-linear-gradient(45deg,#D8D4CA 0 6px,#CFCBC0 6px 7px); border-right:2px dashed var(--line); }
+  /* capacity marker line at 40h = 80% of 50h scale */
+  .cap-mark { position:absolute; top:-7px; bottom:-7px; left:80%; width:0; border-left:3px dashed var(--line); z-index:2; }
+  .cap-mark span {
+    position:absolute; top:-22px; left:50%; transform:translateX(-50%);
+    font-family:'Kalam',cursive; font-weight:700; font-size:11px; white-space:nowrap;
+    background:var(--paper); padding:0 5px;
+  }
+  .calc-row {
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-family:'Caveat',cursive; font-size:22px; font-weight:700;
+    padding:12px 0; justify-content:center;
+  }
+  .calc-chip {
+    border:2px solid var(--line); border-radius:8px 3px 7px 2px; padding:4px 14px; background:var(--paper);
+    text-align:center; white-space:nowrap; line-height:1.05;
+  }
+  .calc-chip.over { background:var(--line); color:var(--paper); }
+  .calc-chip small { font-family:'Kalam',cursive; font-size:11px; font-weight:700; display:block; margin-top:-2px; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE SWITCHER ============ -->
+<div class="statebar">
+  <span class="label">Estado del boceto:</span>
+  <div class="seg">
+    <button class="active" data-state="tabla" onclick="setState('tabla')">Asignaciones</button>
+    <button data-state="nueva" onclick="setState('nueva')">Modal · Nueva asignación</button>
+    <button data-state="sobrecarga" onclick="setState('sobrecarga')">Diálogo · Sobrecarga</button>
+    <button data-state="vacio" onclick="setState('vacio')">Estado vacío</button>
+  </div>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">RF-05 · RF-06 · CU-04 · HU-02 — Asignar recurso a tarea · Actor: A2 Líder de Proyecto (GESTOR_PROYECTO)</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Planificación">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Dashboard</span><span class="pendiente">pendiente</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Proyectos</span></a>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Planificación</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Seguimiento</span><span class="pendiente">pendiente</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Carga del equipo</span><span class="pendiente">pendiente</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Avance</span><span class="pendiente">pendiente</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Variaciones</span><span class="pendiente">pendiente</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      Los ítems atenuados aún no tienen pantalla diseñada.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">L. Fernández</div>
+        <div class="tiny">Gestor de Proyecto</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Lucía Fernández</div>
+          <div class="tiny">Gestor de Proyecto</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- module header -->
+      <div class="row between mb-2" style="align-items:flex-end;">
+        <div>
+          <div class="crumb">Operación › <b style="color:var(--line);">Planificación</b></div>
+          <div class="h-title" style="margin-top:2px;">Planificación</div>
+        </div>
+        <button class="btn btn-primary" onclick="setState('nueva')">+ Nueva asignación</button>
+      </div>
+      <div class="small mb-5" style="color:var(--line-soft); max-width:76ch;">Planificar es asignar recursos técnicos a <b>tareas</b> con horas estimadas por periodo. El conjunto de asignaciones establece la <b>línea base</b> del plan.</div>
+
+      <!-- toolbar: project selector + freeze baseline -->
+      <div class="row gap-3 mb-5" style="flex-wrap:wrap; align-items:center;">
+        <div class="row gap-2" style="align-items:center;">
+          <span class="label" style="margin:0;">PROYECTO</span>
+          <div class="dropdown" style="min-width:230px;"><span class="codechip" style="padding:2px 8px; font-size:12px;">SIGTRAMITES</span><span>Sistema de Gestión de Trámites</span></div>
+        </div>
+        <div class="flex-1"></div>
+        <div style="text-align:right;">
+          <button class="btn">❄ Congelar línea base</button>
+          <div class="tiny mt-1" style="max-width:230px;">Fija una foto del plan actual · HU-02</div>
+        </div>
+      </div>
+
+      <!-- ===== TABLE ===== -->
+      <div id="table-wrap" class="box p-4">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th style="width:200px;">Recurso técnico</th>
+              <th>Tarea</th>
+              <th style="width:120px; text-align:center;">Horas planif.</th>
+              <th style="width:240px;">Periodo</th>
+              <th style="text-align:right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+
+        <div class="row between mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:12px;">
+          <span class="tiny">5 asignaciones · 3 recursos técnicos</span>
+          <div class="row gap-2" style="align-items:center;">
+            <span class="tiny">Total horas planificadas del proyecto:</span>
+            <span class="codechip">176 h <span style="font-weight:400; font-size:11px;">≈ 22 jornadas</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY STATE ===== -->
+      <div id="empty-wrap" class="empty" style="display:none;">
+        <div class="ph square" style="width:54px; height:54px;"></div>
+        <div class="h-section">Este proyecto aún no tiene asignaciones.</div>
+        <div class="small mt-2">Crea la primera para iniciar la línea base.</div>
+        <div class="row center gap-2 mt-4">
+          <button class="btn btn-sm btn-primary" onclick="setState('nueva')">+ Nueva asignación</button>
+        </div>
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:560px;">
+        Capacidad del recurso = jornada base <b>8 h/día</b> × días hábiles (L–V) del periodo. Si una asignación supera la capacidad, SPSRT avisa de <b>sobrecarga</b> antes de confirmar (RF-06).
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL · NUEVA ASIGNACIÓN ============ -->
+<div class="scrim" id="scrim-nueva">
+  <div class="modal">
+    <span class="modal-x" onclick="setState('tabla')">✕</span>
+    <div class="h-title" style="font-size:26px; margin-bottom:4px; white-space:normal;">Nueva asignación</div>
+    <div class="small mb-4">Vincula un recurso técnico con una tarea de <b>SIGTRAMITES</b>.</div>
+
+    <div class="formrow">
+      <div class="label mb-2">TAREA</div>
+      <div class="dropdown stretch"><span>Implementar validación de RUC <span style="color:var(--line-soft);">· #REQ-014</span></span></div>
+      <div class="tiny mt-2">Tareas de los subproyectos del proyecto seleccionado.</div>
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">RECURSO TÉCNICO</div>
+      <div class="dropdown stretch"><span>Ana Quispe Rojas</span></div>
+      <div class="tiny mt-2">Solo usuarios con rol Recurso Técnico.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="formrow">
+        <div class="label mb-2">HORAS PLANIFICADAS</div>
+        <input class="input" placeholder="p. ej. 20" />
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">&nbsp;</div>
+        <div class="tiny" style="padding-top:10px;">8 h/día · 20 h ≈ 2.5 jornadas</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="formrow">
+        <div class="label mb-2">FECHA INICIO</div>
+        <input class="input" placeholder="dd/mm/aaaa" />
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">FECHA FIN</div>
+        <input class="input" placeholder="dd/mm/aaaa" />
+      </div>
+    </div>
+
+    <div class="row end gap-2 mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('tabla')">Cancelar</button>
+      <button class="btn btn-primary" onclick="setState('sobrecarga')">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DIALOG · SOBRECARGA (RF-06) ============ -->
+<div class="scrim" id="scrim-sobrecarga">
+  <div class="modal narrow">
+    <span class="modal-x" onclick="setState('tabla')">✕</span>
+    <div class="warnhead">
+      <span class="warn-ico">!</span>
+      <div style="line-height:1.1;">
+        <div class="h-title" style="font-size:23px; white-space:nowrap;">Recurso en sobrecarga</div>
+        <div class="tiny" style="margin-top:3px;">RF-06 · verificación de capacidad</div>
+      </div>
+    </div>
+
+    <div class="small mb-2" style="margin-top:8px;"><b>Ana Quispe</b> quedaría con <b>50 h</b> planificadas frente a <b>40 h</b> de capacidad en el periodo (5 días hábiles × 8 h).</div>
+
+    <!-- capacity bar -->
+    <div class="capbar-wrap">
+      <div class="capbar">
+        <div class="capseg cap-committed">comprometido · 30 h</div>
+        <div class="capseg cap-new">+ esta · 20 h</div>
+        <div class="cap-mark"><span>capacidad 40 h</span></div>
+      </div>
+      <div class="tiny mt-2" style="text-align:center;">Lo que excede la línea de capacidad es sobrecarga.</div>
+    </div>
+
+    <!-- calc breakdown -->
+    <div class="calc-row">
+      <span class="calc-chip">30 h<small>comprometida</small></span>
+      <span>+</span>
+      <span class="calc-chip">20 h<small>esta asignación</small></span>
+      <span>=</span>
+      <span class="calc-chip over">50 h<small>total</small></span>
+      <span style="font-family:'Kalam',cursive; font-size:14px;">vs</span>
+      <span class="calc-chip">40 h<small>capacidad</small></span>
+    </div>
+
+    <div class="row end gap-2 mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('nueva')">Cancelar</button>
+      <button class="btn btn-primary" onclick="setState('tabla')">Confirmar de todas formas</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ASSIGN = [
+    { r:'Ana Quispe Rojas',   ini:'Recurso Técnico', task:'Implementar validación de RUC', sub:'#REQ-014 · Requerimiento', h:20, p1:'26/05/2026', p2:'30/05/2026' },
+    { r:'Ana Quispe Rojas',   ini:'Recurso Técnico', task:'Pruebas con casos reales',      sub:'#REQ-014 · Requerimiento', h:10, p1:'01/06/2026', p2:'03/06/2026' },
+    { r:'Diego Salas Romero', ini:'Recurso Técnico', task:'Módulo de notificaciones por correo', sub:'#DM-018 · Desarrollo modular', h:64, p1:'19/05/2026', p2:'13/06/2026' },
+    { r:'Diego Salas Romero', ini:'Recurso Técnico', task:'Corregir error 500 al adjuntar PDF', sub:'#SD-4821 · Incidencia', h:32, p1:'02/06/2026', p2:'09/06/2026' },
+    { r:'Marco Ríos Peña',    ini:'Recurso Técnico', task:'Optimizar listado de trámites', sub:'#SD-4790 · Incidencia', h:50, p1:'12/05/2026', p2:'23/05/2026' },
+  ];
+
+  function rowHTML(a) {
+    const initials = a.r.split(' ').slice(0,2).map(w=>w[0]).join('');
+    return `
+      <tr>
+        <td>
+          <div class="res">
+            <div class="ph round av-sm" style="flex:none;"></div>
+            <div>
+              <b style="font-size:14px;">${a.r}</b>
+              <div class="subline">${a.ini}</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <b style="font-size:14px;">${a.task}</b>
+          <div class="subline">${a.sub}</div>
+        </td>
+        <td style="text-align:center;"><span class="hrs">${a.h} h</span></td>
+        <td class="tk" style="font-size:12px;">${a.p1} – ${a.p2}</td>
+        <td>
+          <div class="acts">
+            <a onclick="setState('nueva')">Editar</a><span class="sep">·</span>
+            <a class="danger">Quitar</a>
+          </div>
+        </td>
+      </tr>`;
+  }
+  document.getElementById('tbody').innerHTML = ASSIGN.map(rowHTML).join('');
+
+  function setState(s) {
+    document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+    document.getElementById('scrim-nueva').classList.toggle('show', s === 'nueva');
+    document.getElementById('scrim-sobrecarga').classList.toggle('show', s === 'sobrecarga');
+    document.getElementById('table-wrap').style.display = (s === 'vacio') ? 'none' : '';
+    document.getElementById('empty-wrap').style.display = (s === 'vacio') ? 'block' : 'none';
+  }
+</script>
+
+</body>
+</html>

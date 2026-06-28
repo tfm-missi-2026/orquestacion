@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Carga del equipo</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+  .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .seg button {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px;
+    padding: 5px 12px; cursor: pointer; color: var(--line-soft); white-space: nowrap;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .seg button.active { background: var(--line); color: var(--paper); }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* ---- filter bar ---- */
+  .filterbar {
+    display:flex; gap:16px; align-items:flex-end; flex-wrap:wrap;
+    border: 2px solid var(--line);
+    border-radius: 12px 5px 11px 4px / 4px 12px 5px 11px;
+    background: var(--paper-alt);
+    box-shadow: 3px 3px 0 var(--line);
+    padding: 16px 18px; margin-bottom: 22px;
+  }
+  .filterbar .field { display:flex; flex-direction:column; gap:6px; }
+  .filterbar .field .input { min-width: 150px; }
+
+  /* ---- summary cards ---- */
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:24px; }
+  .scard {
+    border: 2px solid var(--line);
+    border-radius: 13px 5px 12px 4px / 4px 13px 5px 12px;
+    background: var(--paper); box-shadow: 3px 3px 0 var(--line);
+    padding: 16px 20px;
+  }
+  .scard.alert { background: repeating-linear-gradient(45deg, var(--paper) 0 9px, var(--paper-alt) 9px 10px); }
+  .scard .slab { font-family:'Kalam',cursive; font-weight:700; font-size:13px; color:var(--line-soft); letter-spacing:.03em; text-transform:uppercase; }
+  .scard .sval { font-family:'Caveat',cursive; font-weight:700; font-size:52px; line-height:1; margin-top:4px; }
+  .scard .ssub { font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft); margin-top:2px; }
+
+  /* ---- table ---- */
+  .tbl td { font-family: 'Kalam', cursive; vertical-align: middle; }
+  .res { display:flex; align-items:center; gap:9px; }
+  .hrs { font-family:'Caveat',cursive; font-weight:700; font-size:19px; white-space:nowrap; }
+  .taskcount { display:inline-flex; align-items:center; justify-content:center; font-family:'Caveat',cursive; font-weight:700; font-size:17px; border:2px solid var(--line-mid); border-radius:8px 3px 7px 2px; padding:1px 9px; }
+
+  /* utilization bar */
+  .util { display:flex; align-items:center; gap:10px; }
+  .ubar { position:relative; flex:1; height:20px; min-width:120px; border:2px solid var(--line); border-radius:6px 3px 6px 3px; background:var(--paper); overflow:hidden; }
+  .ufill { position:absolute; top:0; bottom:0; left:0; background:var(--line-mid); }
+  .ufill.over { background:repeating-linear-gradient(45deg, var(--line) 0 5px, var(--line-soft) 5px 6px); }
+  .ufill.zero { background:transparent; }
+  /* 100% marker */
+  .umark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); z-index:2; }
+  .upct { font-family:'Caveat',cursive; font-weight:700; font-size:18px; min-width:54px; white-space:nowrap; }
+
+  .badge { font-family:'Kalam',cursive; font-weight:700; font-size:11px; white-space:nowrap; padding:3px 11px; border-radius:9px; display:inline-flex; align-items:center; gap:5px; border:2px solid var(--line); }
+  .badge::before { content:''; }
+  .badge-normal { background:var(--paper); }
+  .badge-normal::before { content:'●'; font-size:8px; }
+  .badge-over { background:var(--line); color:var(--paper); }
+  .badge-over::before { content:'▲'; font-size:9px; }
+
+  .btn { white-space: nowrap; }
+  .h-title { white-space: nowrap; }
+
+  /* ---- empty state ---- */
+  .empty {
+    text-align: center; padding: 64px 20px;
+    border: 2px dashed var(--line-mid);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    background: var(--paper);
+  }
+  .empty .ph { margin: 0 auto 16px; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE SWITCHER ============ -->
+<div class="statebar">
+  <span class="label">Estado del boceto:</span>
+  <div class="seg">
+    <button class="active" data-state="datos" onclick="setState('datos')">Carga del equipo</button>
+    <button data-state="vacio" onclick="setState('vacio')">Estado vacío</button>
+  </div>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">RF-07 · CU-05 · HU-03 — Consultar carga del equipo · Actor: A1 Jefe de Área (JEFE_AREA)</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Carga del equipo">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Dashboard</span><span class="pendiente">pendiente</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Proyectos</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Planificación</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Seguimiento</span><span class="pendiente">pendiente</span></a>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Carga del equipo</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Avance</span><span class="pendiente">pendiente</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Variaciones</span><span class="pendiente">pendiente</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      Los ítems atenuados aún no tienen pantalla diseñada.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">C. Vega</div>
+        <div class="tiny">Jefe de Área</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Carlos Vega</div>
+          <div class="tiny">Jefe de Área</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- module header -->
+      <div class="mb-2">
+        <div class="crumb" style="white-space:nowrap;">Operación › <b style="color:var(--line);">Carga del equipo</b></div>
+        <div class="h-title" style="margin-top:2px;">Carga del equipo</div>
+      </div>
+      <div class="small mb-5" style="color:var(--line-soft); max-width:80ch;">Compara <b>horas planificadas</b> (lo asignado) con <b>horas registradas</b> (lo trabajado, de la bitácora) en un rango de fechas. % Utilización = registradas ÷ planificadas; hay <b>sobrecarga</b> cuando registradas &gt; planificadas.</div>
+
+      <!-- FILTER BAR -->
+      <div class="filterbar">
+        <div class="field">
+          <span class="label" style="margin:0;">DESDE</span>
+          <input class="input" value="01/05/2026" />
+        </div>
+        <div class="field">
+          <span class="label" style="margin:0;">HASTA</span>
+          <input class="input" value="31/05/2026" />
+        </div>
+        <div class="field">
+          <span class="label" style="margin:0;">PROYECTO <span class="tiny" style="font-weight:400;">(opcional)</span></span>
+          <div class="dropdown" style="min-width:200px;"><span class="ico sm"></span><span>Todos</span></div>
+        </div>
+        <button class="btn btn-primary">Consultar</button>
+        <div class="tiny" style="flex:1; min-width:180px; text-align:right; align-self:center;">El filtro por proyecto acota a sus tareas · RF-07</div>
+      </div>
+
+      <!-- ===== DATA (cards + table) ===== -->
+      <div id="data-wrap">
+
+        <!-- summary cards -->
+        <div class="cards">
+          <div class="scard">
+            <div class="slab">Recursos</div>
+            <div class="sval">5</div>
+            <div class="ssub">en el rango consultado</div>
+          </div>
+          <div class="scard alert">
+            <div class="slab">En sobrecarga</div>
+            <div class="sval">2</div>
+            <div class="ssub">% utilización &gt; 100</div>
+          </div>
+          <div class="scard">
+            <div class="slab">% Utilización media</div>
+            <div class="sval">105<span style="font-size:30px;">%</span></div>
+            <div class="ssub">promedio de recursos con plan</div>
+          </div>
+        </div>
+
+        <!-- table -->
+        <div class="box p-4">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th style="width:210px;">Recurso técnico</th>
+                <th style="width:104px; text-align:center;">Planif.</th>
+                <th style="width:104px; text-align:center;">Registr.</th>
+                <th style="width:96px; text-align:center;">Tareas act.</th>
+                <th>% Utilización</th>
+                <th style="width:128px;">Estado</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+
+          <div class="row between mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:12px;">
+            <div class="row gap-3" style="align-items:center; flex-wrap:wrap;">
+              <span class="tiny" style="color:var(--line-soft);">Línea punteada = 100% (capacidad planificada).</span>
+              <span class="util" style="gap:6px;"><span class="ubar" style="width:46px; min-width:0; height:14px;"><span class="ufill over" style="width:100%;"></span></span><span class="tiny">trama = sobrecarga</span></span>
+            </div>
+            <span class="tiny">Rango consultado: <b>01/05/2026 – 31/05/2026</b></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY STATE ===== -->
+      <div id="empty-wrap" class="empty" style="display:none;">
+        <div class="ph square" style="width:54px; height:54px;"></div>
+        <div class="h-section">No hay datos para el rango.</div>
+        <div class="small mt-2">Selecciona un periodo y pulsa Consultar.</div>
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:560px;">
+        Si un recurso no tiene plan (planificadas = 0), su % de utilización es 0 y <b>no</b> se marca sobrecarga, aunque tenga horas registradas.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // pct = registradas / planificadas * 100 ; over = registradas > planificadas
+  const ROWS = [
+    { r:'Ana Quispe Rojas',    plan:160, reg:198, tasks:4, },
+    { r:'Diego Salas Romero',  plan:160, reg:152, tasks:3, },
+    { r:'Marco Ríos Peña',     plan:120, reg:138, tasks:2, },
+    { r:'Sofía Lazo Ferrer',   plan:140, reg:118, tasks:3, },
+    { r:'Bruno Tello Vargas',  plan:0,   reg:24,  tasks:1, },
+  ];
+
+  function rowHTML(x) {
+    const pct = x.plan > 0 ? Math.round(x.reg / x.plan * 100) : 0;
+    const over = x.plan > 0 && x.reg > x.plan;
+    const noPlan = x.plan === 0;
+    // bar fill: scale so 100% = 70% of bar width, capacity mark at that point; cap visual at 130%→~91%
+    const markPos = 70; // % of bar where 100% sits
+    const fillW = Math.min(pct / 100 * markPos, 99);
+    const fillClass = noPlan ? 'zero' : (over ? 'over' : '');
+    const badge = over ? '<span class="badge badge-over">Sobrecarga</span>' : '<span class="badge badge-normal">Normal</span>';
+    const pctLabel = noPlan ? '0% <span style="font-size:11px; font-family:Kalam,cursive; color:var(--line-soft);">sin plan</span>' : pct + '%';
+    return `
+      <tr>
+        <td>
+          <div class="res">
+            <div class="ph round av-sm" style="flex:none;"></div>
+            <div><b style="font-size:14px;">${x.r}</b><div class="tiny">Recurso Técnico</div></div>
+          </div>
+        </td>
+        <td style="text-align:center;"><span class="hrs">${x.plan ? x.plan+' h' : '—'}</span></td>
+        <td style="text-align:center;"><span class="hrs">${x.reg} h</span></td>
+        <td style="text-align:center;"><span class="taskcount">${x.tasks}</span></td>
+        <td>
+          <div class="util">
+            <div class="ubar">
+              <div class="ufill ${fillClass}" style="width:${fillW}%;"></div>
+              <div class="umark" style="left:${markPos}%;"></div>
+            </div>
+            <span class="upct">${pctLabel}</span>
+          </div>
+        </td>
+        <td>${badge}</td>
+      </tr>`;
+  }
+  document.getElementById('tbody').innerHTML = ROWS.map(rowHTML).join('');
+
+  function setState(s) {
+    document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+    document.getElementById('data-wrap').style.display = (s === 'vacio') ? 'none' : '';
+    document.getElementById('empty-wrap').style.display = (s === 'vacio') ? 'block' : 'none';
+  }
+</script>
+
+</body>
+</html>

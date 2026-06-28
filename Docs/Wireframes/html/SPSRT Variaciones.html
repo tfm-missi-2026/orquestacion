@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Variaciones</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+  .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .seg button {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px;
+    padding: 5px 12px; cursor: pointer; color: var(--line-soft); white-space: nowrap;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .seg button.active { background: var(--line); color: var(--paper); }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* ---- table ---- */
+  .tbl td { font-family: 'Kalam', cursive; vertical-align: top; }
+  .tk { font-family: monospace; font-weight:700; font-size:12px; white-space:nowrap; }
+  .typetag { font-family:'Kalam',cursive; font-weight:700; font-size:11px; white-space:nowrap; border: 1.5px solid var(--line-mid); border-radius: 7px 3px 6px 2px; padding: 2px 9px; display:inline-block; }
+
+  /* situation labels */
+  .sit { font-family:'Kalam',cursive; font-weight:700; font-size:11px; white-space:nowrap; padding:3px 11px; border-radius:9px; display:inline-flex; align-items:center; gap:5px; border:2px solid var(--line); }
+  .sit::before { line-height:1; }
+  .sit-pend { border-style:dashed; }
+  .sit-pend::before { content:'○'; font-size:10px; }
+  .sit-apr  { background:var(--line); color:var(--paper); }
+  .sit-apr::before { content:'✓'; font-size:10px; }
+  .sit-rech { background:repeating-linear-gradient(45deg,var(--paper) 0 4px,var(--paper-alt) 4px 5px); }
+  .sit-rech::before { content:'✕'; font-size:10px; }
+
+  .acts { display: flex; gap: 10px; align-items: center; white-space: nowrap; justify-content: flex-end; }
+  .acts a { font-family:'Kalam',cursive; font-size:12px; font-weight:700; color:var(--line); text-decoration: underline; cursor: pointer; }
+  .acts .sep { color: var(--line-mid); }
+  .acts .disabled { color:var(--line-faint); text-decoration:none; cursor:not-allowed; }
+
+  .btn { white-space: nowrap; }
+  .h-title { white-space: nowrap; }
+
+  /* count chips */
+  .countchip { font-family:'Kalam',cursive; font-weight:700; font-size:12px; white-space:nowrap; padding:3px 11px; border-radius:9px; border:2px solid var(--line); display:inline-flex; align-items:center; gap:6px; }
+
+  /* ---- modal ---- */
+  .scrim {
+    position: fixed; inset: 0; z-index: 80;
+    background: repeating-linear-gradient(45deg, rgba(26,26,26,0.12) 0 7px, rgba(26,26,26,0.18) 7px 8px);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 48px 20px 40px; overflow: auto;
+  }
+  .scrim.show { display: flex; }
+  .modal {
+    width: 100%; max-width: 580px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    box-shadow: 5px 6px 0 var(--line);
+    padding: 22px 26px 24px; position: relative;
+  }
+  .modal-x {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 24px;
+    cursor: pointer; line-height: 1;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .formrow { margin-bottom: 14px; }
+  .dropdown { white-space: nowrap; }
+  .req { color:var(--line); font-weight:700; }
+  .reqbox { border:2px solid var(--line); border-radius:10px 4px 12px 4px / 4px 10px 4px 12px; background:var(--paper-alt); padding:12px 14px; }
+
+  /* read-only field for resolve modal */
+  .ro { display:flex; flex-direction:column; gap:3px; margin-bottom:12px; }
+  .ro .rolab { font-family:'Kalam',cursive; font-weight:700; font-size:11px; color:var(--line-soft); text-transform:uppercase; letter-spacing:.03em; }
+  .ro .roval { font-family:'Kalam',cursive; font-size:14px; }
+  .ro-card { border:2px solid var(--line); border-radius:11px 4px 12px 4px / 4px 11px 4px 12px; background:var(--paper-alt); padding:14px 16px; margin-bottom:16px; }
+  .valpair { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .valbox { font-family:'Kalam',cursive; font-weight:700; font-size:13px; border:2px solid var(--line-mid); border-radius:8px 3px 7px 2px; padding:4px 11px; background:var(--paper); }
+  .valbox.old { border-style:dashed; text-decoration:line-through; color:var(--line-soft); }
+
+  /* decision radios */
+  .decision { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .dec-opt { display:flex; align-items:center; gap:11px; cursor:pointer; border:2px solid var(--line-mid); border-radius:10px 4px 11px 4px / 4px 10px 4px 11px; padding:12px 14px; background:var(--paper); }
+  .dec-opt.on { border:2px solid var(--line); box-shadow:2px 2px 0 var(--line); background:var(--paper-alt); }
+  .dec-opt .dname { font-family:'Kalam',cursive; font-weight:700; font-size:14px; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE SWITCHER ============ -->
+<div class="statebar">
+  <span class="label">Estado del boceto:</span>
+  <div class="seg">
+    <button class="active" data-state="tabla" onclick="setState('tabla')">Variaciones</button>
+    <button data-state="reportar" onclick="setState('reportar')">Modal · Reportar</button>
+    <button data-state="resolver" onclick="setState('resolver')">Modal · Resolver</button>
+  </div>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">RF-10 · RF-11 · CU-08 · HU-08/09 — Gestionar variaciones · Actor: A2 Gestor de Proyecto</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Variaciones">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Dashboard</span><span class="pendiente">pendiente</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Proyectos</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Planificación</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Seguimiento</span><span class="pendiente">pendiente</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Avance</span></a>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Variaciones</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      Los ítems atenuados aún no tienen pantalla diseñada.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">L. Fernández</div>
+        <div class="tiny">Gestor de Proyecto</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Lucía Fernández</div>
+          <div class="tiny">Gestor de Proyecto</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- module header -->
+      <div class="row between mb-2" style="align-items:flex-end;">
+        <div>
+          <div class="crumb" style="white-space:nowrap;">Operación › <b style="color:var(--line);">Variaciones</b></div>
+          <div class="h-title" style="margin-top:2px;">Variaciones</div>
+        </div>
+        <button class="btn btn-primary" onclick="setState('reportar')">+ Reportar variación</button>
+      </div>
+      <div class="small mb-5" style="color:var(--line-soft); max-width:80ch;">Una variación es un cambio formal sobre el plan (alcance, plazo o recursos) con <b>justificación obligatoria</b>. La reporta el Gestor o el Recurso Técnico; la resuelve el Gestor o el Jefe de Área.</div>
+
+      <!-- toolbar -->
+      <div class="row gap-3 mb-4" style="flex-wrap:wrap;">
+        <div class="row gap-2" style="position:relative; flex:1; min-width:240px;">
+          <span class="ico sm" style="position:absolute; left:11px; top:50%; transform:translateY(-50%);"></span>
+          <input class="input" placeholder="Buscar por tarea o descripción…" style="padding-left:36px;" />
+        </div>
+        <div class="dropdown" style="min-width:150px;"><span class="ico sm"></span><span>Tipo: <b>Todos</b></span></div>
+        <div class="dropdown" style="min-width:170px;"><span class="ico sm"></span><span>Situación: <b>Todas</b></span></div>
+      </div>
+
+      <!-- ===== TABLE ===== -->
+      <div class="box p-4">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Tarea afectada</th>
+              <th style="width:96px;">Tipo</th>
+              <th>Descripción</th>
+              <th style="width:128px;">Reportada por</th>
+              <th style="width:100px;">Detección</th>
+              <th style="width:112px;">Situación</th>
+              <th style="text-align:right; width:130px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+
+        <div class="row between mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:12px;">
+          <div class="row gap-2" style="align-items:center; flex-wrap:wrap;">
+            <span class="tiny" style="color:var(--line-soft);">Conteo:</span>
+            <span class="countchip sit-pend" style="border-style:dashed;">2 pendientes</span>
+            <span class="countchip">3 aprobadas</span>
+            <span class="countchip">1 rechazada</span>
+          </div>
+          <span class="tiny">“Resolver” solo está activo en variaciones Pendientes.</span>
+        </div>
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:560px;">
+        RF-11 · Las variaciones conservan su <b>histórico y trazabilidad</b> respecto a la línea base; resolverlas registra <b>quién y cuándo</b>.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL · REPORTAR VARIACIÓN ============ -->
+<div class="scrim" id="scrim-reportar">
+  <div class="modal">
+    <span class="modal-x" onclick="setState('tabla')">✕</span>
+    <div class="h-title" style="font-size:26px; margin-bottom:4px; white-space:normal;">Reportar variación</div>
+    <div class="small mb-4">Un cambio formal sobre el plan. La justificación es obligatoria y queda en el histórico.</div>
+
+    <div class="grid2">
+      <div class="formrow">
+        <div class="label mb-2">TAREA AFECTADA <span class="tiny" style="font-weight:400;">(opcional)</span></div>
+        <div class="dropdown stretch"><span>Implementar validación de RUC <span style="color:var(--line-soft);">· #REQ-014</span></span></div>
+        <div class="tiny mt-2">Puede dejarse a nivel de subproyecto.</div>
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">TIPO</div>
+        <div class="dropdown stretch"><span>Plazo</span></div>
+        <div class="tiny mt-2">Alcance · Plazo · Recursos.</div>
+      </div>
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">DESCRIPCIÓN</div>
+      <textarea class="input" rows="2" placeholder="¿Qué cambia respecto al plan?"></textarea>
+    </div>
+
+    <div class="formrow reqbox">
+      <div class="label mb-2" style="margin:0 0 6px;">JUSTIFICACIÓN <span class="req">*</span></div>
+      <textarea class="input" rows="2" placeholder="¿Por qué es necesaria esta variación?"></textarea>
+      <div class="tiny mt-2"><b>Campo obligatorio.</b> Sin justificación no se puede reportar.</div>
+    </div>
+
+    <div class="grid2">
+      <div class="formrow">
+        <div class="label mb-2">VALOR ANTERIOR</div>
+        <input class="input" placeholder="p. ej. fin 30/05/2026" />
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">VALOR NUEVO</div>
+        <input class="input" placeholder="p. ej. fin 06/06/2026" />
+      </div>
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">FECHA DE DETECCIÓN</div>
+      <input class="input" placeholder="dd/mm/aaaa" style="max-width:220px;" />
+    </div>
+
+    <div class="row end gap-2 mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('tabla')">Cancelar</button>
+      <button class="btn btn-primary" onclick="setState('tabla')">Reportar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL · RESOLVER VARIACIÓN ============ -->
+<div class="scrim" id="scrim-resolver">
+  <div class="modal">
+    <span class="modal-x" onclick="setState('tabla')">✕</span>
+    <div class="h-title" style="font-size:26px; white-space:nowrap; margin-bottom:6px;">Resolver variación</div>
+    <div class="row gap-2 mb-4" style="align-items:center; flex-wrap:wrap;">
+      <span class="sit sit-pend">Pendiente</span>
+      <span class="small" style="margin:0;">Decisión del Gestor o Jefe de Área. Queda registrada con autor y fecha.</span>
+    </div>
+
+    <!-- read-only variation -->
+    <div class="ro-card">
+      <div class="grid2">
+        <div class="ro"><span class="rolab">Tarea afectada</span><span class="roval"><b>Optimizar listado de trámites</b> · #SD-4790</span></div>
+        <div class="ro"><span class="rolab">Tipo</span><span class="roval">Plazo</span></div>
+      </div>
+      <div class="ro"><span class="rolab">Descripción</span><span class="roval">El volumen real de registros exige más tiempo de optimización del previsto.</span></div>
+      <div class="ro"><span class="rolab">Justificación</span><span class="roval">Pruebas con 1000+ registros muestran que la consulta supera el umbral aceptable; se requieren 2 días adicionales.</span></div>
+      <div class="ro" style="margin-bottom:6px;"><span class="rolab">Cambio</span>
+        <span class="valpair">
+          <span class="valbox old">fin 23/05/2026</span>
+          <span style="font-family:'Caveat',cursive; font-weight:700; font-size:18px;">→</span>
+          <span class="valbox">fin 27/05/2026</span>
+        </span>
+      </div>
+      <div class="tiny">Reportada por <b>Marco Ríos</b> · detección 12/05/2026</div>
+    </div>
+
+    <!-- decision -->
+    <div class="label mb-2">DECISIÓN</div>
+    <div class="decision">
+      <label class="dec-opt on" id="dec-aprobar" onclick="pickDec('aprobar')">
+        <span class="radio checked"></span><span class="dname">Aprobar</span>
+      </label>
+      <label class="dec-opt" id="dec-rechazar" onclick="pickDec('rechazar')">
+        <span class="radio"></span><span class="dname">Rechazar</span>
+      </label>
+    </div>
+
+    <div class="formrow" style="margin-top:14px;">
+      <div class="label mb-2">OBSERVACIÓN DE RESOLUCIÓN</div>
+      <textarea class="input" rows="2" placeholder="Motivo de la decisión (queda en el histórico)."></textarea>
+    </div>
+
+    <div class="row end gap-2 mt-2" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('tabla')">Cancelar</button>
+      <button class="btn btn-primary" onclick="setState('tabla')">Guardar decisión</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const VARS = [
+    { task:'Optimizar listado de trámites', ref:'#SD-4790', tipo:'Plazo',    d:'El volumen real exige más tiempo de optimización.',        by:'Marco Ríos',     f:'12/05/2026', sit:'Pendiente', sc:'pend' },
+    { task:'Módulo de notificaciones',      ref:'#DM-018',  tipo:'Alcance',  d:'Se añade canal SMS además del correo, no contemplado.',     by:'Lucía Fernández',f:'20/05/2026', sit:'Pendiente', sc:'pend' },
+    { task:'Implementar validación de RUC', ref:'#REQ-014', tipo:'Plazo',    d:'Nuevo dígito verificador obliga a re-codificar la regla.',  by:'Ana Quispe',     f:'04/06/2026', sit:'Aprobada',  sc:'apr' },
+    { task:'Corregir error 500 al adjuntar',ref:'#SD-4821', tipo:'Recursos', d:'Se suma un recurso para acelerar la corrección.',           by:'Lucía Fernández',f:'03/06/2026', sit:'Aprobada',  sc:'apr' },
+    { task:'(Subproyecto #REQ-014)',        ref:'',         tipo:'Alcance',  d:'Inclusión de validación con datos de extranjería.',         by:'Ana Quispe',     f:'21/04/2026', sit:'Aprobada',  sc:'apr' },
+    { task:'Integración con firma digital', ref:'#REQ-198', tipo:'Recursos', d:'Solicitud de recurso externo; sin alcance aprobado.',       by:'Marco Ríos',     f:'18/04/2026', sit:'Rechazada', sc:'rech' },
+  ];
+
+  function rowHTML(v) {
+    const pend = v.sc === 'pend';
+    const resolver = pend
+      ? '<a onclick="setState(\'resolver\')">Resolver</a>'
+      : '<span class="disabled" title="Solo en variaciones Pendientes">Resolver</span>';
+    const taskRef = v.ref ? `<span class="tk" style="font-size:11px; color:var(--line-soft);"> · ${v.ref}</span>` : '';
+    return `
+      <tr>
+        <td><b style="font-size:14px;">${v.task}</b>${taskRef}</td>
+        <td><span class="typetag">${v.tipo}</span></td>
+        <td style="font-size:13px; color:var(--line-soft);">${v.d}</td>
+        <td style="font-size:12px;">${v.by}</td>
+        <td class="tk" style="font-size:11px;">${v.f}</td>
+        <td><span class="sit sit-${v.sc}">${v.sit}</span></td>
+        <td>
+          <div class="acts">
+            <a>Ver</a><span class="sep">·</span>${resolver}
+          </div>
+        </td>
+      </tr>`;
+  }
+  document.getElementById('tbody').innerHTML = VARS.map(rowHTML).join('');
+
+  function pickDec(d) {
+    document.getElementById('dec-aprobar').classList.toggle('on', d === 'aprobar');
+    document.getElementById('dec-rechazar').classList.toggle('on', d === 'rechazar');
+    document.querySelector('#dec-aprobar .radio').classList.toggle('checked', d === 'aprobar');
+    document.querySelector('#dec-rechazar .radio').classList.toggle('checked', d === 'rechazar');
+  }
+
+  function setState(s) {
+    document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+    document.getElementById('scrim-reportar').classList.toggle('show', s === 'reportar');
+    document.getElementById('scrim-resolver').classList.toggle('show', s === 'resolver');
+  }
+</script>
+
+</body>
+</html>

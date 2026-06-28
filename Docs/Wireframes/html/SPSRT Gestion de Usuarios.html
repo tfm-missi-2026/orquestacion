@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Gestión de usuarios</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher bar (annotation chrome, not part of product) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+  .seg { display: flex; gap: 6px; }
+  .seg button {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px;
+    padding: 5px 12px; cursor: pointer; color: var(--line-soft); white-space: nowrap;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .seg button.active { background: var(--line); color: var(--paper); }
+
+  /* ---- sidebar disabled items (match Roles) ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* ---- table ---- */
+  .role-pill { white-space: nowrap; padding: 2px 14px; }
+  .h-title { line-height: 1.08; }
+  .dropdown { white-space: nowrap; }
+  .tbl td { font-family: 'Kalam', cursive; }
+  .est-activo::before   { content:'●'; font-size:9px; margin-right:5px; }
+  .est-inactivo::before { content:'○'; font-size:9px; margin-right:5px; }
+  .acts { display: flex; gap: 10px; align-items: center; white-space: nowrap; }
+  .acts a { font-family:'Kalam',cursive; font-size:12px; font-weight:700; color:var(--line); text-decoration: underline; cursor: pointer; }
+  .acts .sep { color: var(--line-mid); }
+  .acts .danger { color: var(--line-soft); }
+
+  /* ---- empty state ---- */
+  .empty {
+    text-align: center; padding: 64px 20px;
+    border: 2px dashed var(--line-mid);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    background: var(--paper);
+  }
+  .empty .ph { margin: 0 auto 16px; }
+
+  /* ---- modal ---- */
+  .scrim {
+    position: fixed; inset: 0; z-index: 80;
+    background: repeating-linear-gradient(45deg, rgba(26,26,26,0.12) 0 7px, rgba(26,26,26,0.18) 7px 8px);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 70px 20px 40px; overflow:auto;
+  }
+  .scrim.show { display: flex; }
+  .modal {
+    width: 100%; max-width: 560px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    box-shadow: 5px 6px 0 var(--line);
+    padding: 22px 26px 24px;
+    position: relative;
+  }
+  .modal.narrow { max-width: 460px; }
+  .modal-x {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 24px;
+    cursor: pointer; line-height: 1;
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .formrow { margin-bottom: 14px; }
+
+  .pwbox {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    border: 2px dashed var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    background: var(--paper-alt);
+    padding: 12px 16px;
+  }
+  .pwval { font-family: monospace; font-weight: 700; font-size: 22px; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE SWITCHER (boceto chrome) ============ -->
+<div class="statebar">
+  <span class="label">Estado del boceto:</span>
+  <div class="seg">
+    <button class="active" data-state="tabla" onclick="setState('tabla')">Tabla</button>
+    <button data-state="nuevo" onclick="setState('nuevo')">Modal · Nuevo / Editar</button>
+    <button data-state="reset" onclick="setState('reset')">Modal · Restablecer contraseña</button>
+    <button data-state="vacio" onclick="setState('vacio')">Estado vacío</button>
+  </div>
+  <span class="traza" style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">RF-02 · CU-02 — Gestionar usuarios y roles · Actor: A4 Administrador</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Gestión de usuarios">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Administración · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">ADMINISTRACIÓN</div>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Usuarios</span><span class="pill pill-dark">6</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Roles</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Catálogo</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Módulos</span><span class="pendiente">pendiente</span></a>
+      <div class="nav-h">CUENTA</div>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Configuración</span><span class="pendiente">pendiente</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      Los ítems atenuados aún no tienen pantalla diseñada.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">R. Salazar</div>
+        <div class="tiny">Administrador</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div>
+          <div style="font-weight:700; font-size:13px;">Ricardo Salazar</div>
+          <div class="tiny">Administrador · r.salazar@institucion.gob.pe</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- module header -->
+      <div class="row between mb-6" style="align-items:flex-end;">
+        <div>
+          <div class="crumb">Administración › <b style="color:var(--line);">Usuarios</b></div>
+          <div class="h-title" style="margin-top:2px; white-space:nowrap;">Gestión de usuarios</div>
+        </div>
+        <button class="btn btn-primary" onclick="setState('nuevo')">+ Nuevo usuario</button>
+      </div>
+
+      <!-- toolbar: search + filters -->
+      <div class="row gap-3 mb-4" style="flex-wrap:wrap;">
+        <div class="row gap-2" style="position:relative; flex:1; min-width:280px;">
+          <span class="ico sm" style="position:absolute; left:11px; top:50%; transform:translateY(-50%);"></span>
+          <input class="input" placeholder="Buscar por nombre o correo…" style="padding-left:36px;" oninput="onSearch(this.value)" />
+        </div>
+        <div class="dropdown" style="min-width:170px;"><span class="ico sm"></span><span>Rol: <b>Todos</b></span></div>
+        <div class="dropdown" style="min-width:160px;"><span class="ico sm"></span><span>Estado: <b>Todos</b></span></div>
+      </div>
+
+      <!-- ===== TABLE (states: tabla / nuevo / reset) ===== -->
+      <div id="table-wrap" class="box p-4">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Nombre completo</th>
+              <th>Correo electrónico</th>
+              <th>Rol</th>
+              <th>Estado</th>
+              <th style="text-align:right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <!-- rows injected -->
+          </tbody>
+        </table>
+
+        <!-- pagination -->
+        <div class="row between mt-4" style="border-top: 1.5px dashed var(--line-faint); padding-top: 12px;">
+          <span class="tiny">Mostrando 1–6 de 6</span>
+          <div class="row gap-2">
+            <span class="btn btn-sm" style="box-shadow:none; opacity:.5;">‹ Anterior</span>
+            <span class="pill pill-dark">1</span>
+            <span class="pill">2</span>
+            <span class="btn btn-sm">Siguiente ›</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EMPTY STATE (state: vacio) ===== -->
+      <div id="empty-wrap" class="empty" style="display:none;">
+        <div class="ph square" style="width:54px; height:54px;"></div>
+        <div class="h-section">No hay usuarios que coincidan con el filtro.</div>
+        <div class="small mt-2">Prueba a limpiar la búsqueda o ajustar los filtros de rol y estado.</div>
+        <div class="row center gap-2 mt-4">
+          <button class="btn btn-sm" onclick="setState('tabla')">Limpiar filtros</button>
+          <button class="btn btn-sm btn-primary" onclick="setState('nuevo')">+ Nuevo usuario</button>
+        </div>
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:520px;">
+        Acciones por fila: Editar (abre el modal) · Restablecer contraseña (genera temporal) · Dar de baja (pasa el usuario a Inactivo, no lo elimina).
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL · NUEVO / EDITAR USUARIO ============ -->
+<div class="scrim" id="scrim-nuevo">
+  <div class="modal">
+    <span class="modal-x" onclick="setState('tabla')">✕</span>
+    <div class="h-title" style="font-size:26px; margin-bottom:4px;">Nuevo usuario</div>
+    <div class="small mb-4">Complete los datos. Los campos quedan en estado borrador hasta guardar.</div>
+
+    <div class="formrow">
+      <div class="label mb-2">NOMBRES</div>
+      <input class="input" placeholder="p. ej. Ana María" />
+    </div>
+
+    <div class="grid2">
+      <div class="formrow">
+        <div class="label mb-2">APELLIDO PATERNO</div>
+        <input class="input" placeholder="p. ej. Quispe" />
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">APELLIDO MATERNO</div>
+        <input class="input" placeholder="p. ej. Rojas" />
+      </div>
+    </div>
+
+    <div class="formrow">
+      <div class="label mb-2">CORREO ELECTRÓNICO</div>
+      <input type="email" class="input" placeholder="nombre.apellido@institucion.gob.pe" />
+    </div>
+
+    <div class="grid2">
+      <div class="formrow">
+        <div class="label mb-2">ROL</div>
+        <div class="dropdown stretch"><span>Recurso Técnico</span></div>
+      </div>
+      <div class="formrow">
+        <div class="label mb-2">ESTADO</div>
+        <div class="row gap-4" style="padding-top:6px;">
+          <label class="row gap-2" style="cursor:pointer;"><span class="radio checked"></span><span style="font-size:14px;">Activo</span></label>
+          <label class="row gap-2" style="cursor:pointer;"><span class="radio"></span><span style="font-size:14px;">Inactivo</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- only on alta -->
+    <div class="formrow box-thin p-3" style="border-style:dashed;">
+      <div class="row between mb-2">
+        <span class="label" style="margin:0;">CONTRASEÑA INICIAL</span>
+        <span class="pill pill-soft">Solo en alta</span>
+      </div>
+      <div class="relative">
+        <input type="password" class="input" placeholder="••••••••" style="padding-right:38px;" />
+        <span class="ico eye" style="position:absolute; right:10px; top:50%; transform:translateY(-50%);"></span>
+      </div>
+      <div class="tiny mt-2">Al editar un usuario existente este campo no aparece; la contraseña se cambia desde “Restablecer”.</div>
+    </div>
+
+    <div class="row end gap-2 mt-4" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('tabla')">Cancelar</button>
+      <button class="btn btn-primary" onclick="setState('tabla')">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL · RESTABLECER CONTRASEÑA ============ -->
+<div class="scrim" id="scrim-reset">
+  <div class="modal narrow">
+    <span class="modal-x" onclick="setState('tabla')">✕</span>
+    <div class="h-title" style="font-size:26px; margin-bottom:4px;">Restablecer contraseña</div>
+    <div class="small mb-4">Usuario: <b>Diego Salas Romero</b> · d.salas@institucion.gob.pe</div>
+
+    <div class="box-thin p-3 mb-4 row gap-2" style="align-items:flex-start;">
+      <span class="bang" style="font-family:'Caveat',cursive; font-weight:700; font-size:20px; line-height:1; border:2px solid var(--line); border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; flex:none;">!</span>
+      <span style="font-size:13px;">Se generará una contraseña temporal. La contraseña actual del usuario dejará de ser válida.</span>
+    </div>
+
+    <div class="label mb-2">CONTRASEÑA TEMPORAL GENERADA</div>
+    <div class="pwbox mb-2">
+      <span class="pwval">Tk7-mP2q</span>
+      <button class="btn btn-sm">⧉ Copiar</button>
+    </div>
+    <div class="small mb-4"><b>Entregue esta contraseña temporal al usuario.</b> Deberá cambiarla en su primer acceso.</div>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-bottom:16px;">
+      Este es el flujo al que el login deriva: cuando un usuario pulsa “¿Olvidó su contraseña?”, el Administrador la restablece aquí.
+    </div>
+
+    <div class="row end gap-2" style="border-top:1.5px dashed var(--line-faint); padding-top:16px;">
+      <button class="btn" onclick="setState('tabla')">Cerrar</button>
+      <button class="btn btn-primary" onclick="setState('tabla')">Confirmar restablecimiento</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const USERS = [
+    { n:'Ricardo Salazar Núñez',  e:'r.salazar@institucion.gob.pe',  rol:'Administrador',      est:'Activo' },
+    { n:'Carlos Vega Ramos',      e:'c.vega@institucion.gob.pe',     rol:'Jefe de Área',       est:'Activo' },
+    { n:'Lucía Fernández Torres', e:'l.fernandez@institucion.gob.pe',rol:'Gestor de Proyecto', est:'Activo' },
+    { n:'Jorge Medina Castro',    e:'j.medina@institucion.gob.pe',   rol:'Gestor de Proyecto', est:'Activo' },
+    { n:'Ana Quispe Rojas',       e:'a.quispe@institucion.gob.pe',   rol:'Recurso Técnico',    est:'Activo' },
+    { n:'Diego Salas Romero',     e:'d.salas@institucion.gob.pe',    rol:'Recurso Técnico',    est:'Inactivo' },
+  ];
+
+  function rowHTML(u) {
+    const estClass = u.est === 'Activo' ? 'est-activo' : 'est-inactivo';
+    const estPill  = u.est === 'Activo' ? 'pill-dark' : 'pill-soft';
+    return `
+      <tr>
+        <td><b style="font-size:14px;">${u.n}</b></td>
+        <td style="font-family:monospace; font-size:12px;">${u.e}</td>
+        <td><span class="pill role-pill">${u.rol}</span></td>
+        <td><span class="pill ${estPill} ${estClass}">${u.est}</span></td>
+        <td>
+          <div class="acts" style="justify-content:flex-end;">
+            <a onclick="setState('nuevo')">Editar</a><span class="sep">·</span>
+            <a onclick="setState('reset')">Restablecer contraseña</a><span class="sep">·</span>
+            <a class="danger">Dar de baja</a>
+          </div>
+        </td>
+      </tr>`;
+  }
+  document.getElementById('tbody').innerHTML = USERS.map(rowHTML).join('');
+
+  function setState(s) {
+    document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+    document.getElementById('scrim-nuevo').classList.toggle('show', s === 'nuevo');
+    document.getElementById('scrim-reset').classList.toggle('show', s === 'reset');
+    document.getElementById('table-wrap').style.display = (s === 'vacio') ? 'none' : '';
+    document.getElementById('empty-wrap').style.display = (s === 'vacio') ? 'block' : 'none';
+  }
+
+  // eye toggles (cosmetic)
+  document.addEventListener('click', e => {
+    if (e.target.classList && e.target.classList.contains('eye')) {
+      const inp = e.target.parentElement.querySelector('input');
+      if (inp) inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+  });
+  function onSearch(v){ /* boceto: sin lógica real */ }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Dashboard Jefe de Área</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* period selector */
+  .period { display:inline-flex; align-items:center; gap:8px; border:2px solid var(--line); border-radius:10px 4px 11px 4px / 4px 10px 4px 11px; box-shadow:2px 2px 0 var(--line); background:var(--paper); padding:5px 12px; font-family:'Kalam',cursive; font-weight:700; font-size:13px; white-space:nowrap; cursor:pointer; }
+
+  /* ---- indicator cards ---- */
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:22px; }
+  .kpi {
+    border: 2px solid var(--line);
+    border-radius: 13px 5px 12px 4px / 4px 13px 5px 12px;
+    background: var(--paper); box-shadow: 3px 3px 0 var(--line);
+    padding: 16px 18px; cursor:pointer; display:flex; flex-direction:column; min-height:148px;
+  }
+  .kpi:hover { background: var(--paper-alt); }
+  .kpi.alert { background: repeating-linear-gradient(45deg, var(--paper) 0 9px, var(--paper-alt) 9px 10px); }
+  .kpi .klab { font-family:'Kalam',cursive; font-weight:700; font-size:12px; color:var(--line-soft); letter-spacing:.02em; text-transform:uppercase; line-height:1.2; }
+  .kpi .kval { font-family:'Caveat',cursive; font-weight:700; font-size:46px; line-height:1; margin-top:6px; }
+  .kpi .ksub { font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft); margin-top:auto; }
+  .kpi .klink { font-family:'Kalam',cursive; font-weight:700; font-size:12px; text-decoration:underline; margin-top:8px; }
+  .kmark { font-family:'Kalam',cursive; font-size:10px; color:var(--line-soft); border:1.5px dashed var(--line-mid); border-radius:6px 2px 5px 2px; padding:1px 6px; display:inline-block; }
+
+  /* mini bar inside kpi 2 */
+  .minibar { position:relative; height:16px; border:2px solid var(--line); border-radius:5px 2px 5px 2px; background:var(--paper); overflow:hidden; margin-top:8px; }
+  .minifill { position:absolute; top:0; bottom:0; left:0; background:repeating-linear-gradient(45deg,var(--line) 0 5px,var(--line-soft) 5px 6px); }
+  .minimark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); }
+
+  /* status tags for projects */
+  .stag { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; padding:1px 7px; border-radius:6px 2px 5px 2px; border:1.5px solid var(--line-mid); display:inline-flex; align-items:center; gap:4px; }
+  .stag::before { content:''; width:6px; height:6px; }
+  .stag-ok::before { content:'●'; font-size:7px; }
+  .stag-risk::before { content:'◐'; font-size:8px; }
+  .stag-late::before { content:'▲'; font-size:7px; }
+  .stag-late { background:var(--line); color:var(--paper); border-color:var(--line); }
+
+  /* ---- two-column lower ---- */
+  .lower { display:grid; grid-template-columns:2fr 1fr; gap:20px; align-items:start; }
+
+  /* team load chart */
+  .loadrow { display:flex; align-items:center; gap:12px; padding:9px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .loadrow:last-child { border-bottom:none; }
+  .loadname { width:140px; flex:none; font-family:'Kalam',cursive; font-weight:700; font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .loadbar { position:relative; flex:1; height:22px; border:2px solid var(--line); border-radius:6px 3px 6px 3px; background:var(--paper); overflow:hidden; }
+  .loadfill { position:absolute; top:0; bottom:0; left:0; background:var(--line-mid); }
+  .loadfill.over { background:repeating-linear-gradient(45deg,var(--line) 0 5px,var(--line-soft) 5px 6px); }
+  .loadmark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); z-index:2; }
+  .loadpct { width:54px; flex:none; text-align:right; font-family:'Caveat',cursive; font-weight:700; font-size:18px; white-space:nowrap; }
+
+  /* alerts */
+  .alertitem { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .alertitem:last-child { border-bottom:none; }
+  .alertitem .aname { font-family:'Kalam',cursive; font-weight:700; font-size:13px; flex:1; }
+  .apct { font-family:'Caveat',cursive; font-weight:700; font-size:18px; white-space:nowrap; border:2px solid var(--line); border-radius:7px 3px 6px 2px; padding:0 8px; }
+  .varitem { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .varitem:last-child { border-bottom:none; }
+  .vtype { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; border:1.5px solid var(--line-mid); border-radius:6px 2px 5px 2px; padding:1px 7px; flex:none; margin-top:2px; }
+
+  .seclink { font-family:'Kalam',cursive; font-weight:700; font-size:13px; text-decoration:underline; cursor:pointer; white-space:nowrap; }
+  .h-title { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE BAR (boceto chrome) ============ -->
+<div class="statebar">
+  <span class="label">Boceto · Dashboard del Jefe de Área (landing post-login)</span>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">Landing A1 · agrega RF-07 · RF-09 · RF-10 · RF-12 · Actor: A1 Jefe de Área (JEFE_AREA)</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Dashboard Jefe de Área">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Dashboard</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Proyectos</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Planificación</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Seguimiento</span><span class="pendiente">pendiente</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Carga del equipo</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Avance</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Variaciones</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      El dashboard solo agrega y enlaza; los datos se gestionan en cada módulo.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">C. Vega</div>
+        <div class="tiny">Jefe de Área</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <div class="period"><span class="label" style="margin:0; font-size:11px;">PERIODO</span> <span>2T 2026 · abr–jun</span> <span style="font-size:10px;">▼</span></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Carlos Vega</div>
+          <div class="tiny">Jefe de Área</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- greeting -->
+      <div class="mb-5">
+        <div class="h-title" style="font-size:34px;">Buenos días, Carlos</div>
+        <div class="small mt-1" style="color:var(--line-soft);">Visión del área · periodo <b>2T 2026 (abr–jun)</b> · 12 recursos · 3 proyectos activos</div>
+      </div>
+
+      <!-- KPI ROW -->
+      <div class="kpis">
+        <!-- 1 sobrecarga -->
+        <div class="kpi alert">
+          <div class="klab">Recursos en sobrecarga</div>
+          <div class="kval">2 <span style="font-size:24px; color:var(--line-soft);">de 12</span></div>
+          <div class="ksub">% utilización &gt; 100</div>
+          <div class="klink">Ver carga del equipo →</div>
+        </div>
+        <!-- 2 utilización media -->
+        <div class="kpi">
+          <div class="klab">% Utilización media del equipo</div>
+          <div class="kval">105%</div>
+          <div class="minibar"><div class="minifill" style="width:74%;"></div><div class="minimark" style="left:70%;"></div></div>
+          <div class="ksub" style="margin-top:6px;">línea = 100% capacidad</div>
+        </div>
+        <!-- 3 proyectos del área -->
+        <div class="kpi">
+          <div class="klab">Proyectos del área</div>
+          <div class="kval">3 <span style="font-size:24px; color:var(--line-soft);">activos</span></div>
+          <div class="row gap-1" style="flex-wrap:wrap; margin:6px 0;">
+            <span class="stag stag-ok">1 en plazo</span>
+            <span class="stag stag-risk">1 en riesgo</span>
+            <span class="stag stag-late">1 retrasado</span>
+          </div>
+          <div class="ksub"><span class="kmark">indicador — dato de Proyectos</span></div>
+        </div>
+        <!-- 4 variaciones pendientes -->
+        <div class="kpi">
+          <div class="klab">Variaciones pendientes</div>
+          <div class="kval">2</div>
+          <div class="ksub">por resolver en el área</div>
+          <div class="klink">Ver variaciones →</div>
+        </div>
+      </div>
+
+      <!-- LOWER: chart + alerts -->
+      <div class="lower">
+
+        <!-- team load chart -->
+        <div class="box p-5">
+          <div class="row between mb-4" style="align-items:flex-end;">
+            <div>
+              <div class="h-section" style="font-size:20px;">Carga del equipo</div>
+              <div class="tiny mt-1">% de utilización por recurso · ordenado de mayor a menor · línea = 100% capacidad</div>
+            </div>
+            <span class="seclink">Ver carga del equipo →</span>
+          </div>
+          <div id="loadchart"></div>
+          <div class="tiny mt-3" style="color:var(--line-soft);">La trama diagonal marca a quienes superan su capacidad planificada (RF-07).</div>
+        </div>
+
+        <!-- alerts -->
+        <div class="box p-5">
+          <div class="h-section" style="font-size:18px;">Alertas</div>
+
+          <div class="label mt-4 mb-1" style="margin-bottom:6px;">RECURSOS EN SOBRECARGA</div>
+          <div id="overlist"></div>
+          <div class="row mt-2"><span class="seclink" style="font-size:12px;">Ir a Carga del equipo →</span></div>
+
+          <div class="label mt-5 mb-1" style="margin-bottom:6px; border-top:1.5px dashed var(--line-faint); padding-top:14px;">VARIACIONES POR RESOLVER</div>
+          <div id="varlist"></div>
+          <div class="row mt-2"><span class="seclink" style="font-size:12px;">Ir a Variaciones →</span></div>
+        </div>
+
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:560px;">
+        El dashboard <b>solo agrega y enlaza</b>: muestra indicadores tomados de Carga del equipo, Avance, Proyectos y Variaciones. La captura y edición ocurre en cada módulo.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // team load, sorted desc by pct
+  const TEAM = [
+    { n:'Ana Quispe Rojas',   pct:124 },
+    { n:'Marco Ríos Peña',    pct:115 },
+    { n:'Bruno Tello Vargas', pct:102 },
+    { n:'Diego Salas Romero', pct:95  },
+    { n:'Sofía Lazo Ferrer',  pct:84  },
+    { n:'Nadia Cárdenas Lu',  pct:71  },
+  ].sort((a,b)=>b.pct-a.pct);
+
+  const markPos = 70; // 100% sits at 70% of bar
+  document.getElementById('loadchart').innerHTML = TEAM.map(t => {
+    const over = t.pct > 100;
+    const w = Math.min(t.pct/100*markPos, 99);
+    return `
+      <div class="loadrow">
+        <div class="loadname">${t.n}</div>
+        <div class="loadbar">
+          <div class="loadfill ${over?'over':''}" style="width:${w}%;"></div>
+          <div class="loadmark" style="left:${markPos}%;"></div>
+        </div>
+        <div class="loadpct">${t.pct}%</div>
+      </div>`;
+  }).join('');
+
+  // overloaded list (pct>100)
+  document.getElementById('overlist').innerHTML = TEAM.filter(t=>t.pct>100).map(t => `
+    <div class="alertitem">
+      <div class="ph round av-sm" style="flex:none;"></div>
+      <span class="aname">${t.n}</span>
+      <span class="apct">${t.pct}%</span>
+    </div>`).join('');
+
+  // variations to resolve
+  const VARS = [
+    { type:'Plazo',   t:'Optimizar listado de trámites · #SD-4790' },
+    { type:'Alcance', t:'Módulo de notificaciones · #DM-018' },
+  ];
+  document.getElementById('varlist').innerHTML = VARS.map(v => `
+    <div class="varitem">
+      <span class="vtype">${v.type}</span>
+      <span style="font-family:'Kalam',cursive; font-size:13px; font-weight:700;">${v.t}</span>
+    </div>`).join('');
+</script>
+
+</body>
+</html>

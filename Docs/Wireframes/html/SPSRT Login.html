@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Login</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  .stage {
+    min-height: 100vh;
+    padding: 40px 40px 64px;
+    position: relative; z-index: 2;
+  }
+
+  /* page heading */
+  .doc-head { max-width: 1360px; margin: 0 auto 30px; }
+  .traza {
+    display: inline-flex; gap: 8px; align-items: center;
+    border: 1.5px solid var(--line-mid);
+    border-radius: 8px 3px 7px 2px;
+    padding: 3px 10px; font-size: 12px; color: var(--line-soft);
+    font-family: 'Kalam', cursive; background: var(--paper);
+  }
+
+  /* row of three states */
+  .states {
+    max-width: 1360px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px;
+    align-items: start;
+  }
+
+  .state-cap { margin-bottom: 18px; display: flex; align-items: flex-start; gap: 8px; min-height: 30px; }
+  .state-cap .h-section { line-height: 1.05; padding-top: 1px; }
+  .state-num {
+    width: 26px; height: 26px; flex: none;
+    border: 2px solid var(--line); border-radius: 8px 3px 7px 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 18px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+
+  /* a "screen" — full window, sober bg, card centered */
+  .screen {
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    background:
+      repeating-linear-gradient(45deg, var(--paper-alt) 0 16px, #ECEAE2 16px 17px);
+    padding: 34px 26px;
+    min-height: 540px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  /* the login card */
+  .card {
+    width: 100%; max-width: 320px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    box-shadow: 3px 4px 0 var(--line);
+    padding: 28px 26px 22px;
+    position: relative;
+  }
+
+  .brand { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; margin-bottom: 22px; }
+  .brand-sub { max-width: 220px; }
+
+  .field-label { margin-bottom: 6px; }
+
+  /* error band */
+  .errband {
+    display: flex; gap: 8px; align-items: flex-start;
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    background: var(--note-bg);
+    padding: 8px 11px; margin: 2px 0 4px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .errband .bang {
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 20px;
+    line-height: 1; flex: none;
+    border: 2px solid var(--line); border-radius: 50%;
+    width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
+  }
+  .input.err { box-shadow: 2px 2px 0 var(--line); }
+
+  /* recovery modal */
+  .scrim {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(26,26,26,0.10) 0 6px, rgba(26,26,26,0.16) 6px 7px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 14px;
+  }
+  .modal {
+    width: 100%; max-width: 268px;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 12px 5px 14px 4px / 4px 14px 5px 12px;
+    box-shadow: 4px 5px 0 var(--line);
+    padding: 16px 18px 16px;
+    position: relative;
+  }
+  .modal-x {
+    position: absolute; top: 8px; right: 11px;
+    font-family: 'Caveat', cursive; font-weight: 700; font-size: 20px;
+    cursor: pointer; line-height: 1;
+  }
+  .modal .h-sub { line-height: 1.15; }
+
+  .footer-tag { text-align: center; margin-top: 18px; font-family: monospace; }
+
+  .eye { cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="stage" data-screen-label="SPSRT · Login (boceto)">
+
+  <!-- heading -->
+  <div class="doc-head">
+    <div class="h-display" style="font-size:40px;">SPSRT — Acceso al sistema</div>
+    <div class="row gap-3 mt-3" style="flex-wrap:wrap;">
+      <span class="traza">RF-01 · CU-01 — Autenticar usuario</span>
+      <span class="traza">Actor: todos</span>
+      <span class="small">Boceto baja fidelidad · una pantalla, tres estados</span>
+    </div>
+  </div>
+
+  <!-- three states -->
+  <div class="states">
+
+    <!-- ============ STATE 1 — BASE ============ -->
+    <section>
+      <div class="state-cap"><span class="state-num">1</span><span class="h-section">Estado base</span></div>
+      <div class="screen">
+        <div class="card" data-screen-label="Login · base">
+
+          <div class="brand">
+            <div class="ph square" style="width:52px; height:52px;"></div>
+            <div class="h-title" style="font-size:30px; letter-spacing:0.04em;">SPSRT</div>
+            <div class="small brand-sub">Planificación y Seguimiento de Recursos Técnicos</div>
+          </div>
+
+          <div class="mb-3">
+            <div class="label field-label">CORREO ELECTRÓNICO</div>
+            <input type="email" class="input" placeholder="nombre.apellido@institucion.gob.pe" />
+          </div>
+
+          <div class="mb-3">
+            <div class="label field-label">CONTRASEÑA</div>
+            <div class="relative">
+              <input type="password" class="input" placeholder="••••••••" style="padding-right:38px;" />
+              <span class="ico eye" title="Mostrar / ocultar" style="position:absolute; right:10px; top:50%; transform:translateY(-50%);"></span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary stretch center mt-2" style="justify-content:center; padding:10px;">Entrar</button>
+
+          <div class="center mt-4">
+            <a class="small" style="font-weight:700; color:var(--line); text-decoration:underline; cursor:pointer;">¿Olvidó su contraseña?</a>
+          </div>
+
+          <div class="footer-tag tiny">v0.1 · SPSRT</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STATE 2 — ERROR ============ -->
+    <section>
+      <div class="state-cap"><span class="state-num">2</span><span class="h-section">Error de credenciales</span></div>
+      <div class="screen">
+        <div class="card" data-screen-label="Login · error">
+
+          <div class="brand">
+            <div class="ph square" style="width:52px; height:52px;"></div>
+            <div class="h-title" style="font-size:30px; letter-spacing:0.04em;">SPSRT</div>
+            <div class="small brand-sub">Planificación y Seguimiento de Recursos Técnicos</div>
+          </div>
+
+          <div class="mb-3">
+            <div class="label field-label">CORREO ELECTRÓNICO</div>
+            <input type="email" class="input err" value="j.perez@institucion.gob.pe" />
+          </div>
+
+          <div class="mb-3">
+            <div class="label field-label">CONTRASEÑA</div>
+            <div class="relative">
+              <input type="password" class="input err" value="••••••" style="padding-right:38px;" />
+              <span class="ico eye" style="position:absolute; right:10px; top:50%; transform:translateY(-50%);"></span>
+            </div>
+          </div>
+
+          <div class="errband">
+            <span class="bang">!</span>
+            <span style="font-size:13px;">Correo o contraseña incorrectos.</span>
+          </div>
+
+          <button class="btn btn-primary stretch center mt-2" style="justify-content:center; padding:10px;">Entrar</button>
+
+          <div class="center mt-4">
+            <a class="small" style="font-weight:700; color:var(--line); text-decoration:underline; cursor:pointer;">¿Olvidó su contraseña?</a>
+          </div>
+
+          <div class="footer-tag tiny">v0.1 · SPSRT</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STATE 3 — RECOVERY NOTICE ============ -->
+    <section>
+      <div class="state-cap"><span class="state-num">3</span><span class="h-section">Aviso de recuperación</span></div>
+      <div class="screen">
+        <div class="card" data-screen-label="Login · aviso recuperación">
+
+          <div class="brand">
+            <div class="ph square" style="width:52px; height:52px;"></div>
+            <div class="h-title" style="font-size:30px; letter-spacing:0.04em;">SPSRT</div>
+            <div class="small brand-sub">Planificación y Seguimiento de Recursos Técnicos</div>
+          </div>
+
+          <div class="mb-3">
+            <div class="label field-label">CORREO ELECTRÓNICO</div>
+            <input type="email" class="input" placeholder="nombre.apellido@institucion.gob.pe" />
+          </div>
+
+          <div class="mb-3">
+            <div class="label field-label">CONTRASEÑA</div>
+            <div class="relative">
+              <input type="password" class="input" placeholder="••••••••" style="padding-right:38px;" />
+              <span class="ico eye" style="position:absolute; right:10px; top:50%; transform:translateY(-50%);"></span>
+            </div>
+          </div>
+
+          <button class="btn btn-primary stretch center mt-2" style="justify-content:center; padding:10px;">Entrar</button>
+
+          <div class="center mt-4">
+            <a class="small" style="font-weight:700; color:var(--line); text-decoration:underline; cursor:pointer;">¿Olvidó su contraseña?</a>
+          </div>
+
+          <div class="footer-tag tiny">v0.1 · SPSRT</div>
+
+          <!-- modal overlay -->
+          <div class="scrim">
+            <div class="modal">
+              <span class="modal-x">✕</span>
+              <div class="h-sub" style="padding-right:16px; margin-bottom:9px;">Restablecer contraseña</div>
+              <div style="font-size:13px; line-height:1.5;">
+                Contacte al <b>Administrador del sistema</b> para restablecer su contraseña.
+              </div>
+              <button class="btn stretch center mt-4" style="justify-content:center;">Entendido</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- annotation note -->
+  <div class="note no-rotate" style="position:static; display:inline-block; margin: 28px auto 0; max-width: 520px;">
+    El restablecimiento NO es un flujo de correo: lo realiza el Administrador del sistema. El enlace solo muestra este aviso.
+  </div>
+  <div style="text-align:center;"></div>
+
+</div>
+
+</body>
+</html>

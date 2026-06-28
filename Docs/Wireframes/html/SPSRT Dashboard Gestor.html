@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Dashboard Gestor de Proyecto</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* period selector */
+  .period { display:inline-flex; align-items:center; gap:8px; border:2px solid var(--line); border-radius:10px 4px 11px 4px / 4px 10px 4px 11px; box-shadow:2px 2px 0 var(--line); background:var(--paper); padding:5px 12px; font-family:'Kalam',cursive; font-weight:700; font-size:13px; white-space:nowrap; cursor:pointer; }
+
+  /* ---- indicator cards ---- */
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:22px; }
+  .kpi {
+    border: 2px solid var(--line);
+    border-radius: 13px 5px 12px 4px / 4px 13px 5px 12px;
+    background: var(--paper); box-shadow: 3px 3px 0 var(--line);
+    padding: 16px 18px; cursor:pointer; display:flex; flex-direction:column; min-height:148px;
+  }
+  .kpi:hover { background: var(--paper-alt); }
+  .kpi.alert { background: repeating-linear-gradient(45deg, var(--paper) 0 9px, var(--paper-alt) 9px 10px); }
+  .kpi .klab { font-family:'Kalam',cursive; font-weight:700; font-size:12px; color:var(--line-soft); letter-spacing:.02em; text-transform:uppercase; line-height:1.2; }
+  .kpi .kval { font-family:'Caveat',cursive; font-weight:700; font-size:46px; line-height:1; margin-top:6px; }
+  .kpi .ksub { font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft); margin-top:auto; }
+  .kpi .klink { font-family:'Kalam',cursive; font-weight:700; font-size:12px; text-decoration:underline; margin-top:8px; }
+  .kmark { font-family:'Kalam',cursive; font-size:10px; color:var(--line-soft); border:1.5px dashed var(--line-mid); border-radius:6px 2px 5px 2px; padding:1px 6px; display:inline-block; }
+
+  /* mini bar inside kpi 2 */
+  .minibar { position:relative; height:16px; border:2px solid var(--line); border-radius:5px 2px 5px 2px; background:var(--paper); overflow:hidden; margin-top:8px; }
+  .minifill { position:absolute; top:0; bottom:0; left:0; background:repeating-linear-gradient(45deg,var(--line) 0 5px,var(--line-soft) 5px 6px); }
+  .minimark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); }
+
+  /* status tags for projects */
+  .stag { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; padding:1px 7px; border-radius:6px 2px 5px 2px; border:1.5px solid var(--line-mid); display:inline-flex; align-items:center; gap:4px; }
+  .stag::before { content:''; width:6px; height:6px; }
+  .stag-ok::before { content:'●'; font-size:7px; }
+  .stag-risk::before { content:'◐'; font-size:8px; }
+  .stag-late::before { content:'▲'; font-size:7px; }
+  .stag-late { background:var(--line); color:var(--paper); border-color:var(--line); }
+
+  /* ---- two-column lower ---- */
+  .lower { display:grid; grid-template-columns:2fr 1fr; gap:20px; align-items:start; }
+
+  /* project avance list */
+  .projrow { display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .projrow:last-child { border-bottom:none; }
+  .projmeta { width:210px; flex:none; }
+  .projcode { font-family:monospace; font-weight:700; font-size:13px; letter-spacing:.02em; border:2px solid var(--line); border-radius:8px 3px 7px 2px; padding:3px 9px; display:inline-block; background:var(--paper-alt); }
+  .projname { font-family:'Kalam',cursive; font-weight:700; font-size:13px; margin-top:5px; }
+  .basechip { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; padding:1px 7px; border-radius:6px 2px 5px 2px; border:1.5px solid var(--line-mid); display:inline-block; margin-top:5px; }
+  .basechip.nobase { border-style:dashed; color:var(--line-soft); }
+  .loadbar { position:relative; flex:1; height:22px; border:2px solid var(--line); border-radius:6px 3px 6px 3px; background:var(--paper); overflow:hidden; }
+  .loadfill { position:absolute; top:0; bottom:0; left:0; background:var(--line-mid); }
+  .loadfill.over { background:repeating-linear-gradient(45deg,var(--line) 0 5px,var(--line-soft) 5px 6px); }
+  .loadmark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); z-index:2; }
+  .loadpct { width:54px; flex:none; text-align:right; font-family:'Caveat',cursive; font-weight:700; font-size:18px; white-space:nowrap; }
+  /* due tasks */
+  .dueitem { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .dueitem:last-child { border-bottom:none; }
+  .duename { font-family:'Kalam',cursive; font-weight:700; font-size:13px; flex:1; }
+  .duedate { font-family:monospace; font-weight:700; font-size:11px; white-space:nowrap; border:2px solid var(--line-mid); border-radius:7px 3px 6px 2px; padding:2px 8px; }
+  .duedate.soon { border-color:var(--line); background:var(--line); color:var(--paper); }
+
+  /* alerts */
+  .alertitem { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .alertitem:last-child { border-bottom:none; }
+  .alertitem .aname { font-family:'Kalam',cursive; font-weight:700; font-size:13px; flex:1; }
+  .apct { font-family:'Caveat',cursive; font-weight:700; font-size:18px; white-space:nowrap; border:2px solid var(--line); border-radius:7px 3px 6px 2px; padding:0 8px; }
+  .varitem { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .varitem:last-child { border-bottom:none; }
+  .vtype { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; border:1.5px solid var(--line-mid); border-radius:6px 2px 5px 2px; padding:1px 7px; flex:none; margin-top:2px; }
+
+  .seclink { font-family:'Kalam',cursive; font-weight:700; font-size:13px; text-decoration:underline; cursor:pointer; white-space:nowrap; }
+  .h-title { white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE BAR (boceto chrome) ============ -->
+<div class="statebar">
+  <span class="label">Boceto · Dashboard del Gestor de Proyecto (landing post-login)</span>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">Landing A2 · agrega RF-05 · RF-09 · RF-10 · Actor: A2 Gestor de Proyecto (GESTOR_PROYECTO)</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Dashboard Gestor de Proyecto">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Dashboard</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Proyectos</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Planificación</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Seguimiento</span><span class="pendiente">pendiente</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Avance</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Variaciones</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      El Gestor no ve “Carga del equipo”: ese módulo es del Jefe de Área.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">L. Fernández</div>
+        <div class="tiny">Gestor de Proyecto</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <div class="period"><span class="label" style="margin:0 2px 0 0; font-size:11px;">PERIODO</span> <span>2T 2026 · abr–jun</span> <span style="font-size:10px;">▼</span></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Lucía Fernández</div>
+          <div class="tiny">Gestor de Proyecto</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- greeting -->
+      <div class="mb-5">
+        <div class="h-title" style="font-size:34px;">Buenos días, Lucía</div>
+        <div class="small mt-1" style="color:var(--line-soft);">Tus proyectos · periodo <b>2T 2026 (abr–jun)</b> · 2 proyectos a tu cargo</div>
+      </div>
+
+      <!-- KPI ROW -->
+      <div class="kpis">
+        <!-- 1 mis proyectos -->
+        <div class="kpi">
+          <div class="klab">Mis proyectos</div>
+          <div class="kval">2</div>
+          <div class="ksub">proyectos a tu cargo, activos</div>
+          <div class="klink">Ver proyectos →</div>
+        </div>
+        <!-- 2 avance promedio -->
+        <div class="kpi">
+          <div class="klab">Avance promedio</div>
+          <div class="kval">78%</div>
+          <div class="minibar"><div class="minifill" style="width:78%; background:var(--line-mid);"></div><div class="minimark" style="left:100%;"></div></div>
+          <div class="ksub" style="margin-top:6px;"><span class="klink" style="margin:0;">Ver avance →</span></div>
+        </div>
+        <!-- 3 variaciones por resolver -->
+        <div class="kpi alert">
+          <div class="klab">Variaciones por resolver</div>
+          <div class="kval">2</div>
+          <div class="ksub">debes aprobar o rechazar</div>
+          <div class="klink">Ver variaciones →</div>
+        </div>
+        <!-- 4 planificacion -->
+        <div class="kpi">
+          <div class="klab">Planificación</div>
+          <div class="kval">1</div>
+          <div class="ksub">proyecto sin línea base congelada</div>
+          <div class="klink">Ir a Planificación →</div>
+        </div>
+      </div>
+
+      <!-- LOWER: projects + por hacer -->
+      <div class="lower">
+
+        <!-- project avance -->
+        <div class="box p-5">
+          <div class="row between mb-4" style="align-items:flex-end;">
+            <div>
+              <div class="h-section" style="font-size:20px;">Avance de mis proyectos</div>
+              <div class="tiny mt-1">% de avance vs. línea base · estado de la línea base por proyecto</div>
+            </div>
+            <span class="seclink">Ver avance →</span>
+          </div>
+          <div id="projlist"></div>
+          <div class="tiny mt-3" style="color:var(--line-soft);">El avance solo se mide contra una línea base congelada (RF-09). “SIPLANILLA” aún no tiene una.</div>
+        </div>
+
+        <!-- por hacer -->
+        <div class="box p-5">
+          <div class="h-section" style="font-size:18px;">Por hacer</div>
+
+          <div class="label mt-4 mb-1" style="margin-bottom:6px;">VARIACIONES POR RESOLVER</div>
+          <div id="varlist"></div>
+          <div class="row mt-2"><span class="seclink" style="font-size:12px;">Ir a Variaciones →</span></div>
+
+          <div class="label mt-5 mb-1" style="margin-bottom:6px; border-top:1.5px dashed var(--line-faint); padding-top:14px;">TAREAS PRÓXIMAS A VENCER</div>
+          <div id="duelist"></div>
+          <div class="row mt-2"><span class="seclink" style="font-size:12px;">Ir a Proyectos →</span></div>
+        </div>
+
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:560px;">
+        El dashboard <b>solo agrega y enlaza</b>: muestra indicadores de tus proyectos tomados de Avance, Variaciones y Planificación. La gestión ocurre en cada módulo.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // my projects with avance + baseline status
+  const PROJECTS = [
+    { code:'SIGTRAMITES', name:'Sistema de Gestión de Trámites', pct:85, base:'Línea base v2 · vigente', nobase:false },
+    { code:'SIPLANILLA',  name:'Sistema de Planillas y Remuneraciones', pct:0, base:'Sin línea base congelada', nobase:true },
+  ];
+  const markPos = 70;
+  document.getElementById('projlist').innerHTML = PROJECTS.map(p => {
+    const w = p.nobase ? 0 : Math.min(p.pct/100*markPos, 99);
+    const pctLabel = p.nobase ? '—' : p.pct + '%';
+    const barInner = p.nobase
+      ? '<div class="loadmark" style="left:'+markPos+'%;"></div>'
+      : '<div class="loadfill" style="width:'+w+'%;"></div><div class="loadmark" style="left:'+markPos+'%;"></div>';
+    return `
+      <div class="projrow">
+        <div class="projmeta">
+          <span class="projcode">${p.code}</span>
+          <div class="projname">${p.name}</div>
+          <span class="basechip ${p.nobase?'nobase':''}">${p.base}</span>
+        </div>
+        <div class="loadbar">${barInner}</div>
+        <div class="loadpct">${pctLabel}</div>
+      </div>`;
+  }).join('');
+
+  // variations to resolve
+  const VARS = [
+    { type:'Plazo',   t:'Optimizar listado de trámites · #SD-4790' },
+    { type:'Alcance', t:'Módulo de notificaciones · #DM-018' },
+  ];
+  document.getElementById('varlist').innerHTML = VARS.map(v => `
+    <div class="varitem">
+      <span class="vtype">${v.type}</span>
+      <span style="font-family:'Kalam',cursive; font-size:13px; font-weight:700;">${v.t}</span>
+    </div>`).join('');
+
+  // upcoming due tasks
+  const DUE = [
+    { t:'Implementar validación de RUC · #REQ-014', d:'13/06/2026', soon:true },
+    { t:'Pruebas con casos reales · #REQ-014',       d:'16/06/2026', soon:false },
+    { t:'Módulo de notificaciones por correo · #DM-018', d:'20/06/2026', soon:false },
+  ];
+  document.getElementById('duelist').innerHTML = DUE.map(x => `
+    <div class="dueitem">
+      <span class="duename">${x.t}</span>
+      <span class="duedate ${x.soon?'soon':''}">${x.d}</span>
+    </div>`).join('');
+</script>
+
+</body>
+</html>

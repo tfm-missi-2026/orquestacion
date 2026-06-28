@@ -1,0 +1,136 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="Story Map SPSRT" id="storymap-spsrt">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="0" arrows="0" fold="1" page="1" pageScale="1" pageWidth="1560" pageHeight="760" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ===== Título ===== -->
+        <mxCell id="title" value="Mapa de Historias de Usuario — SPSRT&#10;Sistema de Planificación y Seguimiento de Recursos Técnicos" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1E2A52;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=16;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="1470" height="48" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Franjas de release (fondo) ===== -->
+        <mxCell id="bandR1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F5E9;strokeColor=#A5D6A7;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="20" y="255" width="1470" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="bandR2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FFE082;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="20" y="415" width="1470" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="bandR3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FCE4EC;strokeColor=#F48FB1;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="20" y="535" width="1470" height="95" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Etiquetas de release ===== -->
+        <mxCell id="lblR1" value="Release 1&#10;MVP — Must" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="25" y="260" width="140" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="lblR2" value="Release 2&#10;Should" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFB300;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="25" y="420" width="140" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lblR3" value="Release 3&#10;Could" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EC407A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="25" y="540" width="140" height="85" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Backbone: actividades ===== -->
+        <mxCell id="act0" value="1. Acceso y administración&#10;(transversal)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#345A8A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="170" y="85" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="act1" value="2. Planificación del proyecto&#10;(C1)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#345A8A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="360" y="85" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="act2" value="3. Asignación de recursos&#10;(C1)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#345A8A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="550" y="85" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="act3" value="4. Control de carga&#10;(C1)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#345A8A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="740" y="85" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="act4" value="5. Registro de ejecución&#10;(C2)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#345A8A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="930" y="85" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="act5" value="6. Seguimiento del avance&#10;(C2)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#345A8A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="85" width="180" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="act6" value="7. Gestión de variaciones&#10;(C3)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#345A8A;strokeColor=none;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="85" width="180" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Fila de tareas de usuario ===== -->
+        <mxCell id="task0" value="• Autenticarse&#10;• Gestionar usuarios y roles" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#7EA6E0;fontColor=#1A1A1A;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="170" y="150" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="task1" value="• Crear proyecto&#10;• Definir tareas" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#7EA6E0;fontColor=#1A1A1A;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="360" y="150" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="task2" value="• Asignar recursos (horas / periodo)&#10;• Reasignar recursos" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#7EA6E0;fontColor=#1A1A1A;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="550" y="150" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="task3" value="• Ver carga por recurso&#10;• Detectar sobreasignación" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#7EA6E0;fontColor=#1A1A1A;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="740" y="150" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="task4" value="• Registrar dedicación real" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#7EA6E0;fontColor=#1A1A1A;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="930" y="150" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="task5" value="• Consultar plan vs. real&#10;• Ver indicadores del área" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#7EA6E0;fontColor=#1A1A1A;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="150" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="task6" value="• Reportar incidencia&#10;• Registrar variación&#10;• Consultar histórico" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#7EA6E0;fontColor=#1A1A1A;fontSize=11;align=left;verticalAlign=top;spacingLeft=6;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="150" width="180" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Release 1 — tarjetas (verde = implementado) ===== -->
+        <mxCell id="hu11" value="HU-11 · Login con JWT&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="268" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="hu12" value="HU-12 · ABM de usuarios y roles&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="175" y="333" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="hu01" value="HU-01 · Crear proyecto&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="365" y="298" width="170" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="hu02" value="HU-02 · Asignar recursos (línea base)&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="555" y="298" width="170" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="hu03" value="HU-03 · Ver carga / sobreasignación&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="745" y="298" width="170" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="hu05" value="HU-05 · Registrar dedicación real&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="935" y="298" width="170" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="hu06" value="HU-06 · Avance plan vs. real&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1125" y="298" width="170" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="hu08" value="HU-08 · Reportar incidencia&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1315" y="268" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="hu09" value="HU-09 · Registrar variación&#10;[Must] ✅" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1315" y="333" width="170" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Release 2 — tarjetas ===== -->
+        <mxCell id="hu04" value="HU-04 · Reasignar recursos&#10;[Should] ◐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#FB8C00;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="555" y="435" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hu07" value="HU-07 · Indicadores del área&#10;[Should] ❌" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#E53935;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1125" y="435" width="170" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Release 3 — tarjetas ===== -->
+        <mxCell id="hu10" value="HU-10 · Histórico de variaciones&#10;[Could] ◐" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#FB8C00;fontColor=#1A1A1A;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1315" y="552" width="170" height="58" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Leyenda ===== -->
+        <mxCell id="legend" value="Estado:  ✅ Implementado   ◐ Parcial   ❌ Pendiente        |        Prioridad MoSCoW:  [Must] / [Should] / [Could]        |        C1 Planificación · C2 Seguimiento · C3 Variaciones" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#BDBDBD;fontColor=#1A1A1A;fontSize=11;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="20" y="650" width="1470" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- ===== Pie de figura (APA) ===== -->
+        <mxCell id="caption" value="Figura X. Mapa de historias de usuario del sistema SPSRT. Fuente. Elaboración propia." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontColor=#555555;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="20" y="695" width="900" height="25" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

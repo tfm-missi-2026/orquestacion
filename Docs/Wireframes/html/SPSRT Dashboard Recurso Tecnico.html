@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Dashboard Recurso Técnico</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* period selector */
+  .period { display:inline-flex; align-items:center; gap:8px; border:2px solid var(--line); border-radius:10px 4px 11px 4px / 4px 10px 4px 11px; box-shadow:2px 2px 0 var(--line); background:var(--paper); padding:5px 12px; font-family:'Kalam',cursive; font-weight:700; font-size:13px; white-space:nowrap; cursor:pointer; }
+
+  /* ---- indicator cards ---- */
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-bottom:22px; }
+  .kpi {
+    border: 2px solid var(--line);
+    border-radius: 13px 5px 12px 4px / 4px 13px 5px 12px;
+    background: var(--paper); box-shadow: 3px 3px 0 var(--line);
+    padding: 16px 18px; cursor:pointer; display:flex; flex-direction:column; min-height:148px;
+  }
+  .kpi:hover { background: var(--paper-alt); }
+  .kpi.alert { background: repeating-linear-gradient(45deg, var(--paper) 0 9px, var(--paper-alt) 9px 10px); }
+  .kpi .klab { font-family:'Kalam',cursive; font-weight:700; font-size:12px; color:var(--line-soft); letter-spacing:.02em; text-transform:uppercase; line-height:1.2; }
+  .kpi .kval { font-family:'Caveat',cursive; font-weight:700; font-size:46px; line-height:1; margin-top:6px; white-space:nowrap; }
+  .kpi .ksub { font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft); margin-top:auto; }
+  .kpi .klink { font-family:'Kalam',cursive; font-weight:700; font-size:12px; text-decoration:underline; margin-top:8px; }
+  .kmark { font-family:'Kalam',cursive; font-size:10px; color:var(--line-soft); border:1.5px dashed var(--line-mid); border-radius:6px 2px 5px 2px; padding:1px 6px; display:inline-block; }
+
+  /* mini bar inside kpi 2 */
+  .minibar { position:relative; height:16px; border:2px solid var(--line); border-radius:5px 2px 5px 2px; background:var(--paper); overflow:hidden; margin-top:8px; }
+  .minifill { position:absolute; top:0; bottom:0; left:0; background:repeating-linear-gradient(45deg,var(--line) 0 5px,var(--line-soft) 5px 6px); }
+  .minimark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); }
+
+  /* status tags for projects */
+  .stag { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; padding:1px 7px; border-radius:6px 2px 5px 2px; border:1.5px solid var(--line-mid); display:inline-flex; align-items:center; gap:4px; }
+  .stag::before { content:''; width:6px; height:6px; }
+  .stag-ok::before { content:'●'; font-size:7px; }
+  .stag-risk::before { content:'◐'; font-size:8px; }
+  .stag-late::before { content:'▲'; font-size:7px; }
+  .stag-late { background:var(--line); color:var(--paper); border-color:var(--line); }
+
+  /* ---- two-column lower ---- */
+  .lower { display:grid; grid-template-columns:2fr 1fr; gap:20px; align-items:start; }
+
+  /* project avance list */
+  .projrow { display:flex; align-items:center; gap:14px; padding:14px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .projrow:last-child { border-bottom:none; }
+  .projmeta { width:210px; flex:none; }
+  .projcode { font-family:monospace; font-weight:700; font-size:13px; letter-spacing:.02em; border:2px solid var(--line); border-radius:8px 3px 7px 2px; padding:3px 9px; display:inline-block; background:var(--paper-alt); }
+  .projname { font-family:'Kalam',cursive; font-weight:700; font-size:13px; margin-top:5px; }
+  .basechip { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; padding:1px 7px; border-radius:6px 2px 5px 2px; border:1.5px solid var(--line-mid); display:inline-block; margin-top:5px; }
+  .basechip.nobase { border-style:dashed; color:var(--line-soft); }
+  .loadbar { position:relative; flex:1; height:22px; border:2px solid var(--line); border-radius:6px 3px 6px 3px; background:var(--paper); overflow:hidden; }
+  .loadfill { position:absolute; top:0; bottom:0; left:0; background:var(--line-mid); }
+  .loadfill.over { background:repeating-linear-gradient(45deg,var(--line) 0 5px,var(--line-soft) 5px 6px); }
+  .loadmark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); z-index:2; }
+  .loadpct { width:54px; flex:none; text-align:right; font-family:'Caveat',cursive; font-weight:700; font-size:18px; white-space:nowrap; }
+  /* due tasks */
+  .dueitem { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .dueitem:last-child { border-bottom:none; }
+  .duename { font-family:'Kalam',cursive; font-weight:700; font-size:13px; flex:1; }
+  .duedate { font-family:monospace; font-weight:700; font-size:11px; white-space:nowrap; border:2px solid var(--line-mid); border-radius:7px 3px 6px 2px; padding:2px 8px; }
+  .duedate.soon { border-color:var(--line); background:var(--line); color:var(--paper); }
+
+  /* alerts */
+  .alertitem { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .alertitem:last-child { border-bottom:none; }
+  .alertitem .aname { font-family:'Kalam',cursive; font-weight:700; font-size:13px; flex:1; }
+  .apct { font-family:'Caveat',cursive; font-weight:700; font-size:18px; white-space:nowrap; border:2px solid var(--line); border-radius:7px 3px 6px 2px; padding:0 8px; }
+  .varitem { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .varitem:last-child { border-bottom:none; }
+  .vtype { font-family:'Kalam',cursive; font-weight:700; font-size:10px; white-space:nowrap; border:1.5px solid var(--line-mid); border-radius:6px 2px 5px 2px; padding:1px 7px; flex:none; margin-top:2px; }
+
+  .seclink { font-family:'Kalam',cursive; font-weight:700; font-size:13px; text-decoration:underline; cursor:pointer; white-space:nowrap; }
+  .h-title { white-space: nowrap; }
+
+  /* situation labels */
+  .sit { font-family:'Kalam',cursive; font-weight:700; font-size:11px; white-space:nowrap; padding:3px 10px; border-radius:9px; display:inline-flex; align-items:center; gap:5px; border:2px solid var(--line); }
+  .sit::before { line-height:1; }
+  .sit-pend { border-style:dashed; }
+  .sit-pend::before { content:'○'; font-size:10px; }
+  .sit-aten { background:var(--paper-alt); }
+  .sit-aten::before { content:'◐'; font-size:11px; }
+  .sit-culm { background:var(--line); color:var(--paper); }
+  .sit-culm::before { content:'●'; font-size:9px; }
+  /* my tasks rows */
+  .taskrow { display:flex; align-items:center; gap:14px; padding:13px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .taskrow:last-child { border-bottom:none; }
+  .taskinfo { flex:1; min-width:0; }
+  .taskname { font-family:'Kalam',cursive; font-weight:700; font-size:14px; }
+  .tasksub { font-family:monospace; font-size:11px; color:var(--line-soft); margin-top:2px; }
+  .taskhrs { width:110px; flex:none; text-align:right; font-family:'Caveat',cursive; font-weight:700; font-size:19px; white-space:nowrap; }
+  .taskhrs small { display:block; font-family:'Kalam',cursive; font-size:11px; font-weight:700; color:var(--line-soft); margin-top:-2px; }
+  /* bitacora blocks */
+  .blk { display:flex; gap:11px; align-items:flex-start; padding:9px 0; border-bottom:1.5px dashed var(--line-faint); }
+  .blk:last-child { border-bottom:none; }
+  .blktime { font-family:'Caveat',cursive; font-weight:700; font-size:16px; white-space:nowrap; flex:none; width:96px; }
+  .blkkind { font-family:'Kalam',cursive; font-weight:700; font-size:11px; white-space:nowrap; padding:2px 8px; border-radius:7px 3px 6px 2px; border:2px solid var(--line); display:inline-block; }
+  .blkkind.act { background:repeating-linear-gradient(45deg,var(--paper) 0 6px,var(--paper-alt) 6px 7px); }
+  .blkdesc { font-family:'Kalam',cursive; font-size:13px; margin-top:4px; }
+  .daytotal { display:flex; align-items:center; justify-content:space-between; border-top:2px solid var(--line); padding-top:12px; margin-top:6px; }
+  .totchip { font-family:monospace; font-weight:700; font-size:14px; border:2px solid var(--line); border-radius:8px 3px 7px 2px; padding:3px 11px; background:var(--paper-alt); }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE BAR (boceto chrome) ============ -->
+<div class="statebar">
+  <span class="label">Boceto · Dashboard del Recurso Técnico (landing post-login)</span>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">Landing A3 · agrega RF-08 · RF-07/05 · HU-08 · Actor: A3 Recurso Técnico (RECURSO_TECNICO)</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Dashboard Recurso Técnico">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Dashboard</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Seguimiento</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Avance</span><span class="pendiente">pendiente</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      El menú es más corto: el rol Recurso Técnico solo accede a estos módulos.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">A. Quispe</div>
+        <div class="tiny">Recurso Técnico</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <div class="period"><span class="label" style="margin:0 2px 0 0; font-size:11px;">PERIODO</span> <span>2T 2026 · abr–jun</span> <span style="font-size:10px;">▼</span></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Ana Quispe</div>
+          <div class="tiny">Recurso Técnico</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- greeting -->
+      <div class="mb-5">
+        <div class="h-title" style="font-size:34px;">Buenos días, Ana</div>
+        <div class="small mt-1" style="color:var(--line-soft);">Mi trabajo · periodo <b>2T 2026 (abr–jun)</b> · 4 tareas activas</div>
+      </div>
+
+      <!-- KPI ROW -->
+      <div class="kpis">
+        <!-- 1 mis tareas activas -->
+        <div class="kpi">
+          <div class="klab">Mis tareas activas</div>
+          <div class="kval">4</div>
+          <div class="ksub">asignadas y en curso</div>
+          <div class="klink">Ir a Seguimiento →</div>
+        </div>
+        <!-- 2 horas registradas -->
+        <div class="kpi">
+          <div class="klab">Horas registradas</div>
+          <div class="kval">198 h</div>
+          <div class="ksub">en el 2T (abr–jun)</div>
+          <div class="klink">Ver mi bitácora →</div>
+        </div>
+        <!-- 3 mi utilización -->
+        <div class="kpi alert">
+          <div class="klab">Mi utilización</div>
+          <div class="kval">124%</div>
+          <div style="margin-top:4px;"><span class="sit sit-aten" style="background:var(--line); color:var(--paper); border-color:var(--line);">Sobrecarga</span></div>
+          <div class="minibar"><div class="minifill" style="width:87%;"></div><div class="minimark" style="left:70%;"></div></div>
+          <div class="ksub" style="margin-top:6px;">registradas ÷ planificadas · línea = 100%</div>
+        </div>
+        <!-- 4 variaciones reportadas -->
+        <div class="kpi">
+          <div class="klab">Variaciones reportadas</div>
+          <div class="kval">2</div>
+          <div class="ksub">reportadas por mí</div>
+          <div class="klink">Ver variaciones →</div>
+        </div>
+      </div>
+
+      <!-- LOWER: my tasks + bitacora -->
+      <div class="lower">
+
+        <!-- my tasks -->
+        <div class="box p-5">
+          <div class="row between mb-4" style="align-items:flex-end;">
+            <div>
+              <div class="h-section" style="font-size:20px;">Mis tareas</div>
+              <div class="tiny mt-1">tareas asignadas · situación · horas registradas / planificadas</div>
+            </div>
+            <span class="seclink">Ir a Seguimiento →</span>
+          </div>
+          <div id="tasklist"></div>
+          <div class="tiny mt-3" style="color:var(--line-soft);">Registras tus horas por tarea en Mi bitácora (RF-08).</div>
+        </div>
+
+        <!-- mi bitacora de hoy -->
+        <div class="box p-5">
+          <div class="h-section" style="font-size:18px;">Mi bitácora</div>
+          <div class="tiny mb-3">Hoy · jueves 12/06/2026</div>
+          <div id="blklist"></div>
+          <div class="daytotal">
+            <span class="tiny">Total del día</span>
+            <span class="totchip">6.5 h</span>
+          </div>
+          <button class="btn btn-primary stretch center mt-4" style="justify-content:center;">+ Registrar bloque</button>
+          <div class="row center mt-3"><span class="seclink" style="font-size:12px;">Ver mi bitácora →</span></div>
+        </div>
+
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:560px;">
+        El dashboard <b>solo agrega y enlaza</b>: muestra tus tareas, horas y carga. Registras tu dedicación en <b>Mi bitácora</b> (Seguimiento).
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // my assigned tasks
+  const TASKS = [
+    { t:'Implementar validación de RUC', sub:'#REQ-014 · SIGTRAMITES', sit:'En atención', sc:'aten', reg:9,  plan:16 },
+    { t:'Pruebas con casos reales',       sub:'#REQ-014 · SIGTRAMITES', sit:'Pendiente',  sc:'pend', reg:0,  plan:10 },
+    { t:'Ajuste por nuevo dígito verificador', sub:'#V-007 · SIGTRAMITES', sit:'Pendiente', sc:'pend', reg:0, plan:12 },
+    { t:'Analizar formato de RUC (SUNAT)', sub:'#REQ-014 · SIGTRAMITES', sit:'Culminado',  sc:'culm', reg:8,  plan:8  },
+  ];
+  document.getElementById('tasklist').innerHTML = TASKS.map(x => `
+    <div class="taskrow">
+      <div class="taskinfo">
+        <div class="taskname">${x.t}</div>
+        <div class="tasksub">${x.sub}</div>
+      </div>
+      <span class="sit sit-${x.sc}">${x.sit}</span>
+      <div class="taskhrs">${x.reg} / ${x.plan} h<small>registr. / planif.</small></div>
+    </div>`).join('');
+
+  // today's bitacora blocks
+  const BLOCKS = [
+    { time:'08:30–09:00', kind:'act',  k:'Actividad', desc:'Reunión de planificación diaria' },
+    { time:'09:00–12:00', kind:'task', k:'Tarea',     desc:'Implementar validación de RUC · #REQ-014' },
+    { time:'13:00–14:30', kind:'task', k:'Tarea',     desc:'Pruebas con casos reales · #REQ-014' },
+  ];
+  document.getElementById('blklist').innerHTML = BLOCKS.map(b => `
+    <div class="blk">
+      <span class="blktime">${b.time}</span>
+      <div style="flex:1; min-width:0;">
+        <span class="blkkind ${b.kind==='act'?'act':''}">${b.k}</span>
+        <div class="blkdesc">${b.desc}</div>
+      </div>
+    </div>`).join('');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>[Boceto] SPSRT — Avance del proyecto</title>
+<link rel="stylesheet" href="sketch.css">
+<style>
+  /* ---- state switcher (boceto chrome) ---- */
+  .statebar {
+    position: relative; z-index: 3;
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    padding: 12px 22px;
+    border-bottom: 2px dashed var(--line-mid);
+    background: var(--paper-alt);
+  }
+  .statebar .label { margin: 0; }
+  .seg { display: flex; gap: 6px; flex-wrap: wrap; }
+  .seg button {
+    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px;
+    padding: 5px 12px; cursor: pointer; color: var(--line-soft); white-space: nowrap;
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 10px 4px 12px 4px / 4px 10px 4px 12px;
+    box-shadow: 2px 2px 0 var(--line);
+  }
+  .seg button.active { background: var(--line); color: var(--paper); }
+
+  /* ---- sidebar disabled items ---- */
+  .nav a.disabled {
+    color: var(--line-faint); cursor: not-allowed; opacity: .85;
+    box-shadow: none; background: transparent;
+  }
+  .nav a.disabled:hover { background: transparent; }
+  .pendiente {
+    font-family: 'Kalam', cursive; font-size: 10px; font-weight: 700;
+    letter-spacing: .04em; color: var(--line-soft);
+    border: 1.5px dashed var(--line-mid); border-radius: 7px 3px 6px 2px;
+    padding: 1px 6px; white-space: nowrap;
+  }
+
+  /* ---- baseline header ---- */
+  .baseline {
+    border: 2px solid var(--line);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    background: var(--paper-alt); box-shadow: 3px 3px 0 var(--line);
+    padding: 18px 22px; margin-bottom: 24px;
+    display:flex; gap:26px; align-items:center; flex-wrap:wrap;
+  }
+  .bl-tag {
+    display:flex; align-items:center; gap:12px; flex:1; min-width:240px;
+  }
+  .bl-icon {
+    width:46px; height:46px; flex:none;
+    border:2px solid var(--line); border-radius:9px 3px 8px 3px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Caveat',cursive; font-weight:700; font-size:24px;
+    background:var(--paper);
+  }
+  .bl-figs { display:flex; gap:0; flex-wrap:wrap; }
+  .bl-fig { padding:0 22px; border-left:2px dashed var(--line-mid); text-align:center; }
+  .bl-fig:first-child { border-left:none; }
+  .bl-fig .flab { font-family:'Kalam',cursive; font-weight:700; font-size:11px; color:var(--line-soft); text-transform:uppercase; letter-spacing:.03em; white-space:nowrap; }
+  .bl-fig .fval { font-family:'Caveat',cursive; font-weight:700; font-size:44px; line-height:1; margin-top:2px; white-space:nowrap; }
+
+  /* ---- table ---- */
+  .tbl td { font-family: 'Kalam', cursive; vertical-align: middle; }
+  .hrs { font-family:'Caveat',cursive; font-weight:700; font-size:19px; white-space:nowrap; }
+  .tk { font-family:monospace; font-size:11px; color:var(--line-soft); }
+
+  /* progress bar */
+  .prog { display:flex; align-items:center; gap:10px; }
+  .pbar { position:relative; flex:1; height:20px; min-width:120px; border:2px solid var(--line); border-radius:6px 3px 6px 3px; background:var(--paper); overflow:hidden; }
+  .pfill { position:absolute; top:0; bottom:0; left:0; background:var(--line-mid); }
+  .pfill.over { background:repeating-linear-gradient(45deg, var(--line) 0 5px, var(--line-soft) 5px 6px); }
+  .pmark { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--line); z-index:2; }
+  .ppct { font-family:'Caveat',cursive; font-weight:700; font-size:18px; min-width:50px; white-space:nowrap; }
+
+  /* deviation chip */
+  .dev { font-family:'Kalam',cursive; font-weight:700; font-size:13px; white-space:nowrap; padding:3px 12px; border-radius:8px 3px 7px 2px; display:inline-flex; align-items:center; gap:5px; border:2px solid var(--line); }
+  .dev-under { background:var(--paper); }          /* −X aún por debajo */
+  .dev-under::before { content:'↓'; font-size:13px; }
+  .dev-over  { background:var(--line); color:var(--paper); }  /* +X sobre lo estimado */
+  .dev-over::before { content:'↑'; font-size:13px; }
+  .dev-zero  { background:var(--paper-alt); color:var(--line-soft); border-style:dashed; }
+  .dev-zero::before { content:'='; font-size:12px; }
+
+  .codechip { font-family: monospace; font-weight: 700; font-size: 14px; letter-spacing: .02em; border: 2px solid var(--line); border-radius: 8px 3px 7px 2px; padding: 4px 11px; display: inline-block; background: var(--paper); }
+  .dropdown { white-space: nowrap; }
+  .btn { white-space: nowrap; }
+  .h-title { white-space: nowrap; }
+
+  /* ---- empty state (no baseline) ---- */
+  .empty {
+    text-align: center; padding: 60px 30px;
+    border: 2px dashed var(--line-mid);
+    border-radius: 14px 6px 12px 5px / 6px 14px 5px 12px;
+    background: var(--paper);
+  }
+  .empty .ph { margin: 0 auto 16px; }
+</style>
+</head>
+<body>
+
+<!-- ============ STATE SWITCHER ============ -->
+<div class="statebar">
+  <span class="label">Estado del boceto:</span>
+  <div class="seg">
+    <button class="active" data-state="datos" onclick="setState('datos')">Avance (con línea base)</button>
+    <button data-state="sinbase" onclick="setState('sinbase')">Sin línea base</button>
+  </div>
+  <span style="margin-left:auto; border:1.5px solid var(--line-mid); padding:3px 10px; border-radius:8px 3px 7px 2px; font-family:'Kalam',cursive; font-size:12px; color:var(--line-soft);">RF-09 · CU-07 · HU-06 — Consultar avance del proyecto · Actor: A2 Líder de Proyecto (GESTOR_PROYECTO)</span>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div class="app" data-screen-label="SPSRT · Avance del proyecto">
+
+  <!-- SIDEBAR -->
+  <aside class="aside">
+    <div class="row gap-3" style="padding: 4px 4px 16px; border-bottom: 1.5px dashed var(--line-mid);">
+      <div class="ph square" style="width:34px; height:34px;"></div>
+      <div>
+        <div class="h-sub" style="font-size:18px; font-family:'Caveat',cursive;">SPSRT</div>
+        <div class="tiny" style="letter-spacing:0.14em; text-transform:uppercase;">Operación · v0.1</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-h">MÓDULOS</div>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Dashboard</span><span class="pendiente">pendiente</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Proyectos</span></a>
+      <a><span class="ico sm"></span><span class="flex-1">Planificación</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Seguimiento</span><span class="pendiente">pendiente</span></a>
+      <a class="active"><span class="ico sm"></span><span class="flex-1">Avance</span></a>
+      <a class="disabled"><span class="ico sm"></span><span class="flex-1">Variaciones</span><span class="pendiente">pendiente</span></a>
+    </nav>
+
+    <div class="note no-rotate" style="position:static; display:block; max-width:none; margin-top:18px; font-size:12px;">
+      El Gestor no ve “Carga del equipo”: ese módulo es del Jefe de Área.
+    </div>
+
+    <div class="box-thin p-3 mt-4 row gap-2" style="border-style:dashed;">
+      <div class="ph round av-md"></div>
+      <div class="flex-1 truncate">
+        <div style="font-weight:700; font-size:13px;">L. Fernández</div>
+        <div class="tiny">Gestor de Proyecto</div>
+      </div>
+      <span style="font-size:12px;">▸</span>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="h-section" style="font-size:22px;">SPSRT</div>
+      <div class="flex-1"></div>
+      <span style="width:2px; height:24px; background:var(--line-mid);"></span>
+      <div class="row gap-2 box-thin" style="padding: 4px 10px 4px 4px;">
+        <div class="ph round av-sm"></div>
+        <div style="line-height:1.25; white-space:nowrap;">
+          <div style="font-weight:700; font-size:13px;">Lucía Fernández</div>
+          <div class="tiny">Gestor de Proyecto</div>
+        </div>
+        <span style="font-size:10px;">▼</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- module header -->
+      <div class="row between mb-2" style="align-items:flex-end;">
+        <div>
+          <div class="crumb" style="white-space:nowrap;">Operación › <b style="color:var(--line);">Avance</b></div>
+          <div class="h-title" style="margin-top:2px;">Avance del proyecto</div>
+        </div>
+        <div class="row gap-2" style="align-items:center;">
+          <span class="label" style="margin:0;">PROYECTO</span>
+          <div class="dropdown" style="min-width:230px;"><span class="codechip" style="padding:2px 8px; font-size:12px;">SIGTRAMITES</span><span style="white-space:nowrap;">Sistema de Gestión de Trámites</span></div>
+        </div>
+      </div>
+      <div class="small mb-5" style="color:var(--line-soft); max-width:80ch;">Compara lo <b>planificado</b> (horas estimadas de la línea base congelada) con lo <b>ejecutado</b> (horas registradas en bitácora). % Avance = registradas ÷ estimadas; desviación = registradas − estimadas.</div>
+
+      <!-- ===== DATA ===== -->
+      <div id="data-wrap">
+
+        <!-- baseline header -->
+        <div class="baseline">
+          <div class="bl-tag">
+            <span class="bl-icon">❄</span>
+            <div>
+              <div class="h-section" style="font-size:20px;">Línea base v2</div>
+              <div class="tiny mt-1">Congelada el 18/05/2026 · vigente</div>
+            </div>
+          </div>
+          <div class="bl-figs">
+            <div class="bl-fig">
+              <div class="flab">Horas estimadas</div>
+              <div class="fval">176 h</div>
+            </div>
+            <div class="bl-fig">
+              <div class="flab">Horas registradas</div>
+              <div class="fval">149 h</div>
+            </div>
+            <div class="bl-fig">
+              <div class="flab">% Avance</div>
+              <div class="fval">85%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- table -->
+        <div class="box p-4">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Tarea</th>
+                <th style="width:104px; text-align:center;">Estim.</th>
+                <th style="width:104px; text-align:center;">Registr.</th>
+                <th style="width:230px;">% Avance</th>
+                <th style="width:150px;">Desviación</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+
+          <div class="row between mt-4" style="border-top:2px solid var(--line); padding-top:14px;">
+            <div class="row gap-3" style="align-items:center; flex-wrap:wrap;">
+              <span class="tiny" style="color:var(--line-soft);">Línea punteada = 100% de lo estimado.</span>
+              <span class="dev dev-under" style="font-size:11px;">−X por debajo</span>
+              <span class="dev dev-over" style="font-size:11px;">+X sobre lo estimado</span>
+            </div>
+            <div class="row gap-2" style="align-items:center;">
+              <span class="tiny">Total del proyecto:</span>
+              <span class="codechip">149 / 176 h · −27 h</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== NO BASELINE ===== -->
+      <div id="nobase-wrap" style="display:none;">
+        <div class="empty">
+          <div class="ph square" style="width:54px; height:54px;"></div>
+          <div class="h-section" style="max-width:38ch; margin:0 auto;">Este proyecto aún no tiene una línea base congelada.</div>
+          <div class="small mt-2" style="max-width:46ch; margin:8px auto 0;">Congélala en Planificación para medir el avance contra lo estimado.</div>
+          <div class="row center gap-2 mt-4">
+            <button class="btn btn-sm btn-primary">Ir a Planificación</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- annotation -->
+      <div class="note no-rotate" style="position:static; display:inline-block; margin-top:22px; max-width:560px;">
+        Una desviación <b>positiva</b> (registradas &gt; estimadas) señala posible sobre-esfuerzo; una <b>negativa</b> indica que aún falta ejecutar frente al plan. La línea base se congela en Planificación (HU-02).
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // pct = reg / est * 100 ; dev = reg - est
+  const TASKS = [
+    { t:'Analizar formato de RUC (SUNAT)',          ref:'#REQ-014', est:8,  reg:8  },
+    { t:'Diseñar regla de validación',              ref:'#REQ-014', est:12, reg:14 },
+    { t:'Implementar validación de RUC',            ref:'#REQ-014', est:16, reg:9  },
+    { t:'Módulo de notificaciones por correo',      ref:'#DM-018',  est:64, reg:58 },
+    { t:'Corregir error 500 al adjuntar PDF',       ref:'#SD-4821', est:32, reg:40 },
+    { t:'Optimizar listado de trámites',            ref:'#SD-4790', est:44, reg:20 },
+  ];
+
+  function rowHTML(x) {
+    const pct = Math.round(x.reg / x.est * 100);
+    const dev = x.reg - x.est;
+    const over = dev > 0;
+    const zero = dev === 0;
+    const markPos = 70; // 100% sits at 70% of bar
+    const fillW = Math.min(pct / 100 * markPos, 99);
+    const fillClass = over ? 'over' : '';
+    let devChip;
+    if (zero) devChip = '<span class="dev dev-zero">0 h</span>';
+    else if (over) devChip = `<span class="dev dev-over">+${dev} h</span>`;
+    else devChip = `<span class="dev dev-under">${dev} h</span>`;
+    return `
+      <tr>
+        <td><b style="font-size:14px;">${x.t}</b> <span class="tk">· ${x.ref}</span></td>
+        <td style="text-align:center;"><span class="hrs">${x.est} h</span></td>
+        <td style="text-align:center;"><span class="hrs">${x.reg} h</span></td>
+        <td>
+          <div class="prog">
+            <div class="pbar">
+              <div class="pfill ${fillClass}" style="width:${fillW}%;"></div>
+              <div class="pmark" style="left:${markPos}%;"></div>
+            </div>
+            <span class="ppct">${pct}%</span>
+          </div>
+        </td>
+        <td>${devChip}</td>
+      </tr>`;
+  }
+  document.getElementById('tbody').innerHTML = TASKS.map(rowHTML).join('');
+
+  function setState(s) {
+    document.querySelectorAll('.seg button').forEach(b => b.classList.toggle('active', b.dataset.state === s));
+    document.getElementById('data-wrap').style.display = (s === 'sinbase') ? 'none' : '';
+    document.getElementById('nobase-wrap').style.display = (s === 'sinbase') ? 'block' : 'none';
+  }
+</script>
+
+</body>
+</html>

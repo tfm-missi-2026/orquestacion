@@ -139,6 +139,11 @@ services:
 volumes:
   postgres-data:
     name: spsrt-postgres-data
+  # Cache de Maven compartido entre builds. Permite que los rebuilds
+  # reutilicen las dependencias ya bajadas (200MB+) en lugar de
+  # descargarlas de nuevo. Solo se invalida si cambia pom.xml.
+  # Para limpiarlo: docker volume rm spsrt-maven-cache
+  maven-cache:
 
 networks:
   spsrt-net:

@@ -79,7 +79,8 @@ La primera vez tarda ~5 minutos (descarga de imágenes base + build Maven).
 | http://localhost:8081/swagger-ui.html · :8082 · :8083 | Swagger UI con los endpoints de cada microservicio |
 
 > El **login** entra por el gateway: `POST http://localhost:8080/api/auth/login`.
-> Usuario administrador semilla (cargado por `Database/spsrt_administracion/migrations/V2__seed.sql`):
+> Usuario administrador semilla (cargado por la migración Flyway
+> `ms-administracion/src/main/resources/db/migration/V2__seed.sql`):
 >
 > ```json
 > { "email": "admin@srp.local", "contrasenia": "Admin123" }
@@ -129,10 +130,11 @@ reporte HTML). Detalle de orden y variables en [`Test/00_LEEME.md`](Test/00_LEEM
   se hace en cada `pom.xml` por separado.
 - **JWT compartido HS256** vía `JWT_SECRET` para M0. En M4 se evaluará migrar a RS256 con
   JWKS publicado por `ms-administracion`.
-- **Migraciones Flyway** dentro de cada microservicio (`src/main/resources/db/migration/V*.sql`);
-  se replican en `Database/spsrt_*/migrations/` (este repo) para revisión humana y entrega
-  académica. La creación de las 3 BD/usuarios la hace `Database/init/00_create_databases.sql`
-  al levantar postgres.
+- **Migraciones Flyway** dentro de cada microservicio
+  (`src/main/resources/db/migration/V*.sql`) — es la **única fuente** del
+  esquema; no se mantienen copias en `orquestacion/`. La creación de las
+  3 BD/usuarios la hace `Database/init/00_create_databases.sql` al levantar
+  postgres.
 - **Paquete Java raíz**: `pe.unir.tfm.srp.<dominio>`.
 - El **`.env` real no se versiona** (está en `.gitignore`); se parte de `.env.example`.
 

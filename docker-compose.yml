@@ -34,7 +34,7 @@ services:
 
   eureka-server:
     build:
-      context: ../eureka-server
+      context: ${BACKEND_ROOT:-../Backend}/eureka-server
     container_name: spsrt-eureka
     restart: unless-stopped
     environment:
@@ -52,7 +52,7 @@ services:
 
   api-gateway:
     build:
-      context: ../api-gateway
+      context: ${BACKEND_ROOT:-../Backend}/api-gateway
     container_name: spsrt-gateway
     restart: unless-stopped
     depends_on:
@@ -69,7 +69,7 @@ services:
 
   ms-administracion:
     build:
-      context: ../ms-administracion
+      context: ${BACKEND_ROOT:-../Backend}/ms-administracion
     container_name: spsrt-ms-administracion
     restart: unless-stopped
     depends_on:
@@ -91,7 +91,7 @@ services:
 
   ms-proyectos:
     build:
-      context: ../ms-proyectos
+      context: ${BACKEND_ROOT:-../Backend}/ms-proyectos
     container_name: spsrt-ms-proyectos
     restart: unless-stopped
     depends_on:
@@ -113,7 +113,7 @@ services:
 
   ms-seguimiento:
     build:
-      context: ../ms-seguimiento
+      context: ${BACKEND_ROOT:-../Backend}/ms-seguimiento
     container_name: spsrt-ms-seguimiento
     restart: unless-stopped
     depends_on:

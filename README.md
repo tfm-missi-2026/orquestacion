@@ -13,13 +13,13 @@ El código de cada componente vive en su **propio repositorio**.
 
 | Componente | Repo | Tecnología | Puerto | Responsable |
 |---|---|---|---|---|
-| `eureka-server` | `eureka-server` | Spring Cloud Netflix Eureka | 8761 | colaborativo |
-| `api-gateway` | `api-gateway` | Spring Cloud Gateway + JWT | 8080 | colaborativo |
-| `ms-administracion` | `ms-administracion` | Spring Boot · PostgreSQL · Flyway | 8081 | EFPF |
-| `ms-proyectos` | `ms-proyectos` | Spring Boot · PostgreSQL · Flyway | 8082 | MJPA |
-| `ms-seguimiento` | `ms-seguimiento` | Spring Boot · PostgreSQL · Flyway | 8083 | PESSL |
+| `eureka-server` | `eureka-server` | Java 17 · Spring Boot 4.1.1 · Spring Cloud Netflix Eureka | 8761 | colaborativo |
+| `api-gateway` | `api-gateway` | Java 17 · Spring Boot 4.1.1 · Spring Cloud Gateway + JWT | 8080 | colaborativo |
+| `ms-administracion` | `ms-administracion` | Java 17 · Spring Boot 4.1.1 · MyBatis · PostgreSQL 16 · Flyway | 8081 | EFPF |
+| `ms-proyectos` | `ms-proyectos` | Java 17 · Spring Boot 4.1.1 · MyBatis · PostgreSQL 16 · Flyway | 8082 | MJPA |
+| `ms-seguimiento` | `ms-seguimiento` | Java 17 · Spring Boot 4.1.1 · MyBatis · PostgreSQL 16 · Flyway | 8083 | PESSL |
 | `postgres` | (imagen) | PostgreSQL 16 (3 BD lógicas) | 5432 | — |
-| `frontend` | `frontend` | Angular 21 + TailAdmin + pnpm 11.3.0 | 4200 | colaborativo |
+| `frontend` | `frontend` | Angular 21.2 · TailAdmin · Node 24.18.0 · pnpm 11.3.0 | 4200 | colaborativo |
 
 ## Disposición esperada del workspace
 
@@ -56,8 +56,10 @@ git clone https://github.com/tfm-missi-2026/frontend.git          Frontend
 
 - Docker Desktop 24+ con docker compose v2 — **único requisito para levantar todo el backend
   + PostgreSQL** (cada microservicio se compila dentro de su contenedor; no hace falta Java/Maven local)
-- Node.js 20.19.x LTS · pnpm 11.3.0 (`npm install -g pnpm@11.3.0`) — solo para el frontend
-- Java 21 + Maven 3.9+ — opcional, solo si se quiere compilar un microservicio fuera del contenedor
+- Node.js 24.18.0 (fijado en el `.nvmrc` del repo `frontend`) · pnpm 11.3.0 (via `corepack enable`,
+  fijado en el `packageManager` del `package.json`) — solo para el frontend
+- JDK 17 o superior — opcional, solo si se quiere compilar un microservicio fuera del contenedor.
+  Maven no hace falta: cada servicio trae su wrapper (`mvnw` / `mvnw.cmd`)
 
 ## Primer arranque (stack completo)
 
@@ -78,15 +80,30 @@ La primera vez tarda ~5 minutos (descarga de imágenes base + build Maven).
 | http://localhost:8081/actuator/health · :8082 · :8083 | `{"status":"UP"}` |
 | http://localhost:8081/swagger-ui.html · :8082 · :8083 | Swagger UI con los endpoints de cada microservicio |
 
-> El **login** entra por el gateway: `POST http://localhost:8080/api/auth/login`.
-> Usuario administrador semilla (cargado por la migración Flyway
-> `ms-administracion/src/main/resources/db/migration/V2__seed.sql`):
->
-> ```json
-> { "email": "admin@srp.local", "contrasenia": "Admin123" }
-> ```
->
-> Devuelve un JWT que se envía como `Authorization: Bearer <token>` en el resto de endpoints.
+### Cuentas de acceso al sistema
+
+El **login** entra por el gateway: `POST http://localhost:8080/api/auth/login`.
+
+```json
+{ "email": "admin@srp.local", "contrasenia": "Admin123" }
+```
+
+Devuelve un JWT que se envía como `Authorization: Bearer <token>` en el resto de endpoints.
+
+Las cuentas las cargan las migraciones Flyway de `ms-administracion`
+(`V2__seed.sql` y `V3__seed_mock_users.sql`):
+
+| Email | Contraseña | Rol |
+|---|---|---|
+| `admin@srp.local` | `Admin123` | ADMIN |
+| `pedro.soria@institucion.gob.pe` | `Spsrt.2026` | ADMIN |
+| `marcos.pacheco@institucion.gob.pe` | `Spsrt.2026` | GESTOR_PROYECTO |
+| `edwin.pacheco@institucion.gob.pe` | `Spsrt.2026` | RECURSO_TECNICO |
+| `juan.perez@institucion.gob.pe` | `Spsrt.2026` | JEFE_AREA |
+
+Los cuatro roles del sistema tienen usuario, de modo que se puede recorrer cada vista del
+frontend. Las contraseñas se almacenan hasheadas con `crypt()` de pgcrypto (BCrypt),
+compatible con el `BCryptPasswordEncoder` de Spring Security.
 
 ### Frontend en local
 

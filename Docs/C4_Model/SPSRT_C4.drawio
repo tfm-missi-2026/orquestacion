@@ -1,160 +1,354 @@
-<mxfile host="app.diagrams.net" type="device">
-  <!-- ============================ 1. CONTEXTO ============================ -->
-  <diagram name="1. Contexto" id="c4-contexto">
-    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="640" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="ctx_title" value="C4 · Nivel 1 — Diagrama de Contexto · SPSRT" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=14;fontColor=#1A1A1A;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="500" height="24" as="geometry" /></mxCell>
-        <mxCell id="ctx_a1" value="Jefe del Área de Desarrollo (A1)&lt;br&gt;[Persona]&lt;br&gt;Visión transversal de la carga; detecta sobreasignación; valida la planificación" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="60" y="70" width="190" height="100" as="geometry" /></mxCell>
-        <mxCell id="ctx_a2" value="Gestor de Proyecto (A2)&lt;br&gt;[Persona]&lt;br&gt;Planifica, asigna recursos, registra variaciones y sigue el avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="290" y="70" width="190" height="100" as="geometry" /></mxCell>
-        <mxCell id="ctx_a3" value="Recurso Técnico (A3)&lt;br&gt;[Persona]&lt;br&gt;Consulta sus asignaciones, registra dedicación real y reporta variaciones" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="520" y="70" width="190" height="100" as="geometry" /></mxCell>
-        <mxCell id="ctx_a4" value="Administrador (A4)&lt;br&gt;[Persona]&lt;br&gt;Gestiona el ciclo de vida de usuarios y permisos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="750" y="70" width="190" height="100" as="geometry" /></mxCell>
-        <mxCell id="ctx_sys" value="SPSRT&lt;br&gt;[Sistema de software]&lt;br&gt;Planificación y seguimiento de recursos técnicos: planificación de recursos (C1), seguimiento de la ejecución (C2) y registro de variaciones (C3). Autoalojable." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" vertex="1" parent="1"><mxGeometry x="350" y="360" width="300" height="140" as="geometry" /></mxCell>
-        <mxCell id="ctx_e1" value="Usa [HTTPS]" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.2;entryY=0;" edge="1" parent="1" source="ctx_a1" target="ctx_sys"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ctx_e2" value="" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.4;entryY=0;" edge="1" parent="1" source="ctx_a2" target="ctx_sys"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ctx_e3" value="" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.6;entryY=0;" edge="1" parent="1" source="ctx_a3" target="ctx_sys"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ctx_e4" value="Usa [HTTPS]" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.8;entryY=0;" edge="1" parent="1" source="ctx_a4" target="ctx_sys"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-
-  <!-- ============================ 2. CONTENEDORES ============================ -->
-  <diagram name="2. Contenedores" id="c4-contenedores">
-    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1050" pageHeight="780" math="0" shadow="0">
-      <root>
-        <mxCell id="0" /><mxCell id="1" parent="0" />
-        <mxCell id="cnt_title" value="C4 · Nivel 2 — Diagrama de Contenedores · SPSRT" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="500" height="24" as="geometry" /></mxCell>
-        <mxCell id="cnt_user" value="Usuario&lt;br&gt;[Persona]&lt;br&gt;A1 / A2 / A3 / A4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="430" y="60" width="180" height="70" as="geometry" /></mxCell>
-        <mxCell id="cnt_spa" value="SPA Frontend&lt;br&gt;[Angular 21 · Tailwind · TailAdmin]&lt;br&gt;Interfaz web; login real, sidebar dinámico por rol, design-system con Storybook" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="410" y="180" width="220" height="90" as="geometry" /></mxCell>
-        <mxCell id="cnt_gw" value="API Gateway&lt;br&gt;[Spring Cloud Gateway]&lt;br&gt;Punto único de entrada; valida JWT (HS256); enruta a lb://ms-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="410" y="330" width="220" height="80" as="geometry" /></mxCell>
-        <mxCell id="cnt_eureka" value="Eureka Server&lt;br&gt;[Netflix Eureka]&lt;br&gt;Service discovery" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="740" y="335" width="180" height="70" as="geometry" /></mxCell>
-        <mxCell id="cnt_msa" value="ms-administracion&lt;br&gt;[Spring Boot · MyBatis]&lt;br&gt;Auth/JWT, usuarios, roles, módulos, catálogo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="90" y="480" width="220" height="80" as="geometry" /></mxCell>
-        <mxCell id="cnt_msp" value="ms-proyectos&lt;br&gt;[Spring Boot · MyBatis]&lt;br&gt;Proyectos, subproyectos y tareas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="410" y="480" width="220" height="80" as="geometry" /></mxCell>
-        <mxCell id="cnt_mss" value="ms-seguimiento&lt;br&gt;[Spring Boot · MyBatis]&lt;br&gt;Asignaciones, bitácora, línea base, variaciones, carga, avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="730" y="480" width="220" height="80" as="geometry" /></mxCell>
-        <mxCell id="cnt_dba" value="BD Administración&lt;br&gt;[PostgreSQL 16]" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="140" y="630" width="120" height="80" as="geometry" /></mxCell>
-        <mxCell id="cnt_dbp" value="BD Proyectos&lt;br&gt;[PostgreSQL 16]" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="460" y="630" width="120" height="80" as="geometry" /></mxCell>
-        <mxCell id="cnt_dbs" value="BD Seguimiento&lt;br&gt;[PostgreSQL 16]" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="780" y="630" width="120" height="80" as="geometry" /></mxCell>
-        <mxCell id="cnt_eu" value="HTTPS" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_user" target="cnt_spa"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_eg" value="HTTPS / JSON · /api/**" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_spa" target="cnt_gw"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_gd" value="descubre" style="endArrow=open;html=1;fontSize=9;dashed=1;" edge="1" parent="1" source="cnt_gw" target="cnt_eureka"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_ga" value="lb:// [HTTP]" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_gw" target="cnt_msa"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_gp" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_gw" target="cnt_msp"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_gs" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_gw" target="cnt_mss"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_sa" value="JDBC" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_msa" target="cnt_dba"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_sp" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_msp" target="cnt_dbp"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_ss" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="cnt_mss" target="cnt_dbs"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_ra" value="se registra" style="endArrow=open;html=1;fontSize=9;dashed=1;" edge="1" parent="1" source="cnt_msa" target="cnt_eureka"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="cnt_rs" value="" style="endArrow=open;html=1;fontSize=9;dashed=1;" edge="1" parent="1" source="cnt_mss" target="cnt_eureka"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-
-  <!-- ============================ 3. COMPONENTES — API GATEWAY ============================ -->
-  <diagram name="3. Comp · API Gateway" id="c4-comp-gw">
-    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" page="1" pageWidth="1000" pageHeight="560" math="0" shadow="0">
-      <root>
-        <mxCell id="0" /><mxCell id="1" parent="0" />
-        <mxCell id="gw_title" value="C4 · Nivel 3 — Componentes · API Gateway" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="500" height="24" as="geometry" /></mxCell>
-        <mxCell id="gw_spa" value="SPA Frontend&lt;br&gt;[Angular]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="60" y="240" width="150" height="70" as="geometry" /></mxCell>
-        <mxCell id="gw_bnd" value="API Gateway [Spring Cloud Gateway · WebFlux]" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="300" y="120" width="360" height="320" as="geometry" /></mxCell>
-        <mxCell id="gw_rutas" value="Rutas (application.yml)&lt;br&gt;[RouteLocator]&lt;br&gt;Enruta /api/** al microservicio correspondiente seg&#250;n el dominio de la petici&#243;n" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="320" y="160" width="320" height="110" as="geometry" /></mxCell>
-        <mxCell id="gw_sec" value="SecurityConfig&lt;br&gt;[Reactive Security]&lt;br&gt;Valida el JWT (HS256) en el borde. Público: /api/auth/**, /actuator/**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="320" y="290" width="320" height="70" as="geometry" /></mxCell>
-        <mxCell id="gw_lb" value="Cliente Eureka / LoadBalancer&lt;br&gt;Resuelve lb://ms-* a instancias registradas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="320" y="375" width="320" height="55" as="geometry" /></mxCell>
-        <mxCell id="gw_ms" value="ms-administracion / ms-proyectos / ms-seguimiento" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="730" y="170" width="210" height="80" as="geometry" /></mxCell>
-        <mxCell id="gw_eu" value="Eureka Server" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="760" y="370" width="150" height="60" as="geometry" /></mxCell>
-        <mxCell id="gw_e1" value="HTTPS/JSON" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="gw_spa" target="gw_rutas"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="gw_e2" value="lb:// [HTTP]" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="gw_lb" target="gw_ms"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="gw_e3" value="" style="endArrow=open;html=1;fontSize=9;dashed=1;" edge="1" parent="1" source="gw_lb" target="gw_eu"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-
-  <!-- ============================ 4. COMPONENTES — FRONTEND (real/actual) ============================ -->
-  <diagram name="4. Comp · Frontend" id="c4-comp-front">
-    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" page="1" pageWidth="1080" pageHeight="640" math="0" shadow="0">
-      <root>
-        <mxCell id="0" /><mxCell id="1" parent="0" />
-        <mxCell id="fr_title" value="C4 · Nivel 3 — Componentes · SPA Frontend (estado actual)" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="560" height="24" as="geometry" /></mxCell>
-        <mxCell id="fr_user" value="Usuario&lt;br&gt;[Persona]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="60" y="90" width="140" height="60" as="geometry" /></mxCell>
-        <mxCell id="fr_gw" value="API Gateway&lt;br&gt;[Spring Cloud Gateway]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" vertex="1" parent="1"><mxGeometry x="880" y="300" width="160" height="70" as="geometry" /></mxCell>
-        <mxCell id="fr_bnd" value="SPA Frontend — Angular 21 (standalone + signals)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#333;" vertex="1" parent="1"><mxGeometry x="240" y="80" width="600" height="480" as="geometry" /></mxCell>
-        <mxCell id="fr_shell" value="Shell Layout&lt;br&gt;[AppLayout]&lt;br&gt;Header + Sidebar dinámico + outlet de rutas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="260" y="120" width="230" height="70" as="geometry" /></mxCell>
-        <mxCell id="fr_auth" value="AuthService&lt;br&gt;[signals + HttpClient]&lt;br&gt;POST /api/auth/login; token+usuario en localStorage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="520" y="120" width="300" height="70" as="geometry" /></mxCell>
-        <mxCell id="fr_jwt" value="jwtInterceptor&lt;br&gt;[HttpInterceptorFn]&lt;br&gt;Adjunta Authorization: Bearer; 401 → logout + /signin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="520" y="210" width="300" height="65" as="geometry" /></mxCell>
-        <mxCell id="fr_guard" value="authGuard&lt;br&gt;[CanActivateFn]&lt;br&gt;Protege rutas privadas (isAuthenticated)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="520" y="290" width="300" height="60" as="geometry" /></mxCell>
-        <mxCell id="fr_mod" value="ModulosService&lt;br&gt;[HttpClient]&lt;br&gt;GET /api/modulos/por-rol/{rolId} → menú por rol" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="260" y="210" width="230" height="65" as="geometry" /></mxCell>
-        <mxCell id="fr_fauth" value="Feature Auth&lt;br&gt;sign-in / sign-up (login real vía AuthService)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="260" y="300" width="230" height="55" as="geometry" /></mxCell>
-        <mxCell id="fr_fusers" value="Features de dominio&lt;br&gt;planificación, seguimiento, proyectos, administración y paneles por rol; cada una con su servicio HttpClient" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="260" y="375" width="230" height="75" as="geometry" /></mxCell>
-        <mxCell id="fr_ui" value="Shared UI (design-system)&lt;br&gt;[30+ standalone + Storybook]&lt;br&gt;button, input, table, modal, date-picker, charts, layout…" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="520" y="375" width="300" height="75" as="geometry" /></mxCell>
-        <mxCell id="fr_env" value="environment&lt;br&gt;URL del API Gateway parametrizable por entorno" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="260" y="470" width="560" height="40" as="geometry" /></mxCell>
-        <mxCell id="fr_e1" value="Usa [HTTPS]" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="fr_user" target="fr_shell"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fr_e2" value="login()" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="fr_fauth" target="fr_auth"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fr_e3" value="POST /api/auth/login [HTTPS]" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="fr_auth" target="fr_gw"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fr_e4" value="GET /api/modulos/por-rol [HTTPS]" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="fr_mod" target="fr_gw"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fr_e5" value="Bearer en cada petición" style="endArrow=open;html=1;fontSize=9;dashed=1;" edge="1" parent="1" source="fr_jwt" target="fr_gw"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="fr_e6" value="sidebar" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="fr_shell" target="fr_mod"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-
-  <!-- ============================ 5. COMPONENTES — ms-administracion ============================ -->
-  <diagram name="5. Comp · ms-administracion" id="c4-comp-msa">
-    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" page="1" pageWidth="1000" pageHeight="640" math="0" shadow="0">
-      <root>
-        <mxCell id="0" /><mxCell id="1" parent="0" />
-        <mxCell id="ma_title" value="C4 · Nivel 3 — Componentes · ms-administracion" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="500" height="24" as="geometry" /></mxCell>
-        <mxCell id="ma_gw" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="60" y="280" width="120" height="60" as="geometry" /></mxCell>
-        <mxCell id="ma_ctrl" value="Controllers REST&lt;br&gt;autenticaci&#243;n, usuarios, roles, m&#243;dulos y catalogo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="70" width="280" height="90" as="geometry" /></mxCell>
-        <mxCell id="ma_svc" value="Services&lt;br&gt;Emisi&#243;n y validaci&#243;n del JWT (HS256); gesti&#243;n de usuarios, roles, m&#243;dulos y catalogo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="200" width="280" height="95" as="geometry" /></mxCell>
-        <mxCell id="ma_map" value="Persistencia&lt;br&gt;MyBatis Mappers + MapStruct (DTO) + Flyway (migraciones)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="335" width="280" height="70" as="geometry" /></mxCell>
-        <mxCell id="ma_tx" value="Transversales&lt;br&gt;SecurityConfig (@PreAuthorize) &#183; CurrentUserResolver &#183; AuditoriaInterceptor (auditor&#237;a inline) &#183; GlobalExceptionHandler &#183; BCrypt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A6EA5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="120" width="330" height="220" as="geometry" /></mxCell>
-        <mxCell id="ma_db" value="BD Administración&lt;br&gt;[PostgreSQL]&lt;br&gt;msa_usuario, msa_rol, msa_modulo, msa_rol_modulo, msa_catalogo" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="290" y="460" width="200" height="100" as="geometry" /></mxCell>
-        <mxCell id="ma_e1" value="REST" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ma_gw" target="ma_ctrl"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ma_e2" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ma_ctrl" target="ma_svc"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ma_e3" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ma_svc" target="ma_map"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ma_e4" value="JDBC" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ma_map" target="ma_db"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-
-  <!-- ============================ 6. COMPONENTES — ms-proyectos ============================ -->
-  <diagram name="6. Comp · ms-proyectos" id="c4-comp-msp">
-    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" page="1" pageWidth="1000" pageHeight="620" math="0" shadow="0">
-      <root>
-        <mxCell id="0" /><mxCell id="1" parent="0" />
-        <mxCell id="mp_title" value="C4 · Nivel 3 — Componentes · ms-proyectos" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="500" height="24" as="geometry" /></mxCell>
-        <mxCell id="mp_gw" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="60" y="270" width="120" height="60" as="geometry" /></mxCell>
-        <mxCell id="mp_ctrl" value="Controllers REST&lt;br&gt;proyectos, subproyectos y tareas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="70" width="280" height="80" as="geometry" /></mxCell>
-        <mxCell id="mp_svc" value="Services&lt;br&gt;Validaciones y jerarqu&#237;a proyecto &#8594; subproyecto &#8594; tarea" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="190" width="280" height="90" as="geometry" /></mxCell>
-        <mxCell id="mp_map" value="Persistencia&lt;br&gt;MyBatis Mappers + MapStruct + Flyway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="320" width="280" height="65" as="geometry" /></mxCell>
-        <mxCell id="mp_tx" value="Transversales&lt;br&gt;SecurityConfig (valida JWT, @PreAuthorize) &#183; CurrentUserResolver &#183; AuditoriaInterceptor &#183; GlobalExceptionHandler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A6EA5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="600" y="120" width="330" height="200" as="geometry" /></mxCell>
-        <mxCell id="mp_db" value="BD Proyectos&lt;br&gt;[PostgreSQL]&lt;br&gt;msp_proyecto, msp_subproyecto, msp_tarea" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="290" y="440" width="200" height="100" as="geometry" /></mxCell>
-        <mxCell id="mp_e1" value="REST" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="mp_gw" target="mp_ctrl"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="mp_e2" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="mp_ctrl" target="mp_svc"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="mp_e3" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="mp_svc" target="mp_map"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="mp_e4" value="JDBC" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="mp_map" target="mp_db"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
-
-  <!-- ============================ 7. COMPONENTES — ms-seguimiento ============================ -->
-  <diagram name="7. Comp · ms-seguimiento" id="c4-comp-mss">
-    <mxGraphModel dx="1100" dy="760" grid="1" gridSize="10" guides="1" page="1" pageWidth="1020" pageHeight="640" math="0" shadow="0">
-      <root>
-        <mxCell id="0" /><mxCell id="1" parent="0" />
-        <mxCell id="ms_title" value="C4 · Nivel 3 — Componentes · ms-seguimiento" style="text;html=1;strokeColor=none;fillColor=none;align=left;fontStyle=1;fontSize=14;" vertex="1" parent="1"><mxGeometry x="40" y="20" width="560" height="24" as="geometry" /></mxCell>
-        <mxCell id="ms_gw" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="60" y="290" width="120" height="60" as="geometry" /></mxCell>
-        <mxCell id="ms_ctrl" value="Controllers REST&lt;br&gt;asignaciones, actividades, bit&#225;cora, l&#237;nea base, variaciones, carga y avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="65" width="290" height="110" as="geometry" /></mxCell>
-        <mxCell id="ms_svc" value="Services&lt;br&gt;Asignaci&#243;n con control de capacidad; bit&#225;cora; congelado de l&#237;nea base; variaciones; c&#225;lculo de carga y avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="200" width="290" height="115" as="geometry" /></mxCell>
-        <mxCell id="ms_map" value="Persistencia&lt;br&gt;MyBatis Mappers (.java + .xml) + MapStruct + Flyway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="250" y="350" width="290" height="65" as="geometry" /></mxCell>
-        <mxCell id="ms_tx" value="Transversales&lt;br&gt;SecurityConfig (valida JWT, @PreAuthorize) &#183; CurrentUserResolver &#183; AuditoriaInterceptor &#183; GlobalExceptionHandler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A6EA5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="610" y="120" width="350" height="230" as="geometry" /></mxCell>
-        <mxCell id="ms_db" value="BD Seguimiento&lt;br&gt;[PostgreSQL]&lt;br&gt;mss_asignacion, mss_actividad, mss_bitacora, mss_variacion, mss_linea_base, mss_lb_tarea, mss_lb_asignacion" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" vertex="1" parent="1"><mxGeometry x="280" y="460" width="230" height="110" as="geometry" /></mxCell>
-        <mxCell id="ms_e1" value="REST" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ms_gw" target="ms_ctrl"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ms_e2" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ms_ctrl" target="ms_svc"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ms_e3" value="" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ms_svc" target="ms_map"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="ms_e4" value="JDBC" style="endArrow=open;html=1;fontSize=9;" edge="1" parent="1" source="ms_map" target="ms_db"><mxGeometry relative="1" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram name="1. Contexto" id="c4-contexto">
+        <mxGraphModel dx="1110" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="640" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="ctx_a1" value="Jefe del Área de Desarrollo (A1)&lt;br&gt;[Persona]&lt;br&gt;Visión transversal de la carga; detecta sobreasignación; valida la planificación" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="70" width="190" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_a2" value="Gestor de Proyecto (A2)&lt;br&gt;[Persona]&lt;br&gt;Planifica, asigna recursos, registra variaciones y sigue el avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="70" width="190" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_a3" value="Recurso Técnico (A3)&lt;br&gt;[Persona]&lt;br&gt;Consulta sus asignaciones, registra dedicación real y reporta variaciones" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="520" y="70" width="190" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_a4" value="Administrador (A4)&lt;br&gt;[Persona]&lt;br&gt;Gestiona el ciclo de vida de usuarios y permisos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="750" y="70" width="190" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_sys" value="SPSRT&lt;br&gt;[Sistema de software]&lt;br&gt;Planificación y seguimiento de recursos técnicos: planificación de recursos (C1), seguimiento de la ejecución (C2) y registro de variaciones (C3). Autoalojable." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="360" width="300" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_e1" value="Usa [HTTPS]" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.2;entryY=0;" parent="1" source="ctx_a1" target="ctx_sys" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_e2" value="" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.4;entryY=0;" parent="1" source="ctx_a2" target="ctx_sys" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_e3" value="" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.6;entryY=0;" parent="1" source="ctx_a3" target="ctx_sys" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ctx_e4" value="Usa [HTTPS]" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;entryX=0.8;entryY=0;" parent="1" source="ctx_a4" target="ctx_sys" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="2. Contenedores" id="c4-contenedores">
+        <mxGraphModel dx="1110" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1050" pageHeight="780" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="cnt_user" value="Usuario&lt;br&gt;[Persona]&lt;br&gt;A1 / A2 / A3 / A4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="430" y="60" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_spa" value="SPA Frontend&lt;br&gt;[Angular 21 · Tailwind · TailAdmin]&lt;br&gt;Interfaz web; login real, sidebar dinámico por rol, design-system con Storybook" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="180" width="220" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_gw" value="API Gateway&lt;br&gt;[Spring Cloud Gateway]&lt;br&gt;Punto único de entrada; valida JWT (HS256); enruta a lb://ms-*" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="330" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_eureka" value="Eureka Server&lt;br&gt;[Netflix Eureka]&lt;br&gt;Service discovery" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="738" y="335" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_msa" value="ms-administracion&lt;br&gt;[Spring Boot · MyBatis]&lt;br&gt;Auth/JWT, usuarios, roles, módulos, catálogo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="90" y="480" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_msp" value="ms-proyectos&lt;br&gt;[Spring Boot · MyBatis]&lt;br&gt;Proyectos, subproyectos y tareas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="480" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_mss" value="ms-seguimiento&lt;br&gt;[Spring Boot · MyBatis]&lt;br&gt;Asignaciones, bitácora, línea base, variaciones, carga, avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0B4884;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="480" width="220" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_dba" value="BD Administración&lt;br&gt;[PostgreSQL 16]" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="140" y="630" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_dbp" value="BD Proyectos&lt;br&gt;[PostgreSQL 16]" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="630" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_dbs" value="BD Seguimiento&lt;br&gt;[PostgreSQL 16]" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="780" y="630" width="120" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_eu" value="HTTPS" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_user" target="cnt_spa" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_eg" value="HTTPS / JSON · /api/**" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_spa" target="cnt_gw" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_gd" value="descubre" style="endArrow=open;html=1;fontSize=9;dashed=1;" parent="1" source="cnt_gw" target="cnt_eureka" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_ga" value="lb:// [HTTP]" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_gw" target="cnt_msa" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_gp" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_gw" target="cnt_msp" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_gs" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_gw" target="cnt_mss" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_sa" value="JDBC" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_msa" target="cnt_dba" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_sp" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_msp" target="cnt_dbp" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_ss" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="cnt_mss" target="cnt_dbs" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_ra" value="se registra" style="endArrow=open;html=1;fontSize=9;dashed=1;" parent="1" source="cnt_msa" target="cnt_eureka" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="cnt_rs" value="" style="endArrow=open;html=1;fontSize=9;dashed=1;entryX=0.567;entryY=0.957;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="cnt_mss" target="cnt_eureka" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="3. Comp · API Gateway" id="c4-comp-gw">
+        <mxGraphModel dx="1110" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="560" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="gw_spa" value="SPA Frontend&lt;br&gt;[Angular]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="240" width="150" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_bnd" value="API Gateway [Spring Cloud Gateway · WebFlux]" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#333;" parent="1" vertex="1">
+                    <mxGeometry x="300" y="120" width="360" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_rutas" value="Rutas (application.yml)&lt;br&gt;[RouteLocator]&lt;br&gt;Enruta /api/** al microservicio correspondiente según el dominio de la petición" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="160" width="320" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_sec" value="SecurityConfig&lt;br&gt;[Reactive Security]&lt;br&gt;Valida el JWT (HS256) en el borde. Público: /api/auth/**, /actuator/**" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="290" width="320" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_lb" value="Cliente Eureka / LoadBalancer&lt;br&gt;Resuelve lb://ms-* a instancias registradas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="375" width="320" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_ms" value="ms-administracion / ms-proyectos / ms-seguimiento" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="730" y="170" width="210" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_eu" value="Eureka Server" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="760" y="370" width="150" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_e1" value="HTTPS/JSON" style="endArrow=open;html=1;fontSize=9;" parent="1" source="gw_spa" target="gw_rutas" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="gw_e2" value="lb:// [HTTP]" style="endArrow=open;html=1;fontSize=9;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="gw_ms" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="640" y="390.41333333333336" as="sourcePoint"/>
+                        <mxPoint x="745" y="259.58" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="700" y="390"/>
+                            <mxPoint x="700" y="279.58"/>
+                            <mxPoint x="700" y="210"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="gw_e3" value="" style="endArrow=open;html=1;fontSize=9;dashed=1;" parent="1" source="gw_lb" target="gw_eu" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="4. Comp · Frontend" id="c4-comp-front">
+        <mxGraphModel dx="1110" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1080" pageHeight="640" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="fr_user" value="Usuario&lt;br&gt;[Persona]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#052E56;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="30" y="80" width="140" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_gw" value="API Gateway&lt;br&gt;[Spring Cloud Gateway]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+                    <mxGeometry x="1120" y="270" width="160" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_bnd" value="SPA Frontend — Angular 21 (standalone + signals)" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#666;verticalAlign=top;fontSize=12;fontStyle=1;fontColor=#333;" parent="1" vertex="1">
+                    <mxGeometry x="240" y="80" width="710" height="480" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_shell" value="Shell Layout&lt;br&gt;[AppLayout]&lt;br&gt;Header + Sidebar dinámico + outlet de rutas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="120" width="230" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_auth" value="AuthService&lt;br&gt;[signals + HttpClient]&lt;br&gt;POST /api/auth/login; token+usuario en localStorage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="539" y="120" width="300" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_jwt" value="jwtInterceptor&lt;br&gt;[HttpInterceptorFn]&lt;br&gt;Adjunta Authorization: Bearer; 401 → logout + /signin" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="539" y="228" width="300" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_guard" value="authGuard&lt;br&gt;[CanActivateFn]&lt;br&gt;Protege rutas privadas (isAuthenticated)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="539" y="322" width="300" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_mod" value="ModulosService&lt;br&gt;[HttpClient]&lt;br&gt;GET /api/modulos/por-rol/{rolId} → menú por rol" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="230" width="230" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_fauth" value="Feature Auth&lt;br&gt;sign-in / sign-up (login real vía AuthService)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="321" width="230" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_fusers" value="Features de dominio&lt;br&gt;planificación, seguimiento, proyectos, administración y paneles por rol; cada una con su servicio HttpClient" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="400" width="230" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_ui" value="Shared UI (design-system)&lt;br&gt;[30+ standalone + Storybook]&lt;br&gt;button, input, table, modal, date-picker, charts, layout…" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="539" y="400" width="300" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_env" value="environment&lt;br&gt;URL del API Gateway parametrizable por entorno" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="260" y="489" width="580" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_e1" value="Usa [HTTPS]" style="endArrow=open;html=1;fontSize=9;" parent="1" source="fr_user" target="fr_shell" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_e2" value="login()" style="endArrow=open;html=1;fontSize=9;exitX=1;exitY=0.5;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="fr_fauth" target="fr_auth" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="520" y="349"/>
+                            <mxPoint x="520" y="155"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="fr_e3" value="POST /api/auth/login [HTTPS]" style="endArrow=open;html=1;fontSize=9;" parent="1" source="fr_auth" target="fr_gw" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_e4" value="GET /api/modulos/por-rol [HTTPS]" style="endArrow=open;html=1;fontSize=9;exitX=0.5;exitY=1;exitDx=0;exitDy=0;edgeStyle=orthogonalEdgeStyle;" parent="1" source="fr_mod" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="375" y="305" as="sourcePoint"/>
+                        <mxPoint x="1120" y="305" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="375" y="305"/>
+                            <mxPoint x="1120" y="305"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="fr_e5" value="Bearer en cada petición" style="endArrow=open;html=1;fontSize=9;dashed=1;" parent="1" source="fr_jwt" target="fr_gw" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="fr_e6" value="sidebar" style="endArrow=open;html=1;fontSize=9;" parent="1" source="fr_shell" target="fr_mod" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="5. Comp · ms-administracion" id="c4-comp-msa">
+        <mxGraphModel dx="1110" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="640" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="ma_gw" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="280" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_ctrl" value="Controllers REST&lt;br&gt;autenticación, usuarios, roles, módulos y catalogo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="70" width="280" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_svc" value="Services&lt;br&gt;Emisión y validación del JWT (HS256); gestión de usuarios, roles, módulos y catalogo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="200" width="280" height="95" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_map" value="Persistencia&lt;br&gt;MyBatis Mappers + MapStruct (DTO) + Flyway (migraciones)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="335" width="280" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_tx" value="Transversales&lt;br&gt;SecurityConfig (@PreAuthorize) · CurrentUserResolver · AuditoriaInterceptor (auditoría inline) · GlobalExceptionHandler · BCrypt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A6EA5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="120" width="330" height="220" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_db" value="BD Administración&lt;br&gt;[PostgreSQL]&lt;br&gt;msa_usuario, msa_rol, msa_modulo, msa_rol_modulo, msa_catalogo" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="460" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_e1" value="REST" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ma_gw" target="ma_ctrl" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="120" y="115"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ma_e2" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ma_ctrl" target="ma_svc" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_e3" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ma_svc" target="ma_map" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ma_e4" value="JDBC" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ma_map" target="ma_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="6. Comp · ms-proyectos" id="c4-comp-msp">
+        <mxGraphModel dx="1110" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="620" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="mp_gw" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="270" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_ctrl" value="Controllers REST&lt;br&gt;proyectos, subproyectos y tareas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="70" width="280" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_svc" value="Services&lt;br&gt;Validaciones y jerarquía proyecto → subproyecto → tarea" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="190" width="280" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_map" value="Persistencia&lt;br&gt;MyBatis Mappers + MapStruct + Flyway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="320" width="280" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_tx" value="Transversales&lt;br&gt;SecurityConfig (valida JWT, @PreAuthorize) · CurrentUserResolver · AuditoriaInterceptor · GlobalExceptionHandler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A6EA5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="600" y="120" width="330" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_db" value="BD Proyectos&lt;br&gt;[PostgreSQL]&lt;br&gt;msp_proyecto, msp_subproyecto, msp_tarea" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="440" width="200" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_e1" value="REST" style="endArrow=open;html=1;fontSize=9;" parent="1" source="mp_gw" target="mp_ctrl" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="120" y="110"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="mp_e2" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="mp_ctrl" target="mp_svc" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_e3" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="mp_svc" target="mp_map" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="mp_e4" value="JDBC" style="endArrow=open;html=1;fontSize=9;" parent="1" source="mp_map" target="mp_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram name="7. Comp · ms-seguimiento" id="c4-comp-mss">
+        <mxGraphModel dx="1110" dy="628" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1020" pageHeight="640" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="ms_gw" value="API Gateway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#8A8A8A;strokeColor=#5A5A5A;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="60" y="290" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_ctrl" value="Controllers REST&lt;br&gt;asignaciones, actividades, bitácora, línea base, variaciones, carga y avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="65" width="290" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_svc" value="Services&lt;br&gt;Asignación con control de capacidad; bitácora; congelado de línea base; variaciones; cálculo de carga y avance" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="200" width="290" height="115" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_map" value="Persistencia&lt;br&gt;MyBatis Mappers (.java + .xml) + MapStruct + Flyway" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="350" width="290" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_tx" value="Transversales&lt;br&gt;SecurityConfig (valida JWT, @PreAuthorize) · CurrentUserResolver · AuditoriaInterceptor · GlobalExceptionHandler" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#3A6EA5;strokeColor=#2E6295;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="610" y="120" width="350" height="230" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_db" value="BD Seguimiento&lt;br&gt;[PostgreSQL]&lt;br&gt;mss_asignacion, mss_actividad, mss_bitacora, mss_variacion, mss_linea_base, mss_lb_tarea, mss_lb_asignacion" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#0B4884;strokeColor=#073B6F;fontColor=#FFFFFF;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="460" width="230" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_e1" value="REST" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ms_gw" target="ms_ctrl" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="120" y="120"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ms_e2" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ms_ctrl" target="ms_svc" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_e3" value="" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ms_svc" target="ms_map" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ms_e4" value="JDBC" style="endArrow=open;html=1;fontSize=9;" parent="1" source="ms_map" target="ms_db" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>

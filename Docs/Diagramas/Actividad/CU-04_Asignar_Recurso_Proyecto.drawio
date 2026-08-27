@@ -1,48 +1,124 @@
-<mxfile host="Claude" agent="SPSRT diagramas CU">
-  <diagram name="CU-04 Asignar recurso a proyecto" id="cu04">
-    <mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="lane_a" value="A2 · Gestor de Proyecto" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" vertex="1" parent="1"><mxGeometry x="0" y="0" width="430" height="1886" as="geometry" /></mxCell>
-        <mxCell id="lane_s" value="Sistema · ms-seguimiento" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" vertex="1" parent="1"><mxGeometry x="430" y="0" width="430" height="1886" as="geometry" /></mxCell>
-        <mxCell id="n0" value="" style="ellipse;html=1;fillColor=#333333;strokeColor=#333333;strokeWidth=1;shadow=0;" vertex="1" parent="1"><mxGeometry x="195" y="92" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="n1" value="Accede a «Planificación» y selecciona&lt;br&gt;el proyecto y la tarea" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="15" y="206" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n2" value="Muestra los recursos técnicos y su carga&lt;br&gt;actual en el periodo" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="445" y="320" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n3" value="Selecciona un recurso e indica las horas&lt;br&gt;planificadas y el periodo" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="15" y="434" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n4" value="Pulsa «Asignar»" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="15" y="548" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n5" value="Recibe POST /api/asignaciones" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="445" y="662" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n6" value="¿Ya existe una asignación para&lt;br&gt;esa tarea y ese recurso?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" vertex="1" parent="1"><mxGeometry x="445" y="776" width="400" height="110" as="geometry" /></mxCell>
-        <mxCell id="x6" value="HTTP 409 · Ya existe una asignación&lt;br&gt;para esa tarea y ese recurso" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="880" y="794" width="350" height="74" as="geometry" /></mxCell>
-        <mxCell id="f6" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" vertex="1" parent="1"><mxGeometry x="1035" y="914" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="n7" value="¿La fecha de fin es anterior&lt;br&gt;a la de inicio?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" vertex="1" parent="1"><mxGeometry x="445" y="1012" width="400" height="110" as="geometry" /></mxCell>
-        <mxCell id="x7" value="HTTP 409 · La fecha de fin debe ser&lt;br&gt;posterior o igual a la de inicio" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="880" y="1030" width="350" height="74" as="geometry" /></mxCell>
-        <mxCell id="f7" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" vertex="1" parent="1"><mxGeometry x="1035" y="1150" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="n8" value="¿La carga total supera la capacidad&lt;br&gt;del periodo y no se confirmó?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" vertex="1" parent="1"><mxGeometry x="445" y="1248" width="400" height="110" as="geometry" /></mxCell>
-        <mxCell id="x8" value="HTTP 409 · Sobrecarga. Reenviar con&lt;br&gt;confirmarSobrecarga = true" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="880" y="1266" width="350" height="74" as="geometry" /></mxCell>
-        <mxCell id="f8" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" vertex="1" parent="1"><mxGeometry x="1035" y="1386" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="n9" value="Persiste la asignación en mss_asignacion&lt;br&gt;con la auditoría inline" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="445" y="1484" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n10" value="El sistema confirma la operación y&lt;br&gt;actualiza la vista de carga" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="15" y="1598" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n11" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" vertex="1" parent="1"><mxGeometry x="195" y="1712" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="e0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n0" target="n1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n3" target="n4"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n4" target="n5"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n5" target="n6"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e6" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n6" target="x6"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="x6" target="f6"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e8" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n6" target="n7"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e9" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n7" target="x7"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="x7" target="f7"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e11" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n7" target="n8"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e12" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n8" target="x8"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="x8" target="f8"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e14" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n8" target="n9"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n9" target="n10"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n10" target="n11"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="legend" value="Caso de uso: CU-04&lt;br&gt;Nombre: Asignar recurso a proyecto&lt;br&gt;Actor primario: A2 · Gestor de Proyecto&lt;br&gt;Actor secundario: A3 · Recurso Técnico (afectado)&lt;br&gt;Historia de usuario: HU-02&lt;br&gt;Precondición: la tarea existe y el recurso está&lt;br&gt;dado de alta. A2 autenticado con permisos.&lt;br&gt;Postcondición: asignación registrada. La línea base&lt;br&gt;se fija después, al congelarla (CU-07)." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;strokeColor=#999999;strokeWidth=1;fontColor=#000000;fontSize=16;align=left;verticalAlign=top;spacingLeft=14;spacingTop=6;shadow=0;" vertex="1" parent="1"><mxGeometry x="880" y="1562" width="350" height="284" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram name="CU-04 Asignar recurso a proyecto" id="cu04">
+        <mxGraphModel dx="788" dy="628" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="lane_a" value="A2 · Gestor de Proyecto" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" parent="1" vertex="1">
+                    <mxGeometry width="430" height="1886" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane_s" value="Sistema · ms-seguimiento" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="430" width="430" height="1886" as="geometry"/>
+                </mxCell>
+                <mxCell id="n0" value="" style="ellipse;html=1;fillColor=#333333;strokeColor=#333333;strokeWidth=1;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="195" y="92" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n1" value="Accede a «Planificación» y selecciona&lt;br&gt;el proyecto y la tarea" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="15" y="206" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n2" value="Muestra los recursos técnicos y su carga&lt;br&gt;actual en el periodo" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="320" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n3" value="Selecciona un recurso e indica las horas&lt;br&gt;planificadas y el periodo" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="15" y="434" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n4" value="Pulsa «Asignar»" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="15" y="548" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n5" value="Recibe POST /api/asignaciones" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="662" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n6" value="¿Ya existe una asignación para&lt;br&gt;esa tarea y ese recurso?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="776" width="400" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="x6" value="HTTP 409 · Ya existe una asignación&lt;br&gt;para esa tarea y ese recurso" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="794" width="350" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="f6" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="1035" y="914" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n7" value="¿La fecha de fin es anterior&lt;br&gt;a la de inicio?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="1012" width="400" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="x7" value="HTTP 409 · La fecha de fin debe ser&lt;br&gt;posterior o igual a la de inicio" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="1030" width="350" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="f7" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="1035" y="1150" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n8" value="¿La carga total supera la capacidad&lt;br&gt;del periodo y no se confirmó?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="1248" width="400" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="x8" value="HTTP 409 · Sobrecarga. Reenviar con&lt;br&gt;confirmarSobrecarga = true" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="1266" width="350" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="f8" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="1035" y="1386" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n9" value="Persiste la asignación en mss_asignacion&lt;br&gt;con la auditoría inline" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="1484" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n10" value="El sistema confirma la operación y&lt;br&gt;actualiza la vista de carga" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="15" y="1598" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n11" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="195" y="1712" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n0" target="n1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n1" target="n2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n2" target="n3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n3" target="n4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n4" target="n5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n5" target="n6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n6" target="x6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="x6" target="f6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n6" target="n7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e9" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n7" target="x7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="x7" target="f7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e11" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n7" target="n8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e12" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n8" target="x8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="x8" target="f8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e14" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n8" target="n9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n9" target="n10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n10" target="n11" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend" value="Caso de uso: CU-04&lt;br&gt;Nombre: Asignar recurso a proyecto&lt;br&gt;Actor primario: A2 · Gestor de Proyecto&lt;br&gt;Actor secundario: A3 · Recurso Técnico&lt;br&gt;Historia de usuario: HU-02&lt;br&gt;Precondición: la tarea existe y el recurso está&lt;br&gt;dado de alta. A2 autenticado con permisos.&lt;br&gt;Postcondición: asignación registrada en&lt;br&gt;mss_asignacion. La línea base se fija después,&lt;br&gt;mediante la operación de congelado." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;strokeColor=#999999;strokeWidth=1;fontColor=#000000;fontSize=16;align=left;verticalAlign=top;spacingLeft=14;spacingTop=6;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="1562" width="350" height="284" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>

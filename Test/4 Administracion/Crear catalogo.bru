@@ -1,0 +1,32 @@
+meta {
+  name: Crear catalogo
+  type: http
+  seq: 2
+}
+post {
+  url: {{baseUrl}}/api/catalogo
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "grupo": "QA_{{runId}}",
+    "idOpcion": 1,
+    "opcion": "Opcion de prueba {{runId}}"
+  }
+}
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("catalogoId", res.body.id);
+  }
+}
+tests {
+  test("creado (200/201)", function() { expect(res.status).to.be.oneOf([200, 201]); });
+  test("devuelve id", function() { expect(res.body.id).to.be.a("string"); });
+  test("el grupo lleva el sufijo de la corrida", function() {
+    expect(res.body.grupo).to.equal("QA_" + bru.getVar("runId"));
+  });
+}

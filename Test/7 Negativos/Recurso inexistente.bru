@@ -1,0 +1,19 @@
+meta {
+  name: Recurso inexistente
+  type: http
+  seq: 4
+}
+get {
+  url: {{baseUrl}}/api/proyectos/00000000-0000-0000-0000-0000000000ff
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 404", function() { expect(res.status).to.equal(404); });
+  test("el codigo es de recurso no encontrado", function() {
+    expect(res.body.title).to.equal("RECURSO_NO_ENCONTRADO");
+  });
+}

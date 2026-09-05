@@ -1,0 +1,32 @@
+meta {
+  name: Listar modulos
+  type: http
+  seq: 10
+}
+get {
+  url: {{baseUrl}}/api/modulos
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+script:post-response {
+  if (res.status === 200) {
+    const items = res.body.items || res.body;
+    const seccion = items.find(m => m.seccion);
+    if (seccion) { bru.setVar("moduloSeccion", seccion.seccion); }
+  }
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve listado paginado", function() {
+    expect(res.body.items).to.be.an("array").that.is.not.empty;
+  });
+  test("cada modulo trae seccion y tipo", function() {
+    res.body.items.forEach(m => {
+      expect(m.seccion, "seccion").to.be.a("string");
+      expect(m.tipo, "tipo").to.be.a("string");
+    });
+  });
+}

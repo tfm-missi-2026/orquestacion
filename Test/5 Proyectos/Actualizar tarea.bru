@@ -1,0 +1,26 @@
+meta {
+  name: Actualizar tarea
+  type: http
+  seq: 12
+}
+put {
+  url: {{baseUrl}}/api/tareas/{{tareaId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "nombre": "Tarea actualizada {{runId}}",
+    "fechaInicioPlanificada": "2026-08-03",
+    "fechaFinPlanificada": "2026-08-07",
+    "horasEstimadas": 24,
+    "situacionId": "{{catSituacionPendiente}}"
+  }
+}
+tests {
+  test("actualizada 200", function() { expect(res.status).to.equal(200); });
+  test("refleja el cambio de horas", function() { expect(res.body.horasEstimadas).to.equal(24); });
+}

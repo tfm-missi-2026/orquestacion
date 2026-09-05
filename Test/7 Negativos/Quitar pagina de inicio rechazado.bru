@@ -1,0 +1,29 @@
+meta {
+  name: Quitar pagina de inicio rechazado
+  type: http
+  seq: 6
+}
+put {
+  url: {{baseUrl}}/api/roles/{{rolCreadoId}}/modulos
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "moduloIds": ["{{moduloCreadoId}}"]
+  }
+}
+tests {
+  test("rechaza quitar la pagina de inicio del rol con 409", function() {
+    expect(res.status).to.equal(409);
+  });
+  test("el codigo es de conflicto de negocio", function() {
+    expect(res.body.title).to.equal("CONFLICTO_NEGOCIO");
+  });
+  test("el mensaje explica la causa", function() {
+    expect(res.body.detail.toLowerCase()).to.contain("pagina de inicio");
+  });
+}

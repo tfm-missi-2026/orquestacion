@@ -1,0 +1,17 @@
+meta {
+  name: Obtener catalogo
+  type: http
+  seq: 3
+}
+get {
+  url: {{baseUrl}}/api/catalogo/{{catalogoId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("es el catalogo creado", function() { expect(res.body.id).to.equal(bru.getVar("catalogoId")); });
+}

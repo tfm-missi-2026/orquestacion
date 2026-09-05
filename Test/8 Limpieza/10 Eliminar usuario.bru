@@ -1,0 +1,21 @@
+meta {
+  name: Eliminar usuario
+  type: http
+  seq: 10
+}
+delete {
+  url: {{baseUrl}}/api/usuarios/{{usuarioCreadoId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de la corrida {{runId}}"
+  }
+}
+tests {
+  test("eliminado (204)", function() { expect(res.status).to.equal(204); });
+}

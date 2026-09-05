@@ -1,0 +1,21 @@
+meta {
+  name: Eliminar asignacion sobrecarga
+  type: http
+  seq: 6
+}
+delete {
+  url: {{baseUrl}}/api/asignaciones/{{asignacionSobrecargaId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de la corrida {{runId}}"
+  }
+}
+tests {
+  test("eliminado (204)", function() { expect(res.status).to.equal(204); });
+}

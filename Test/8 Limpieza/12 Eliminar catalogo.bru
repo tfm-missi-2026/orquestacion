@@ -1,0 +1,21 @@
+meta {
+  name: Eliminar catalogo
+  type: http
+  seq: 12
+}
+delete {
+  url: {{baseUrl}}/api/catalogo/{{catalogoId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de la corrida {{runId}}"
+  }
+}
+tests {
+  test("eliminado (204)", function() { expect(res.status).to.equal(204); });
+}

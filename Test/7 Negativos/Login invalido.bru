@@ -1,0 +1,22 @@
+meta {
+  name: Login invalido
+  type: http
+  seq: 1
+}
+post {
+  url: {{baseUrl}}/api/auth/login
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "email": "{{adminEmail}}",
+    "contrasenia": "ClaveIncorrecta"
+  }
+}
+tests {
+  test("rechaza con 401", function() { expect(res.status).to.equal(401); });
+  test("el codigo es de credenciales invalidas", function() {
+    expect(res.body.title).to.equal("CREDENCIALES_INVALIDAS");
+  });
+}

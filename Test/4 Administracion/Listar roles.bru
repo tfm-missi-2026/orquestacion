@@ -1,0 +1,25 @@
+meta {
+  name: Listar roles
+  type: http
+  seq: 5
+}
+get {
+  url: {{baseUrl}}/api/roles
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve listado paginado", function() {
+    expect(res.body.items).to.be.an("array");
+    expect(res.body.total).to.be.a("number");
+  });
+  test("incluye los cuatro roles base del seed", function() {
+    const codigos = res.body.items.map(r => r.codigo);
+    ["ADMIN", "JEFE_AREA", "GESTOR_PROYECTO", "RECURSO_TECNICO"]
+      .forEach(c => expect(codigos, c).to.include(c));
+  });
+}

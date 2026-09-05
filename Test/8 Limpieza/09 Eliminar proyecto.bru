@@ -1,0 +1,21 @@
+meta {
+  name: Eliminar proyecto
+  type: http
+  seq: 9
+}
+delete {
+  url: {{baseUrl}}/api/proyectos/{{proyectoId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de la corrida {{runId}}"
+  }
+}
+tests {
+  test("eliminado (204)", function() { expect(res.status).to.equal(204); });
+}

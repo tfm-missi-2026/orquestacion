@@ -1,0 +1,34 @@
+meta {
+  name: Sobrecarga rechazada
+  type: http
+  seq: 3
+}
+post {
+  url: {{baseUrl}}/api/asignaciones
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "tareaId": "{{tareaId}}",
+    "usuarioId": "{{adminUserId}}",
+    "horasPlanificadas": 500,
+    "fechaInicioPlanificada": "2026-08-03",
+    "fechaFinPlanificada": "2026-08-07",
+    "confirmarSobrecarga": false
+  }
+}
+tests {
+  test("rechaza por sobrecarga con 409 (RF-06)", function() {
+    expect(res.status).to.equal(409);
+  });
+  test("el codigo es de conflicto de negocio", function() {
+    expect(res.body.title).to.equal("CONFLICTO_NEGOCIO");
+  });
+  test("el mensaje explica la sobrecarga", function() {
+    expect(res.body.detail.toLowerCase()).to.contain("capacidad");
+  });
+}

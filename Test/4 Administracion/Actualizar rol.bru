@@ -1,0 +1,24 @@
+meta {
+  name: Actualizar rol
+  type: http
+  seq: 8
+}
+put {
+  url: {{baseUrl}}/api/roles/{{rolCreadoId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "nombre": "Rol actualizado {{runId}}",
+    "descripcion": "Actualizado por la coleccion Bruno",
+    "paginaInicioId": "{{paginaInicioId}}"
+  }
+}
+tests {
+  test("actualizado 200", function() { expect(res.status).to.equal(200); });
+  test("refleja el cambio", function() { expect(res.body.nombre).to.contain("actualizado"); });
+}

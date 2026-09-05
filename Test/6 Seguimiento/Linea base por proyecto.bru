@@ -1,0 +1,16 @@
+meta {
+  name: Linea base por proyecto
+  type: http
+  seq: 17
+}
+get {
+  url: {{baseUrl}}/api/linea-base/por-proyecto/{{proyectoId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+}

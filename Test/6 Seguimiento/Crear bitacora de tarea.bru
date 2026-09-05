@@ -1,0 +1,31 @@
+meta {
+  name: Crear bitacora de tarea
+  type: http
+  seq: 10
+}
+post {
+  url: {{baseUrl}}/api/bitacora
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "fecha": "2026-08-03",
+    "horaInicio": "09:00:00",
+    "horaFin": "13:00:00",
+    "descripcion": "Trabajo en la tarea de prueba {{runId}}",
+    "asignacionId": "{{asignacionSobrecargaId}}"
+  }
+}
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("bitacoraId", res.body.id);
+  }
+}
+tests {
+  test("creada (200/201)", function() { expect(res.status).to.be.oneOf([200, 201]); });
+  test("devuelve id", function() { expect(res.body.id).to.be.a("string"); });
+}

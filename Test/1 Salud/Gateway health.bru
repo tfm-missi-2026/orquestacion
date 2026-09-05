@@ -5,16 +5,28 @@ meta {
 }
 
 get {
-  url: {{tfm-api-gateway-local}}/actuator/health
+  url: {{baseUrl}}/actuator/health
   body: none
   auth: none
 }
 
+script:pre-request {
+  // Identificador unico de esta corrida. Todos los codigos y correos que
+  // la coleccion cree lo llevan como sufijo, de modo que la coleccion se
+  // puede reejecutar sin resetear la base y sin chocar con el seed.
+  if (!bru.getVar("runId")) {
+    bru.setVar("runId", Date.now().toString(36));
+  }
+}
+
 tests {
-  test("responde 200", function() {
+  test("gateway responde 200", function() {
     expect(res.status).to.equal(200);
   });
   test("estado UP", function() {
     expect(res.body.status).to.equal("UP");
+  });
+  test("runId generado para la corrida", function() {
+    expect(bru.getVar("runId")).to.be.a("string");
   });
 }

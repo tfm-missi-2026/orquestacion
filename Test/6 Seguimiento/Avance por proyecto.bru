@@ -1,0 +1,19 @@
+meta {
+  name: Avance por proyecto
+  type: http
+  seq: 19
+}
+get {
+  url: {{baseUrl}}/api/avance/por-proyecto/{{proyectoId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200 con linea base congelada", function() { expect(res.status).to.equal(200); });
+  test("devuelve el avance calculado", function() {
+    expect(res.body).to.be.an("object");
+  });
+}

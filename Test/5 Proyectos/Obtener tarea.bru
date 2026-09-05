@@ -1,0 +1,18 @@
+meta {
+  name: Obtener tarea
+  type: http
+  seq: 11
+}
+get {
+  url: {{baseUrl}}/api/tareas/{{tareaId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("es la tarea creada", function() { expect(res.body.id).to.equal(bru.getVar("tareaId")); });
+  test("conserva las horas estimadas", function() { expect(res.body.horasEstimadas).to.equal(20); });
+}

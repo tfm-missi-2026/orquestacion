@@ -1,0 +1,19 @@
+meta {
+  name: Mi bitacora por dia
+  type: http
+  seq: 12
+}
+get {
+  url: {{baseUrl}}/api/bitacora/mia?fecha=2026-08-03
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve los registros del dia", function() {
+    expect(res.body.items || res.body).to.be.an("array");
+  });
+}

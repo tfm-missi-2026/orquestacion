@@ -1,0 +1,19 @@
+meta {
+  name: Asignaciones por usuario
+  type: http
+  seq: 6
+}
+get {
+  url: {{baseUrl}}/api/asignaciones/por-usuario/{{usuarioCreadoId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve las asignaciones del recurso", function() {
+    expect(res.body.items || res.body).to.be.an("array");
+  });
+}

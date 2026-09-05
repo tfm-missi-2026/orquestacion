@@ -1,0 +1,20 @@
+meta {
+  name: Asignaciones por tarea
+  type: http
+  seq: 5
+}
+get {
+  url: {{baseUrl}}/api/asignaciones/por-tarea/{{tareaId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("incluye la asignacion creada", function() {
+    const items = res.body.items || res.body;
+    expect(items.map(a => a.id)).to.include(bru.getVar("asignacionId"));
+  });
+}

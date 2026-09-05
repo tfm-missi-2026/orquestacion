@@ -1,0 +1,18 @@
+meta {
+  name: Verificar borrado logico
+  type: http
+  seq: 14
+}
+get {
+  url: {{baseUrl}}/api/proyectos/{{proyectoId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("el registro eliminado ya no es accesible (404)", function() {
+    expect(res.status).to.equal(404);
+  });
+}

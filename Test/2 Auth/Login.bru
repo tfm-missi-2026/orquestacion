@@ -5,21 +5,23 @@ meta {
 }
 
 post {
-  url: {{tfm-api-gateway-local}}/api/auth/login
+  url: {{baseUrl}}/api/auth/login
   body: json
   auth: none
 }
 
 body:json {
   {
-    "email": "admin@srp.local",
-    "contrasenia": "Admin123"
+    "email": "{{adminEmail}}",
+    "contrasenia": "{{adminPassword}}"
   }
 }
 
 script:post-response {
   if (res.status === 200) {
     bru.setVar("token", res.body.tokenAcceso);
+    bru.setVar("adminUserId", res.body.usuario.id);
+    bru.setVar("adminRolId", res.body.usuario.rol.id);
   }
 }
 
@@ -29,5 +31,8 @@ tests {
   });
   test("devuelve token", function() {
     expect(res.body.tokenAcceso).to.be.a("string");
+  });
+  test("captura el id del usuario autenticado", function() {
+    expect(bru.getVar("adminUserId")).to.be.a("string");
   });
 }

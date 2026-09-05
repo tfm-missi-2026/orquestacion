@@ -1,0 +1,26 @@
+meta {
+  name: Actualizar subproyecto
+  type: http
+  seq: 8
+}
+put {
+  url: {{baseUrl}}/api/subproyectos/{{subproyectoId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "tipoSubproyectoId": "{{catTipoSubproyecto}}",
+    "codigoTicket": "QA-{{runId}}",
+    "prioridadId": "{{catPrioridad}}",
+    "descripcion": "Subproyecto actualizado por la coleccion Bruno",
+    "situacionId": "{{catSituacionPendiente}}"
+  }
+}
+tests {
+  test("actualizado 200", function() { expect(res.status).to.equal(200); });
+  test("refleja el cambio", function() { expect(res.body.descripcion).to.contain("actualizado"); });
+}

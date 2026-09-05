@@ -1,0 +1,17 @@
+meta {
+  name: Obtener rol
+  type: http
+  seq: 7
+}
+get {
+  url: {{baseUrl}}/api/roles/{{rolCreadoId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("es el rol creado", function() { expect(res.body.id).to.equal(bru.getVar("rolCreadoId")); });
+}

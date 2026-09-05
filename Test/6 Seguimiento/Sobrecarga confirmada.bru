@@ -1,0 +1,33 @@
+meta {
+  name: Sobrecarga confirmada
+  type: http
+  seq: 4
+}
+post {
+  url: {{baseUrl}}/api/asignaciones
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "tareaId": "{{tareaId}}",
+    "usuarioId": "{{adminUserId}}",
+    "horasPlanificadas": 500,
+    "fechaInicioPlanificada": "2026-08-03",
+    "fechaFinPlanificada": "2026-08-07",
+    "confirmarSobrecarga": true
+  }
+}
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("asignacionSobrecargaId", res.body.id);
+  }
+}
+tests {
+  test("acepta la sobrecarga confirmada", function() {
+    expect(res.status).to.be.oneOf([200, 201]);
+  });
+}

@@ -1,0 +1,26 @@
+meta {
+  name: Datos invalidos en alta
+  type: http
+  seq: 5
+}
+post {
+  url: {{baseUrl}}/api/proyectos
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "nombreCorto": "QA",
+    "nombre": "",
+    "gestorId": "{{adminUserId}}"
+  }
+}
+tests {
+  test("responde 400", function() { expect(res.status).to.equal(400); });
+  test("detalla el campo que fallo", function() {
+    expect(res.body.errores).to.be.an("array").that.is.not.empty;
+  });
+}

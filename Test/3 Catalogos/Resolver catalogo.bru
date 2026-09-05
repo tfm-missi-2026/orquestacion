@@ -1,0 +1,51 @@
+meta {
+  name: Resolver catalogo
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/catalogo
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+script:post-response {
+  // Los UUID del catalogo no se fijan a mano: se resuelven por grupo y
+  // opcion, de modo que un cambio de seed no rompe la coleccion.
+  if (res.status === 200) {
+    const items = res.body;
+    const buscar = (grupo, opcion) => {
+      const it = items.find(i => i.grupo === grupo && i.idOpcion === opcion);
+      return it ? it.id : null;
+    };
+    bru.setVar("catTipoSubproyecto", buscar("TIPO_SUBPROYECTO", 2));
+    bru.setVar("catPrioridad", buscar("PRIORIDAD", 1));
+    bru.setVar("catSituacionPendiente", buscar("SITUACION", 1));
+    bru.setVar("catSituacionCulminado", buscar("SITUACION", 3));
+    bru.setVar("catTipoVariacion", buscar("TIPO_VARIACION", 2));
+    bru.setVar("catSitVarPendiente", buscar("SITUACION_VARIACION", 1));
+    bru.setVar("catSitVarAprobada", buscar("SITUACION_VARIACION", 2));
+    bru.setVar("catTipoActividad", buscar("TIPO_ACTIVIDAD", 1));
+    bru.setVar("catModalidad", buscar("MODALIDAD", 1));
+  }
+}
+
+tests {
+  test("responde 200", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("devuelve arreglo de items", function() {
+    expect(res.body).to.be.an("array");
+  });
+  test("resuelve los nueve UUID que usa la coleccion", function() {
+    const claves = ["catTipoSubproyecto", "catPrioridad", "catSituacionPendiente",
+                    "catSituacionCulminado", "catTipoVariacion", "catSitVarPendiente",
+                    "catSitVarAprobada", "catTipoActividad", "catModalidad"];
+    claves.forEach(k => expect(bru.getVar(k), k).to.be.a("string"));
+  });
+}

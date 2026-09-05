@@ -1,0 +1,24 @@
+meta {
+  name: Login del usuario creado
+  type: http
+  seq: 21
+}
+post {
+  url: {{baseUrl}}/api/auth/login
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "email": "qa.{{runId}}@srp.local",
+    "contrasenia": "Qa.2026Nueva"
+  }
+}
+tests {
+  test("la contrasena restablecida funciona", function() {
+    expect(res.status).to.equal(200);
+  });
+  test("el rol devuelto es el asignado", function() {
+    expect(res.body.usuario.rol.id).to.equal(bru.getVar("rolRecursoId"));
+  });
+}

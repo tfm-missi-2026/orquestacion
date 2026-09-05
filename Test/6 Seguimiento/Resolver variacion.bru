@@ -1,0 +1,25 @@
+meta {
+  name: Resolver variacion
+  type: http
+  seq: 25
+}
+put {
+  url: {{baseUrl}}/api/variaciones/{{variacionId}}/resolver
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "situacionId": "{{catSitVarAprobada}}",
+    "observacionResolucion": "Aprobada por la coleccion Bruno"
+  }
+}
+tests {
+  test("resuelta 200", function() { expect(res.status).to.equal(200); });
+  test("deja constancia de quien resolvio", function() {
+    expect(res.body.resueltoPor).to.be.a("string");
+  });
+}

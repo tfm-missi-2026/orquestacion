@@ -1,0 +1,17 @@
+meta {
+  name: Listar catalogo
+  type: http
+  seq: 1
+}
+get {
+  url: {{baseUrl}}/api/catalogo
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve arreglo", function() { expect(res.body).to.be.an("array"); });
+}

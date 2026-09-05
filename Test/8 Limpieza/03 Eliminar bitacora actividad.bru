@@ -1,0 +1,21 @@
+meta {
+  name: Eliminar bitacora actividad
+  type: http
+  seq: 3
+}
+delete {
+  url: {{baseUrl}}/api/bitacora/{{bitacoraActividadId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "motivoEliminacion": "Limpieza de la corrida {{runId}}"
+  }
+}
+tests {
+  test("eliminado (204)", function() { expect(res.status).to.equal(204); });
+}

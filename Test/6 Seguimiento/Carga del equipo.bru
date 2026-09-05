@@ -1,0 +1,19 @@
+meta {
+  name: Carga del equipo
+  type: http
+  seq: 20
+}
+get {
+  url: {{baseUrl}}/api/carga/equipo?desde=2026-08-03&hasta=2026-08-07
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve la carga por recurso", function() {
+    expect(res.body.items || res.body).to.be.an("array");
+  });
+}

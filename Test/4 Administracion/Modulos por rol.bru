@@ -1,0 +1,21 @@
+meta {
+  name: Modulos por rol
+  type: http
+  seq: 15
+}
+get {
+  url: {{baseUrl}}/api/modulos/por-rol/{{rolCreadoId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("incluye el modulo recien asignado", function() {
+    const items = res.body.items || res.body;
+    const ids = items.map(m => m.id);
+    expect(ids).to.include(bru.getVar("moduloCreadoId"));
+  });
+}

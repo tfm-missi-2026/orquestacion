@@ -1,0 +1,26 @@
+meta {
+  name: Actualizar usuario
+  type: http
+  seq: 19
+}
+put {
+  url: {{baseUrl}}/api/usuarios/{{usuarioCreadoId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "email": "qa.{{runId}}@srp.local",
+    "nombres": "Recurso",
+    "apellidoPaterno": "De",
+    "apellidoMaterno": "Prueba Actualizado",
+    "rolId": "{{rolRecursoId}}"
+  }
+}
+tests {
+  test("actualizado 200", function() { expect(res.status).to.equal(200); });
+  test("refleja el cambio", function() { expect(res.body.apellidoMaterno).to.contain("Actualizado"); });
+}

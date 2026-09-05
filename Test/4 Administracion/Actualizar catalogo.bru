@@ -1,0 +1,24 @@
+meta {
+  name: Actualizar catalogo
+  type: http
+  seq: 4
+}
+put {
+  url: {{baseUrl}}/api/catalogo/{{catalogoId}}
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "grupo": "QA_{{runId}}",
+    "idOpcion": 1,
+    "opcion": "Opcion actualizada {{runId}}"
+  }
+}
+tests {
+  test("actualizado 200", function() { expect(res.status).to.equal(200); });
+  test("refleja el cambio", function() { expect(res.body.opcion).to.contain("actualizada"); });
+}

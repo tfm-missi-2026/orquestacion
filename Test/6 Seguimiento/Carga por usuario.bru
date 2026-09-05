@@ -1,0 +1,16 @@
+meta {
+  name: Carga por usuario
+  type: http
+  seq: 21
+}
+get {
+  url: {{baseUrl}}/api/carga/por-usuario/{{usuarioCreadoId}}?desde=2026-08-03&hasta=2026-08-07
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+}

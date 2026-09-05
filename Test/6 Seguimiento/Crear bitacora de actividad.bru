@@ -1,0 +1,33 @@
+meta {
+  name: Crear bitacora de actividad
+  type: http
+  seq: 11
+}
+post {
+  url: {{baseUrl}}/api/bitacora
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "fecha": "2026-08-04",
+    "horaInicio": "09:00:00",
+    "horaFin": "10:00:00",
+    "descripcion": "Participacion en la actividad {{runId}}",
+    "actividadId": "{{actividadId}}"
+  }
+}
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("bitacoraActividadId", res.body.id);
+  }
+}
+tests {
+  test("creada (200/201)", function() { expect(res.status).to.be.oneOf([200, 201]); });
+  test("queda ligada a la actividad", function() {
+    expect(res.body.actividadId).to.equal(bru.getVar("actividadId"));
+  });
+}

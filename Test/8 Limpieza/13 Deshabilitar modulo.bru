@@ -1,0 +1,22 @@
+meta {
+  name: Deshabilitar modulo
+  type: http
+  seq: 13
+}
+put {
+  url: {{baseUrl}}/api/modulos/{{moduloCreadoId}}/estado
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "estado": 0,
+    "motivoEliminacion": "Limpieza de la corrida {{runId}}"
+  }
+}
+tests {
+  test("deshabilitado (200/204)", function() { expect(res.status).to.be.oneOf([200, 204]); });
+}

@@ -1,0 +1,24 @@
+meta {
+  name: Asignar modulos a rol
+  type: http
+  seq: 14
+}
+put {
+  url: {{baseUrl}}/api/roles/{{rolCreadoId}}/modulos
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "moduloIds": ["{{paginaInicioId}}", "{{moduloCreadoId}}"]
+  }
+}
+tests {
+  test("asignacion 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve los modulos del rol", function() {
+    expect(res.body).to.be.an("array").that.is.not.empty;
+  });
+}

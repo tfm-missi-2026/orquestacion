@@ -1,0 +1,31 @@
+meta {
+  name: Asignacion duplicada rechazada
+  type: http
+  seq: 2
+}
+post {
+  url: {{baseUrl}}/api/asignaciones
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "tareaId": "{{tareaId}}",
+    "usuarioId": "{{usuarioCreadoId}}",
+    "horasPlanificadas": 4,
+    "fechaInicioPlanificada": "2026-08-03",
+    "fechaFinPlanificada": "2026-08-07",
+    "confirmarSobrecarga": true
+  }
+}
+tests {
+  test("rechaza el duplicado con 409", function() {
+    expect(res.status).to.equal(409);
+  });
+  test("el codigo es de conflicto de negocio", function() {
+    expect(res.body.title).to.equal("CONFLICTO_NEGOCIO");
+  });
+}

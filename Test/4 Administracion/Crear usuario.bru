@@ -1,0 +1,35 @@
+meta {
+  name: Crear usuario
+  type: http
+  seq: 17
+}
+post {
+  url: {{baseUrl}}/api/usuarios
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "email": "qa.{{runId}}@srp.local",
+    "contrasenia": "Qa.2026Test",
+    "nombres": "Recurso",
+    "apellidoPaterno": "De",
+    "apellidoMaterno": "Prueba",
+    "rolId": "{{rolRecursoId}}"
+  }
+}
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("usuarioCreadoId", res.body.id);
+  }
+}
+tests {
+  test("creado (200/201)", function() { expect(res.status).to.be.oneOf([200, 201]); });
+  test("devuelve id", function() { expect(res.body.id).to.be.a("string"); });
+  test("el correo lleva el sufijo de la corrida", function() {
+    expect(res.body.email).to.equal("qa." + bru.getVar("runId") + "@srp.local");
+  });
+}

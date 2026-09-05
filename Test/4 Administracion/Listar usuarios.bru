@@ -1,0 +1,20 @@
+meta {
+  name: Listar usuarios
+  type: http
+  seq: 16
+}
+get {
+  url: {{baseUrl}}/api/usuarios
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("devuelve listado paginado", function() {
+    expect(res.body.items).to.be.an("array").that.is.not.empty;
+    expect(res.body.total).to.be.a("number");
+  });
+}

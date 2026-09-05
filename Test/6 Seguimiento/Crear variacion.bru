@@ -1,0 +1,40 @@
+meta {
+  name: Crear variacion
+  type: http
+  seq: 22
+}
+post {
+  url: {{baseUrl}}/api/variaciones
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "tipoVariacionId": "{{catTipoVariacion}}",
+    "descripcion": "Ampliacion de plazo de la tarea {{runId}}",
+    "justificacion": "Dependencia externa no prevista en la planificacion",
+    "valorAnterior": "2026-08-07",
+    "valorNuevo": "2026-08-14",
+    "fechaDeteccion": "2026-08-05",
+    "reportadaPor": "{{adminUserId}}",
+    "tareaId": "{{tareaId}}"
+  }
+}
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("variacionId", res.body.id);
+  }
+}
+tests {
+  test("creada (200/201)", function() { expect(res.status).to.be.oneOf([200, 201]); });
+  test("nace pendiente: el servidor no asigna situacion", function() {
+    expect(res.body.situacionId).to.equal(null);
+  });
+  test("registra valor anterior y nuevo", function() {
+    expect(res.body.valorAnterior).to.be.a("string");
+    expect(res.body.valorNuevo).to.be.a("string");
+  });
+}

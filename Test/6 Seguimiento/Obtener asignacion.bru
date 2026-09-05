@@ -1,0 +1,17 @@
+meta {
+  name: Obtener asignacion
+  type: http
+  seq: 7
+}
+get {
+  url: {{baseUrl}}/api/asignaciones/{{asignacionId}}
+  body: none
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+tests {
+  test("responde 200", function() { expect(res.status).to.equal(200); });
+  test("es la asignacion creada", function() { expect(res.body.id).to.equal(bru.getVar("asignacionId")); });
+}

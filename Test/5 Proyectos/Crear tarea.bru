@@ -1,0 +1,35 @@
+meta {
+  name: Crear tarea
+  type: http
+  seq: 9
+}
+post {
+  url: {{baseUrl}}/api/tareas
+  body: json
+  auth: bearer
+}
+auth:bearer {
+  token: {{token}}
+}
+body:json {
+  {
+    "subproyectoId": "{{subproyectoId}}",
+    "nombre": "Tarea de prueba {{runId}}",
+    "fechaInicioPlanificada": "2026-08-03",
+    "fechaFinPlanificada": "2026-08-07",
+    "horasEstimadas": 20,
+    "situacionId": "{{catSituacionPendiente}}"
+  }
+}
+script:post-response {
+  if (res.status === 200 || res.status === 201) {
+    bru.setVar("tareaId", res.body.id);
+  }
+}
+tests {
+  test("creada (200/201)", function() { expect(res.status).to.be.oneOf([200, 201]); });
+  test("devuelve id", function() { expect(res.body.id).to.be.a("string"); });
+  test("cuelga del subproyecto, no del proyecto", function() {
+    expect(res.body.subproyectoId).to.equal(bru.getVar("subproyectoId"));
+  });
+}

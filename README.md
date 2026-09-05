@@ -5,9 +5,10 @@ Seguimiento de Recursos Técnicos** (UNIR, MISSI). Reúne el `docker-compose.yml
 stack completo, el init/migraciones de base de datos y la documentación de arranque.
 El código de cada componente vive en su **propio repositorio**.
 
-> Estado: **Backend funcional.** Los 5 servicios arrancan y los 3 microservicios de
+> Estado: **Stack integrado.** Los 5 servicios arrancan y los 3 microservicios de
 > negocio exponen sus APIs REST completas (auth/JWT, CRUDs y cálculos) documentadas en
-> Swagger. El **frontend aún no consume las APIs** (no tiene capa HTTP todavía).
+> Swagger. El **frontend ya consume las APIs** por el gateway: login real con JWT,
+> interceptores, sidebar dinámico por módulo y 14 features de dominio conectadas.
 
 ## Componentes del stack
 
@@ -51,6 +52,11 @@ git clone https://github.com/tfm-missi-2026/ms-proyectos.git      Backend/ms-pro
 git clone https://github.com/tfm-missi-2026/ms-seguimiento.git    Backend/ms-seguimiento
 git clone https://github.com/tfm-missi-2026/frontend.git          Frontend
 ```
+
+> ⚠️ **Mayúsculas.** El compose construye desde `${BACKEND_ROOT:-../Backend}/<servicio>`. En
+> Windows da igual cómo se llame la carpeta, pero en Linux y macOS los nombres distinguen
+> mayúsculas: o se clona exactamente como `Backend/`, o se exporta `BACKEND_ROOT` apuntando a
+> la ruta real (por ejemplo `BACKEND_ROOT=../backend`) antes de `docker compose up`.
 
 ## Requisitos previos
 
@@ -108,14 +114,17 @@ compatible con el `BCryptPasswordEncoder` de Spring Security.
 ### Frontend en local
 
 ```bash
-cd Frontend
+cd ../frontend
 pnpm install
 pnpm dev        # alias de `ng serve` (también existe `pnpm start`)
 ```
 
-`http://localhost:4200` → plantilla TailAdmin con el design-system propio (`src/app/ui/`).
-Todavía **no consume el backend** (sin capa HTTP/auth aún), así que las APIs se prueban por
-Swagger o con la colección Bruno; ambos flujos funcionan de forma independiente al frontend.
+`http://localhost:4200` → aplicación conectada al backend. Entra por el **gateway**
+(`apiGatewayUrl: http://localhost:8080` en `src/environments/environment.ts`), nunca por el
+puerto de un microservicio. Requiere el stack levantado para iniciar sesión.
+
+Las APIs también se pueden probar aparte, por Swagger o con la colección Bruno de `Test/`,
+de forma independiente al frontend.
 
 ## Levantar un solo microservicio (standalone)
 
@@ -157,9 +166,9 @@ reporte HTML). Detalle de orden y variables en [`Test/00_LEEME.md`](Test/00_LEEM
 
 ## Hitos
 
-- **M1** — Autenticación (login + JWT en backend) — ✅ hecho (falta el guard Angular del lado front)
+- **M1** — Autenticación (login + JWT) — ✅ hecho (incluye `authGuard` y `jwtInterceptor` en Angular)
 - **M2** — Modelo de datos completo por microservicio — ✅ hecho (DDL + seed vía Flyway)
 - **M3** — APIs CRUD por entidad principal — ✅ hecho (44 endpoints REST en los 3 ms)
 - **M4** — Integración entre microservicios — parcial (cruce por UUID; sin llamadas backend-backend)
-- **M5** — Frontend conectado a las APIs — ⏳ pendiente (falta la capa HTTP/servicios en Angular)
-- **M6** — Despliegue completo y evaluación — ⏳ pendiente
+- **M5** — Frontend conectado a las APIs — ✅ hecho (18 servicios REST, sidebar dinámico por módulo)
+- **M6** — Despliegue completo y evaluación — parcial (despliegue validado; evaluación de usabilidad y rendimiento pendientes)

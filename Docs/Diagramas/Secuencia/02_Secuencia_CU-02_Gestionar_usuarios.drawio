@@ -1,0 +1,170 @@
+<mxfile host="65bd71144e">
+    <diagram name="Secuencia CU-02 Gestionar usuarios y roles" id="d1">
+        <mxGraphModel dx="2347" dy="2567" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2167" pageHeight="1334" math="0" shadow="0">
+            <root>
+                <mxCell id="r0"/>
+                <mxCell id="1" parent="r0"/>
+                <mxCell id="c0" value="A4 : Administrador" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="37" y="63" width="225" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c1" value=":UsersListComponent&lt;br&gt;(Angular)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="63" width="236" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c2" value=":ApiGateway" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="614" y="63" width="160" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c3" value=":UsuarioController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="832" y="63" width="225" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c4" value=":UsuarioService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1115" y="63" width="192" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c5" value=":UsuarioMapper" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1365" y="63" width="180" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c6" value=":RolMapper" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1603" y="63" width="160" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c7" value="spsrt_administracion&lt;br&gt;msa_usuario" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1821" y="63" width="248" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="f0" value="[ya existe un usuario activo con ese correo]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="514" width="1986" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="t0" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="514" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="[el rol indicado no existe]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="598" width="1986" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="t1" value="else" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="598" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="f2" value="[datos válidos]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="682" width="1986" height="452" as="geometry"/>
+                </mxCell>
+                <mxCell id="t2" value="else" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="682" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0" value="completa el formulario de alta" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="156" y="178" as="sourcePoint"/>
+                        <mxPoint x="431" y="178" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m1" value="POST /api/usuarios (Bearer JWT)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="445" y="220" as="sourcePoint"/>
+                        <mxPoint x="687" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m2" value="valida el JWT en el gateway" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="701" y="262" as="sourcePoint"/>
+                        <mxPoint x="937" y="262" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m3" value="create(UsuarioCrearRequest)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="951" y="304" as="sourcePoint"/>
+                        <mxPoint x="1204" y="304" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m4" value="countByEmail(email)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="346" as="sourcePoint"/>
+                        <mxPoint x="1448" y="346" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m5" value="n" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1448" y="388" as="sourcePoint"/>
+                        <mxPoint x="1218" y="388" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m6" value="findById(rolId)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="430" as="sourcePoint"/>
+                        <mxPoint x="1676" y="430" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m7" value="Rol &lt;br&gt; null" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1676" y="472" as="sourcePoint"/>
+                        <mxPoint x="1218" y="472" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m8" value="409 Ya existe un usuario con ese email" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1204" y="556" as="sourcePoint"/>
+                        <mxPoint x="951" y="556" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m9" value="404 Rol no encontrado" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1204" y="640" as="sourcePoint"/>
+                        <mxPoint x="951" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m10" value="passwordEncoder.encode(contrasenia)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="724" as="sourcePoint"/>
+                        <mxPoint x="1218" y="766" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1361" y="724"/>
+                            <mxPoint x="1361" y="766"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m11" value="insert(nuevo)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="808" as="sourcePoint"/>
+                        <mxPoint x="1448" y="808" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m12" value="INSERT INTO msa_usuario (auditoría inline)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1462" y="850" as="sourcePoint"/>
+                        <mxPoint x="1938" y="850" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m13" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1938" y="892" as="sourcePoint"/>
+                        <mxPoint x="1462" y="892" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m14" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1448" y="934" as="sourcePoint"/>
+                        <mxPoint x="1218" y="934" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m15" value="UsuarioResponse" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1204" y="976" as="sourcePoint"/>
+                        <mxPoint x="951" y="976" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m16" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="937" y="1018" as="sourcePoint"/>
+                        <mxPoint x="701" y="1018" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m17" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="687" y="1060" as="sourcePoint"/>
+                        <mxPoint x="445" y="1060" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m18" value="confirma el alta y actualiza el listado" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="431" y="1102" as="sourcePoint"/>
+                        <mxPoint x="156" y="1102" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram name="CU-04 Asignar recurso a proyecto" id="cu04">
-        <mxGraphModel dx="788" dy="628" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
+        <mxGraphModel dx="1078" dy="770" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -114,9 +114,6 @@
                 </mxCell>
                 <mxCell id="e16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n10" target="n11" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="legend" value="Caso de uso: CU-04&lt;br&gt;Nombre: Asignar recurso a proyecto&lt;br&gt;Actor primario: A2 · Gestor de Proyecto&lt;br&gt;Actor secundario: A3 · Recurso Técnico&lt;br&gt;Historia de usuario: HU-02&lt;br&gt;Precondición: la tarea existe y el recurso está&lt;br&gt;dado de alta. A2 autenticado con permisos.&lt;br&gt;Postcondición: asignación registrada en&lt;br&gt;mss_asignacion. La línea base se fija después,&lt;br&gt;mediante la operación de congelado." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;strokeColor=#999999;strokeWidth=1;fontColor=#000000;fontSize=16;align=left;verticalAlign=top;spacingLeft=14;spacingTop=6;shadow=0;" parent="1" vertex="1">
-                    <mxGeometry x="880" y="1562" width="350" height="284" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

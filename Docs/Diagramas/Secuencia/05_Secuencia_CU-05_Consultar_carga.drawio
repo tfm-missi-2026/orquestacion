@@ -1,0 +1,151 @@
+<mxfile host="65bd71144e">
+    <diagram name="Secuencia CU-05 Consultar carga del equipo" id="d1">
+        <mxGraphModel dx="704" dy="770" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2018" pageHeight="1250" math="0" shadow="0">
+            <root>
+                <mxCell id="r0"/>
+                <mxCell id="1" parent="r0"/>
+                <mxCell id="c0" value="A1 : Jefe del Área" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="37" y="63" width="225" height="977" as="geometry"/>
+                </mxCell>
+                <mxCell id="c1" value=":TeamLoadListComponent&lt;br&gt;(Angular)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="320" y="63" width="270" height="977" as="geometry"/>
+                </mxCell>
+                <mxCell id="c2" value=":ApiGateway" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="648" y="63" width="160" height="977" as="geometry"/>
+                </mxCell>
+                <mxCell id="c3" value=":CargaController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="866" y="63" width="203" height="977" as="geometry"/>
+                </mxCell>
+                <mxCell id="c4" value=":CargaService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1127" y="63" width="169" height="977" as="geometry"/>
+                </mxCell>
+                <mxCell id="c5" value=":CargaMapper" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1354" y="63" width="160" height="977" as="geometry"/>
+                </mxCell>
+                <mxCell id="c6" value="spsrt_seguimiento&lt;br&gt;mss_asignacion + mss_bitacora" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1572" y="63" width="348" height="977" as="geometry"/>
+                </mxCell>
+                <mxCell id="f0" value="[desde posterior a hasta]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="430" width="1787" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="t0" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="430" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="[rango válido]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="514" width="1787" height="536" as="geometry"/>
+                </mxCell>
+                <mxCell id="t1" value="else" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="59" y="514" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0" value="indica el rango de fechas y el filtro" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="156" y="178" as="sourcePoint"/>
+                        <mxPoint x="448" y="178" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m1" value="GET /api/carga/equipo con desde, hasta y tareaIds" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="462" y="220" as="sourcePoint"/>
+                        <mxPoint x="721" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m2" value="valida el JWT y el rol en el gateway" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="735" y="262" as="sourcePoint"/>
+                        <mxPoint x="960" y="262" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m3" value="cargaEquipo(desde, hasta, tareaIds)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="974" y="304" as="sourcePoint"/>
+                        <mxPoint x="1204" y="304" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m4" value="validarRango(desde, hasta)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="346" as="sourcePoint"/>
+                        <mxPoint x="1218" y="388" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1361" y="346"/>
+                            <mxPoint x="1361" y="388"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m5" value="409 desde debe ser anterior o igual a hasta" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1204" y="472" as="sourcePoint"/>
+                        <mxPoint x="974" y="472" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m6" value="agregarCargaEquipo(desde, hasta, tareaIds)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="556" as="sourcePoint"/>
+                        <mxPoint x="1427" y="556" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m7" value="SELECT agregado sobre mss_asignacion y mss_bitacora" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1441" y="598" as="sourcePoint"/>
+                        <mxPoint x="1739" y="598" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m8" value="filas agregadas" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1739" y="640" as="sourcePoint"/>
+                        <mxPoint x="1441" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m9" value="List de CargaAgregado" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1427" y="682" as="sourcePoint"/>
+                        <mxPoint x="1218" y="682" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m10" value="planificadas = 0: utilización 0 % y sin sobrecarga" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="724" as="sourcePoint"/>
+                        <mxPoint x="1218" y="766" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1361" y="724"/>
+                            <mxPoint x="1361" y="766"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m11" value="planificadas &gt; 0: utilización = registradas / planificadas" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1218" y="808" as="sourcePoint"/>
+                        <mxPoint x="1218" y="850" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1361" y="808"/>
+                            <mxPoint x="1361" y="850"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m12" value="List de CargaRecursoResponse" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1204" y="892" as="sourcePoint"/>
+                        <mxPoint x="974" y="892" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m13" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="960" y="934" as="sourcePoint"/>
+                        <mxPoint x="735" y="934" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m14" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="721" y="976" as="sourcePoint"/>
+                        <mxPoint x="462" y="976" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m15" value="muestra la carga y marca los recursos en sobrecarga" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="448" y="1018" as="sourcePoint"/>
+                        <mxPoint x="156" y="1018" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

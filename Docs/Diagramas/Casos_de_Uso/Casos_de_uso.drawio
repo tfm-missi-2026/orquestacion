@@ -1,0 +1,85 @@
+<mxfile host="65bd71144e">
+    <diagram name="Casos de uso - SPSRT" id="d1">
+        <mxGraphModel dx="2247" dy="1573" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1364" pageHeight="803" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="c2" value="SPSRT" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;verticalAlign=top;align=center;fontFamily=Helvetica;fontSize=19;fontColor=#000000;fontStyle=1;dashed=0;" parent="1" vertex="1">
+                    <mxGeometry x="147" y="-71" width="1105" height="788" as="geometry"/>
+                </mxCell>
+                <mxCell id="c3" value="CU-01&lt;br&gt;Autenticar usuario" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="473" y="62" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c4" value="CU-02&lt;br&gt;Gestionar usuarios y roles" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="864" y="133" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c5" value="CU-05&lt;br&gt;Consultar carga del equipo" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="173" y="-22" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c6" value="CU-03&lt;br&gt;Crear proyecto" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="473" y="239" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c7" value="CU-04&lt;br&gt;Asignar recurso al proyecto" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="473" y="355" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c8" value="CU-07&lt;br&gt;Consultar avance del proyecto" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="473" y="447" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c9" value="CU-08&lt;br&gt;Registrar variación" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="473" y="537" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c10" value="CU-06&lt;br&gt;Registrar dedicación real" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="808" y="626" width="374" height="59" as="geometry"/>
+                </mxCell>
+                <mxCell id="c11" value="A4&lt;br&gt;Administrador" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1305" y="83" width="44" height="77" as="geometry"/>
+                </mxCell>
+                <mxCell id="c12" value="A1&lt;br&gt;Jefe del área" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="-17" y="83" width="44" height="77" as="geometry"/>
+                </mxCell>
+                <mxCell id="c13" value="A2&lt;br&gt;Gestor de proyecto" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="-17" y="541" width="44" height="77" as="geometry"/>
+                </mxCell>
+                <mxCell id="c14" value="A3&lt;br&gt;Recurso técnico" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="1305" y="562" width="44" height="77" as="geometry"/>
+                </mxCell>
+                <mxCell id="c15" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c12" target="c3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c16" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c12" target="c5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c17" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c13" target="c3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c18" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c13" target="c6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c19" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c13" target="c7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c20" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c13" target="c8" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c21" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c13" target="c9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c22" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c14" target="c3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c23" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c14" target="c10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c24" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c14" target="c9" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c25" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c11" target="c3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="c26" value="" style="endArrow=none;html=1;strokeColor=#000000;fontFamily=Helvetica;fontSize=19;fontColor=#000000;" parent="1" source="c11" target="c4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

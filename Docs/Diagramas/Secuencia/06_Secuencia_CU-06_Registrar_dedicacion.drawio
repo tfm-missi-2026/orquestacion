@@ -1,0 +1,168 @@
+<mxfile host="65bd71144e">
+    <diagram name="Secuencia CU-06 Registrar dedicación real" id="d1">
+        <mxGraphModel dx="704" dy="770" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2323" pageHeight="1334" math="0" shadow="0">
+            <root>
+                <mxCell id="r0"/>
+                <mxCell id="1" parent="r0"/>
+                <mxCell id="c0" value="A3 : Recurso Técnico" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="37" y="63" width="248" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c1" value=":TimesheetListComponent&lt;br&gt;(Angular)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="343" y="63" width="281" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c2" value=":ApiGateway" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="682" y="63" width="160" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c3" value=":BitacoraController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="900" y="63" width="236" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c4" value=":BitacoraService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1194" y="63" width="203" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c5" value=":CurrentUserResolver" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1455" y="63" width="248" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c6" value=":BitacoraMapper" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1761" y="63" width="192" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="c7" value="spsrt_seguimiento&lt;br&gt;mss_bitacora" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="2011" y="63" width="214" height="1061" as="geometry"/>
+                </mxCell>
+                <mxCell id="f0" value="[no se indicó exactamente uno entre asignación y actividad]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="71" y="514" width="2147" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="t0" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="71" y="514" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="[hora_fin no posterior a hora_inicio]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="71" y="598" width="2147" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="t1" value="else" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="71" y="598" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="f2" value="[datos válidos]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="71" y="682" width="2147" height="452" as="geometry"/>
+                </mxCell>
+                <mxCell id="t2" value="else" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="71" y="682" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0" value="completa fecha, horas y descripción" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="168" y="178" as="sourcePoint"/>
+                        <mxPoint x="476" y="178" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m1" value="POST /api/bitacora (Bearer JWT)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="490" y="220" as="sourcePoint"/>
+                        <mxPoint x="755" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m2" value="valida el JWT en el gateway" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="769" y="262" as="sourcePoint"/>
+                        <mxPoint x="1011" y="262" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m3" value="crear(BitacoraRequest)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1025" y="304" as="sourcePoint"/>
+                        <mxPoint x="1288" y="304" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m4" value="validarXor(asignacionId, actividadId)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1302" y="346" as="sourcePoint"/>
+                        <mxPoint x="1302" y="388" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1445" y="346"/>
+                            <mxPoint x="1445" y="388"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m5" value="validarHoras(request)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1302" y="430" as="sourcePoint"/>
+                        <mxPoint x="1302" y="472" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1445" y="430"/>
+                            <mxPoint x="1445" y="472"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m6" value="409 Exactamente uno entre asignacion_id y actividad_id" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1288" y="556" as="sourcePoint"/>
+                        <mxPoint x="1025" y="556" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m7" value="409 hora_fin debe ser posterior a hora_inicio" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1288" y="640" as="sourcePoint"/>
+                        <mxPoint x="1025" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m8" value="obtenerUsuarioActualId()" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1302" y="724" as="sourcePoint"/>
+                        <mxPoint x="1572" y="724" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m9" value="usuarioId resuelto del JWT, no del cuerpo" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1572" y="766" as="sourcePoint"/>
+                        <mxPoint x="1302" y="766" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m10" value="insertar(nueva)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1302" y="808" as="sourcePoint"/>
+                        <mxPoint x="1850" y="808" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m11" value="INSERT INTO mss_bitacora (auditoría inline)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1864" y="850" as="sourcePoint"/>
+                        <mxPoint x="2111" y="850" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m12" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="2111" y="892" as="sourcePoint"/>
+                        <mxPoint x="1864" y="892" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m13" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1850" y="934" as="sourcePoint"/>
+                        <mxPoint x="1302" y="934" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m14" value="BitacoraResponse" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1288" y="976" as="sourcePoint"/>
+                        <mxPoint x="1025" y="976" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m15" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1011" y="1018" as="sourcePoint"/>
+                        <mxPoint x="769" y="1018" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m16" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="755" y="1060" as="sourcePoint"/>
+                        <mxPoint x="490" y="1060" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m17" value="confirma el registro" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="476" y="1102" as="sourcePoint"/>
+                        <mxPoint x="168" y="1102" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

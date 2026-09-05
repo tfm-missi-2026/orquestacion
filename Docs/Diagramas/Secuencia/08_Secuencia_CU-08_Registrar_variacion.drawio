@@ -1,0 +1,141 @@
+<mxfile host="65bd71144e">
+    <diagram name="Secuencia CU-08 Registrar variación" id="d1">
+        <mxGraphModel dx="704" dy="770" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2096" pageHeight="1166" math="0" shadow="0">
+            <root>
+                <mxCell id="r0"/>
+                <mxCell id="1" parent="r0"/>
+                <mxCell id="c0" value="A2 / A3 : Gestor o Recurso" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="37" y="63" width="315" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c1" value=":ReportVariationModal&lt;br&gt;(Angular)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="410" y="63" width="259" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c2" value=":ApiGateway" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="727" y="63" width="160" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c3" value=":VariacionController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="945" y="63" width="248" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c4" value=":VariacionService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1251" y="63" width="214" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c5" value=":VariacionMapper" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1523" y="63" width="203" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c6" value="spsrt_seguimiento&lt;br&gt;mss_variacion" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1784" y="63" width="214" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="f0" value="[faltan campos obligatorios]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="104" y="388" width="1887" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="t0" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="104" y="388" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="[datos válidos]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="104" y="472" width="1887" height="494" as="geometry"/>
+                </mxCell>
+                <mxCell id="t1" value="else" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="104" y="472" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0" value="completa tipo, descripción, justificación y valores" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="201" y="178" as="sourcePoint"/>
+                        <mxPoint x="532" y="178" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m1" value="POST /api/variaciones (Bearer JWT)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="546" y="220" as="sourcePoint"/>
+                        <mxPoint x="800" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m2" value="valida el JWT en el gateway" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="814" y="262" as="sourcePoint"/>
+                        <mxPoint x="1062" y="262" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m3" value="valida los campos obligatorios del cuerpo" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1076" y="304" as="sourcePoint"/>
+                        <mxPoint x="1076" y="346" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1219" y="304"/>
+                            <mxPoint x="1219" y="346"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m4" value="400 VALIDACION_FALLIDA" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1062" y="430" as="sourcePoint"/>
+                        <mxPoint x="814" y="430" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m5" value="crear(VariacionCrearRequest)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1076" y="514" as="sourcePoint"/>
+                        <mxPoint x="1351" y="514" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m6" value="la situación pendiente la determina el servidor, no el cliente" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;edgeStyle=orthogonalEdgeStyle;align=left;spacingLeft=8;verticalAlign=middle;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1365" y="556" as="sourcePoint"/>
+                        <mxPoint x="1365" y="598" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1508" y="556"/>
+                            <mxPoint x="1508" y="598"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m7" value="insertar(nueva)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1365" y="640" as="sourcePoint"/>
+                        <mxPoint x="1617" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m8" value="INSERT INTO mss_variacion (auditoría inline)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1631" y="682" as="sourcePoint"/>
+                        <mxPoint x="1884" y="682" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m9" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1884" y="724" as="sourcePoint"/>
+                        <mxPoint x="1631" y="724" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m10" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1617" y="766" as="sourcePoint"/>
+                        <mxPoint x="1365" y="766" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m11" value="VariacionResponse" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1351" y="808" as="sourcePoint"/>
+                        <mxPoint x="1076" y="808" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m12" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1062" y="850" as="sourcePoint"/>
+                        <mxPoint x="814" y="850" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m13" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="800" y="892" as="sourcePoint"/>
+                        <mxPoint x="546" y="892" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m14" value="queda pendiente en la bandeja del gestor y del jefe del área" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="532" y="934" as="sourcePoint"/>
+                        <mxPoint x="201" y="934" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

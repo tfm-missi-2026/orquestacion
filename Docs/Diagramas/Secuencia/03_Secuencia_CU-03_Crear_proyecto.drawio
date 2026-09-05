@@ -1,0 +1,145 @@
+<mxfile host="65bd71144e">
+    <diagram name="Secuencia CU-03 Crear proyecto" id="d1">
+        <mxGraphModel dx="704" dy="770" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2017" pageHeight="1166" math="0" shadow="0">
+            <root>
+                <mxCell id="r0"/>
+                <mxCell id="1" parent="r0"/>
+                <mxCell id="c0" value="A2 : Gestor de Proyecto" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="37" y="63" width="281" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c1" value=":ProjectsListComponent&lt;br&gt;(Angular)" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="376" y="63" width="270" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c2" value=":ApiGateway" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="704" y="63" width="160" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c3" value=":ProyectoController" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="922" y="63" width="236" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c4" value=":ProyectoService" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1216" y="63" width="203" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c5" value=":ProyectoMapper" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1477" y="63" width="192" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="c6" value="spsrt_proyectos&lt;br&gt;msp_proyecto" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=0;collapsible=0;recursiveResize=0;outlineConnect=0;size=46;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=18;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="1727" y="63" width="192" height="893" as="geometry"/>
+                </mxCell>
+                <mxCell id="f0" value="[el nombre corto ya está en uso]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="87" y="514" width="1836" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="t0" value="alt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="87" y="514" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="f1" value="[nombre corto disponible]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;dashed=1;verticalAlign=top;align=right;spacingRight=8;spacingTop=4;fontFamily=Helvetica;fontSize=16;fontColor=#000000;" parent="1" vertex="1">
+                    <mxGeometry x="87" y="598" width="1836" height="368" as="geometry"/>
+                </mxCell>
+                <mxCell id="t1" value="else" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontFamily=Helvetica;fontSize=16;fontColor=#000000;fontStyle=1;" parent="1" vertex="1">
+                    <mxGeometry x="87" y="598" width="52" height="21" as="geometry"/>
+                </mxCell>
+                <mxCell id="m0" value="completa el formulario de proyecto" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="184" y="178" as="sourcePoint"/>
+                        <mxPoint x="504" y="178" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m1" value="POST /api/proyectos (Bearer JWT)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="518" y="220" as="sourcePoint"/>
+                        <mxPoint x="777" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m2" value="valida el JWT en el gateway" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="791" y="262" as="sourcePoint"/>
+                        <mxPoint x="1033" y="262" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m3" value="crear(ProyectoCrearRequest)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1047" y="304" as="sourcePoint"/>
+                        <mxPoint x="1310" y="304" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m4" value="buscarPorNombreCorto(nombreCorto)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1324" y="346" as="sourcePoint"/>
+                        <mxPoint x="1566" y="346" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m5" value="SELECT ... WHERE nombre_corto = ? AND estado = 1" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1580" y="388" as="sourcePoint"/>
+                        <mxPoint x="1816" y="388" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m6" value="Proyecto &lt;br&gt; null" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1816" y="430" as="sourcePoint"/>
+                        <mxPoint x="1580" y="430" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m7" value="Proyecto &lt;br&gt; null" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1566" y="472" as="sourcePoint"/>
+                        <mxPoint x="1324" y="472" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m8" value="409 Ya existe un proyecto con ese nombre_corto" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1310" y="556" as="sourcePoint"/>
+                        <mxPoint x="1047" y="556" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m9" value="insertar(nuevo)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1324" y="640" as="sourcePoint"/>
+                        <mxPoint x="1566" y="640" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m10" value="INSERT INTO msp_proyecto (auditoría inline)" style="endArrow=block;endFill=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1580" y="682" as="sourcePoint"/>
+                        <mxPoint x="1816" y="682" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m11" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1816" y="724" as="sourcePoint"/>
+                        <mxPoint x="1580" y="724" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m12" value="ok" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1566" y="766" as="sourcePoint"/>
+                        <mxPoint x="1324" y="766" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m13" value="ProyectoResponse" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1310" y="808" as="sourcePoint"/>
+                        <mxPoint x="1047" y="808" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m14" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1033" y="850" as="sourcePoint"/>
+                        <mxPoint x="791" y="850" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m15" value="200 OK" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="777" y="892" as="sourcePoint"/>
+                        <mxPoint x="518" y="892" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="m16" value="muestra el proyecto en el listado" style="endArrow=open;endFill=0;dashed=1;html=1;strokeColor=#000000;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=#000000;verticalAlign=bottom;" parent="1" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="504" y="934" as="sourcePoint"/>
+                        <mxPoint x="184" y="934" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -1,32 +1,73 @@
-<mxfile host="Claude" agent="SPSRT diagramas CU">
-  <diagram name="CU-07 Consultar avance del proyecto" id="cu07">
-    <mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="lane_a" value="A2 · Gestor de Proyecto" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" vertex="1" parent="1"><mxGeometry x="0" y="0" width="430" height="1186" as="geometry" /></mxCell>
-        <mxCell id="lane_s" value="Sistema · ms-seguimiento" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" vertex="1" parent="1"><mxGeometry x="430" y="0" width="430" height="1186" as="geometry" /></mxCell>
-        <mxCell id="n0" value="" style="ellipse;html=1;fillColor=#333333;strokeColor=#333333;strokeWidth=1;shadow=0;" vertex="1" parent="1"><mxGeometry x="195" y="92" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="n1" value="Accede al proyecto y selecciona&lt;br&gt;la opción «Avance»" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="15" y="206" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n2" value="Recibe GET /api/avance/por-proyecto/{id}&lt;br&gt;y busca la línea base del proyecto" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="445" y="320" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n3" value="¿Existe una línea base&lt;br&gt;congelada del proyecto?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" vertex="1" parent="1"><mxGeometry x="445" y="434" width="400" height="110" as="geometry" /></mxCell>
-        <mxCell id="x3" value="HTTP 404 · No hay línea base&lt;br&gt;congelada para el proyecto" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="880" y="452" width="350" height="74" as="geometry" /></mxCell>
-        <mxCell id="f3" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" vertex="1" parent="1"><mxGeometry x="1035" y="572" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="n4" value="Recorre las tareas de la línea base y suma&lt;br&gt;las horas estimadas y las registradas" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="445" y="670" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n5" value="Calcula el avance de cada tarea y el del&lt;br&gt;proyecto como registradas sobre estimadas" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="445" y="784" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n6" value="Visualiza el avance comparando lo&lt;br&gt;planificado con lo ejecutado" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" vertex="1" parent="1"><mxGeometry x="15" y="898" width="400" height="74" as="geometry" /></mxCell>
-        <mxCell id="n7" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" vertex="1" parent="1"><mxGeometry x="195" y="1012" width="40" height="40" as="geometry" /></mxCell>
-        <mxCell id="e0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n0" target="n1"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n1" target="n2"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n2" target="n3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e3" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n3" target="x3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="x3" target="f3"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e5" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n3" target="n4"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n4" target="n5"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n5" target="n6"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" edge="1" parent="1" source="n6" target="n7"><mxGeometry relative="1" as="geometry" /></mxCell>
-        <mxCell id="legend" value="Caso de uso: CU-07&lt;br&gt;Nombre: Consultar avance del proyecto&lt;br&gt;Actor primario: A2 · Gestor de Proyecto&lt;br&gt;Historia de usuario: HU-06&lt;br&gt;Precondición: A2 autenticado; el proyecto tiene una&lt;br&gt;línea base congelada (POST /api/linea-base/congelar).&lt;br&gt;Postcondición: vista calculada en tiempo de&lt;br&gt;consulta. No modifica ningún dato." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EEEEEE;strokeColor=#999999;strokeWidth=1;fontColor=#000000;fontSize=16;align=left;verticalAlign=top;spacingLeft=14;spacingTop=6;shadow=0;" vertex="1" parent="1"><mxGeometry x="880" y="906" width="350" height="240" as="geometry" /></mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="65bd71144e">
+    <diagram name="CU-07 Consultar avance del proyecto" id="cu07">
+        <mxGraphModel dx="741" dy="770" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2000" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="lane_a" value="A2 · Gestor de Proyecto" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" parent="1" vertex="1">
+                    <mxGeometry width="430" height="1186" as="geometry"/>
+                </mxCell>
+                <mxCell id="lane_s" value="Sistema · ms-seguimiento" style="swimlane;html=1;startSize=54;horizontal=1;fillColor=none;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=24;fontStyle=0;shadow=0;rounded=0;collapsible=0;swimlaneFillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="430" width="430" height="1186" as="geometry"/>
+                </mxCell>
+                <mxCell id="n0" value="" style="ellipse;html=1;fillColor=#333333;strokeColor=#333333;strokeWidth=1;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="195" y="92" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n1" value="Accede al proyecto y selecciona&lt;br&gt;la opción «Avance»" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="15" y="206" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n2" value="Recibe GET /api/avance/por-proyecto/{id}&lt;br&gt;y busca la línea base del proyecto" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="320" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n3" value="¿Existe una línea base&lt;br&gt;congelada del proyecto?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="434" width="400" height="110" as="geometry"/>
+                </mxCell>
+                <mxCell id="x3" value="HTTP 404 · No hay línea base&lt;br&gt;congelada para el proyecto" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="452" width="350" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="f3" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="1035" y="572" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="n4" value="Recorre las tareas de la línea base y suma&lt;br&gt;las horas estimadas y las registradas" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="670" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n5" value="Calcula el avance de cada tarea y el del&lt;br&gt;proyecto como registradas sobre estimadas" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="445" y="784" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n6" value="Visualiza el avance comparando lo&lt;br&gt;planificado con lo ejecutado" style="rounded=1;arcSize=14;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1;fontColor=#000000;fontSize=20;shadow=0;verticalAlign=middle;align=center;spacingLeft=8;spacingRight=8;" parent="1" vertex="1">
+                    <mxGeometry x="15" y="898" width="400" height="74" as="geometry"/>
+                </mxCell>
+                <mxCell id="n7" value="" style="ellipse;html=1;shape=endState;fillColor=#333333;strokeColor=#333333;strokeWidth=2;shadow=0;" parent="1" vertex="1">
+                    <mxGeometry x="195" y="1012" width="40" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="e0" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n0" target="n1" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n1" target="n2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n2" target="n3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e3" value="no" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n3" target="x3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="x3" target="f3" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e5" value="sí" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n3" target="n4" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n4" target="n5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n5" target="n6" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="e8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#333333;strokeWidth=1;endArrow=block;endFill=1;endSize=6;fontSize=17;fontColor=#000000;labelBackgroundColor=#FFFFFF;" parent="1" source="n6" target="n7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
 </mxfile>

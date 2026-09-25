@@ -77,6 +77,8 @@ docker compose up -d --build
 
 La primera vez tarda ~5 minutos (descarga de imágenes base + build Maven).
 
+Para los otros dos modos de arranque (todo local e híbrido), la configuración de Node con fnm y los problemas frecuentes, ver [Levantar_Proyecto_Local.md](Levantar_Proyecto_Local.md).
+
 ### Verificación rápida
 
 | URL | Resultado esperado |

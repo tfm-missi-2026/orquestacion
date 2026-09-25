@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>SPSRT · RNF-01 · Tiempos de respuesta</title>
+<style>
+  :root { color-scheme: light; }
+  body { font-family: "Segoe UI", system-ui, sans-serif; margin: 0; padding: 2.5rem;
+         background: #f6f7f9; color: #1f2430; }
+  main { max-width: 60rem; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin: 0 0 .25rem; }
+  h2 { font-size: 1.05rem; margin: 2rem 0 .75rem; padding-bottom: .35rem;
+       border-bottom: 1px solid #d8dce3; }
+  .meta { color: #5b6472; font-size: .875rem; margin-bottom: 1.5rem; }
+  table { width: 100%; border-collapse: collapse; background: #fff;
+          border: 1px solid #d8dce3; border-radius: 6px; overflow: hidden; }
+  th, td { padding: .55rem .75rem; text-align: left; font-size: .875rem;
+           border-bottom: 1px solid #eceef2; }
+  th { background: #eef1f5; font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .destacado { font-weight: 700; }
+  .ok { color: #1a7f4b; font-weight: 600; }
+  .falla { color: #b3261e; font-weight: 600; }
+  .tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+              gap: .75rem; margin-top: .5rem; }
+  .tarjeta { background: #fff; border: 1px solid #d8dce3; border-radius: 6px; padding: .85rem 1rem; }
+  .tarjeta .valor { font-size: 1.35rem; font-weight: 700; }
+  .tarjeta .rotulo { font-size: .75rem; color: #5b6472; text-transform: uppercase;
+                     letter-spacing: .04em; }
+  .nota { font-size: .8125rem; color: #5b6472; margin-top: .75rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>SPSRT · RNF-01 · Tiempos de respuesta</h1>
+  <p class="meta">Ejecutado el 09/08/2026, 22:24:27 · 10 usuarios virtuales durante 30s ·
+     stack completo en Docker, a través del API Gateway.</p>
+
+  <h2>Resumen</h2>
+  <div class="tarjetas">
+    <div class="tarjeta"><div class="rotulo">Peticiones</div>
+      <div class="valor">42.616</div></div>
+    <div class="tarjeta"><div class="rotulo">Peticiones por segundo</div>
+      <div class="valor">1.392</div></div>
+    <div class="tarjeta"><div class="rotulo">Iteraciones</div>
+      <div class="valor">4.725</div></div>
+    <div class="tarjeta"><div class="rotulo">Tasa de error</div>
+      <div class="valor">0.09 %</div></div>
+    <div class="tarjeta"><div class="rotulo">Datos recibidos</div>
+      <div class="valor">6.3 GB</div></div>
+  </div>
+
+  <h2>Tiempos de respuesta por tipo de operación</h2>
+  <table>
+    <tr><th>Operación</th><th class="num">Media</th><th class="num">Mediana</th>
+        <th class="num">P95</th><th class="num">Máximo</th><th class="num">Umbral</th>
+        <th>Resultado</th></tr>
+    <tr>
+    <td>Consultas</td>
+    <td class="num">6.94 ms</td>
+    <td class="num">4.16 ms</td>
+    <td class="num destacado">27.48 ms</td>
+    <td class="num">109.07 ms</td>
+    <td class="num">1.50 s</td>
+    <td><span class="ok">Cumple</span></td>
+  </tr>
+    <tr>
+    <td>Escrituras</td>
+    <td class="num">7.13 ms</td>
+    <td class="num">6.88 ms</td>
+    <td class="num destacado">10.40 ms</td>
+    <td class="num">20.41 ms</td>
+    <td class="num">3.00 s</td>
+    <td><span class="ok">Cumple</span></td>
+  </tr>
+  </table>
+  <p class="nota">Umbrales de RNF-01: P95 inferior a 1,5 s en consultas y a 3 s en escrituras.</p>
+
+  <h2>Verificaciones por endpoint</h2>
+  <table>
+    <tr><th>Verificación</th><th class="num">Conformes</th><th class="num">Fallidas</th>
+        <th class="num">Porcentaje</th></tr>
+    <tr>
+        <td>200 /api/proyectos</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>200 /api/subproyectos</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>200 /api/tareas</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>200 /api/asignaciones</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>200 /api/variaciones</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>200 /api/catalogo</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>200 /api/avance/por-proyecto/ec312bf1-0562-456b-86f2-0048e1b2bbab</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>200 /api/carga/equipo?desde=2026-09-01&hasta=2026-09-30</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+<tr>
+        <td>variacion creada</td>
+        <td class="num">4.725</td>
+        <td class="num">0</td>
+        <td class="num"><span class="ok">100.0 %</span></td>
+      </tr>
+  </table>
+
+  <h2>Volumen de datos de la medición</h2>
+  <p class="nota">La carga inicial crea el conjunto sobre el que se mide, porque sobre tablas
+     vacías los tiempos no son representativos: un proyecto, 3 subproyectos,
+     20 tareas, una asignación por tarea, 40 registros de bitácora y una
+     línea base congelada.</p>
+  <p class="nota">Los listados no están paginados en el servidor, de modo que el volumen
+     transferido crece con el número de filas. El grupo de escrituras inserta una variación
+     por iteración, por lo que la tabla crece durante la propia corrida.</p>
+</main>
+</body>
+</html>

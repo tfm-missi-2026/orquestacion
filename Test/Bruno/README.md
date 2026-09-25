@@ -1,7 +1,7 @@
 # Test — Colección Bruno (SPSRT)
 
 Colección de [Bruno](https://www.usebruno.com/) que prueba **todos los endpoints** de la API
-del sistema SPSRT a través del **API Gateway** (`http://localhost:8080`). Son ~76 requests
+del sistema SPSRT a través del **API Gateway** (`http://localhost:8080`). Son 84 requests
 encadenados (cada `POST` guarda IDs en variables que usan los siguientes) que cubren el CRUD
 de los 3 microservicios, los casos negativos de seguridad/negocio y la limpieza final.
 
